@@ -7,9 +7,9 @@ class kickstack::nova::vncproxy inherits kickstack {
     ensure_package  => $package_version
   }
 
-  unless getvar("${::kickstack::fact_prefix}vncproxy_host") {
+  if !getvar("${fact_prefix}vncproxy_host") {
     kickstack::exportfact::export { 'vncproxy_host':
-      value   => "${hostname}",
+      value   => $hostname,
       tag     => 'nova',
       require => Class['::nova::vncproxy']
     }
