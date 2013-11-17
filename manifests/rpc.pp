@@ -3,12 +3,12 @@ class kickstack::rpc inherits kickstack {
     'rabbitmq': {
       Class['nova::rabbitmq'] -> Exportfact::Export<| tag == 'rabbit' |>
 
-      $rabbit_password = pick(getvar("${::kickstack::fact_prefix}rabbit_password"), pwgen())
+      $rabbit_password = pick(getvar("${fact_prefix}rabbit_password"), pwgen())
 
       class { 'nova::rabbitmq':
-        userid        => $::kickstack::rabbit_userid,
+        userid        => $rabbit_userid,
         password      => $rabbit_password,
-        virtual_host  => $::kickstack::rabbit_virtual_host
+        virtual_host  => $rabbit_virtual_host
       }
 
       kickstack::exportfact::export { 'rabbit_host':
@@ -22,15 +22,16 @@ class kickstack::rpc inherits kickstack {
       }
 
     }
+
     'qpid': {
       Class['nova::qpid'] -> Exportfact::Export<| tag == 'qpid' |>
 
-      $qpid_password = pick(getvar("${::kickstack::fact_prefix}qpid_password"),pwgen())
+      $qpid_password = pick(getvar("${fact_prefix}qpid_password"),pwgen())
 
       class { 'nova::qpid':
-        user          => $::kickstack_qpid_username,
+        user          => $qpid_username,
         password      => $qpid_password,
-        realm         => $::kickstack_qpid_realm
+        realm         => $qpid_realm
       }
 
       kickstack::exportfact::export { 'qpid_hostname':

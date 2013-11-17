@@ -6,25 +6,24 @@
 # Currently supports only entries in /etc/hosts. Alternative
 # implementations might dynamically manage DNS entries.
 class kickstack::nameresolution inherits kickstack {
-
-  case $::kickstack::name_resolution {
+  case $name_resolution {
     'hosts': {
-      $host = pick($fqdn,$hostname)
+      $host = pick($fqdn, $hostname)
       if $fqdn {
         $aliases = [ $hostname ]
       } else {
         $aliases = []
       }
       @@host { $host:
-        ip => getvar("ipaddress_${::kickstack::nic_management}"),
-        host_aliases => $aliases,
-        comment => 'Managed by Puppet',
-        tag => 'hostname'
+        ip            => getvar("ipaddress_${::kickstack::nic_management}"),
+        host_aliases  => $aliases,
+        comment       => 'Managed by Puppet',
+        tag           => "${variable_prefix}_name_resolution"
       }
-      Host <<| tag == 'hostname' |>> {  }
+      Host <<| tag == "${variable_prefix}_name_resolution" |>> { }
     }
     default: {
-      fail("Unsupported value for \$kickstack::name_resolution: $::kickstack::name_resolution")
+      fail("Unsupported value for \$name_resolution: ${name_resolution}")
     }
   }
 }

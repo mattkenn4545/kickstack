@@ -1,30 +1,29 @@
 class kickstack::horizon inherits kickstack {
-
-  $keystone_host = getvar("${::kickstack::fact_prefix}keystone_internal_address")
-  $secret_key = getvar("${::kickstack::fact_prefix}horizon_secret_key")
-  $new_secret_key = pick($secret_key,pwgen())
+  $keystone_host  = getvar("${fact_prefix}keystone_internal_address")
+  $secret_key     = getvar("${fact_prefix}horizon_secret_key")
+  $new_secret_key = pick($secret_key, pwgen())
 
   package { 'memcached':
     ensure => installed;
   }
 
-  if $::kickstack::debug {
+  if $debug {
     $django_debug = 'True'
-    $log_level = 'DEBUG'
-  } elsif $::kickstack::verbose {
+    $log_level    = 'DEBUG'
+  } elsif $verbose {
     $django_debug = 'False'
-    $log_level = 'INFO'
+    $log_level    = 'INFO'
   } else {
     $django_debug = 'False'
-    $log_level = 'WARNING'
+    $log_level    = 'WARNING'
   }
 
   class { '::horizon':
     require               => Package['memcached'],
     secret_key            => $new_secret_key,
-    fqdn                  => $::kickstack::horizon_allow_any_hostname ? {
+    fqdn                  => $horizon_allow_any_hostname ? {
                                true => '*',
-                               default => pick($fqdn,$hostname)
+                               default => pick($fqdn, $hostname)
                              },
     cache_server_ip       => '127.0.0.1',
     cache_server_port     => '11211',
@@ -40,8 +39,8 @@ class kickstack::horizon inherits kickstack {
 
   unless $secret_key == $new_secret_key {
     kickstack::exportfact::export { 'horizon_secret_key':
-      value => $new_secret_key,
-      tag => 'horizon',
+      value   => $new_secret_key,
+      tag     => 'horizon',
       require => Class['::horizon']
     }
   }

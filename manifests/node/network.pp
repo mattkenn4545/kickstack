@@ -1,26 +1,27 @@
 class kickstack::node::network inherits kickstack {
-
   # Network nodes require a neutron Keystone endpoint.
   # The L2 agents need an SQL connection.
   # The metadata agent also requires the shared secret set by Nova API.
 
-  case $::kickstack::rpc {
+  case $rpc {
     'rabbitmq': {
-      $amqp_host = getvar("${::kickstack::fact_prefix}rabbit_host")
-      $amqp_password = getvar("${::kickstack::fact_prefix}rabbit_password")
+      $amqp_host      = getvar("${fact_prefix}rabbit_host")
+      $amqp_password  = getvar("${fact_prefix}rabbit_password")
     }
+  
     'qpid': {
-      $amqp_host = getvar("${::kickstack::fact_prefix}qpid_host")
-      $amqp_password = getvar("${::kickstack::fact_prefix}qpid_password")
+      $amqp_host      = getvar("${fact_prefix}qpid_host")
+      $amqp_password  = getvar("${fact_prefix}qpid_password")
     }
+  
     default: {
-      fail("Unsupported value for \$::kickstack::rpc: $::kickstack::rpc")
+      fail("Unsupported value for rpc: ${rpc}")
     }
   }
 
-  $neutron_sql_conn = getvar("${::kickstack::fact_prefix}neutron_sql_connection")
-  $neutron_keystone_password = getvar("${::kickstack::fact_prefix}neutron_keystone_password")
-  $neutron_metadata_shared_secret = getvar("${::kickstack::fact_prefix}neutron_metadata_shared_secret")
+  $neutron_sql_conn               = getvar("${fact_prefix}neutron_sql_connection")
+  $neutron_keystone_password      = getvar("${fact_prefix}neutron_keystone_password")
+  $neutron_metadata_shared_secret = getvar("${fact_prefix}neutron_metadata_shared_secret")
 
   if $amqp_host and $amqp_password and $neutron_keystone_password {
     include kickstack::neutron::agent::dhcp

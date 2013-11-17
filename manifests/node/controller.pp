@@ -1,5 +1,4 @@
 class kickstack::node::controller inherits kickstack {
-
   $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
   $glance_sql_conn            = getvar("${fact_prefix}glance_sql_connection")
   $glance_keystone_password   = getvar("${fact_prefix}glance_keystone_password")
@@ -29,6 +28,7 @@ class kickstack::node::controller inherits kickstack {
     if $cinder_sql_conn and $cinder_keystone_password {
       include kickstack::cinder::scheduler
     }
+
     if $nova_sql_conn and $nova_keystone_password {
       include kickstack::nova::cert
       include kickstack::nova::conductor

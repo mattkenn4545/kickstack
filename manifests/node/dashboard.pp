@@ -1,16 +1,16 @@
 class kickstack::node::dashboard inherits kickstack {
+  $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
+  $nova_keystone_password     = getvar("${fact_prefix}nova_keystone_password")
 
-  $keystone_internal_address = getvar("${fact_prefix}keystone_internal_address")
-  $nova_keystone_password = getvar("${fact_prefix}nova_keystone_password")
-
-  case $::kickstack::rpc {
+  case $rpc {
     'rabbitmq': {
-      $amqp_host = getvar("${::kickstack::fact_prefix}rabbit_host")
-      $amqp_password = getvar("${::kickstack::fact_prefix}rabbit_password")
+      $amqp_host      = getvar("${fact_prefix}rabbit_host")
+      $amqp_password  = getvar("${fact_prefix}rabbit_password")
     }
+
     'qpid': {
-      $amqp_host = getvar("${::kickstack::fact_prefix}qpid_host")
-      $amqp_password = getvar("${::kickstack::fact_prefix}qpid_password")
+      $amqp_host      = getvar("${fact_prefix}qpid_host")
+      $amqp_password  = getvar("${fact_prefix}qpid_password")
     }
   }
 

@@ -1,5 +1,4 @@
 class kickstack::node::infrastructure inherits kickstack {
-
   include kickstack::rpc
   include kickstack::database
 
@@ -9,7 +8,7 @@ class kickstack::node::infrastructure inherits kickstack {
   include kickstack::neutron::db
   include kickstack::nova::db
 
-  if $::kickstack::heat_apis {
+  if $heat_apis {
     include kickstack::heat::db
   }
 
