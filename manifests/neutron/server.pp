@@ -5,7 +5,7 @@ class kickstack::neutron::server inherits kickstack {
   $service_password           = pick(getvar("${fact_prefix}neutron_keystone_password"), pwgen())
   $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
 
-  class { 'neutron::server':
+  class { '::neutron::server':
     auth_tenant     => $keystone_service_tenant,
     auth_user       => 'neutron',
     auth_password   => $service_password,

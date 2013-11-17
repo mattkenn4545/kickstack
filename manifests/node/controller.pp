@@ -9,7 +9,7 @@ class kickstack::node::controller inherits kickstack {
   $neutron_sql_conn           = getvar("${fact_prefix}neutron_sql_connection")
   $neutron_keystone_password  = getvar("${fact_prefix}neutron_keystone_password")
 
-  case $::kickstack::rpc {
+  case $rpc {
     'rabbitmq': {
       $amqp_host      = getvar("${fact_prefix}rabbit_host")
       $amqp_password  = getvar("${fact_prefix}rabbit_password")

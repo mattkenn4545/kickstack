@@ -1,5 +1,5 @@
 class kickstack::heat::engine inherits kickstack {
-  include ::kickstack::heat::config
+  include kickstack::heat::config
 
   $apis = split($heat_apis,',')
 

@@ -15,7 +15,7 @@ class kickstack::nameresolution inherits kickstack {
         $aliases = []
       }
       @@host { $host:
-        ip            => getvar("ipaddress_${::kickstack::nic_management}"),
+        ip            => getvar("ipaddress_${nic_management}"),
         host_aliases  => $aliases,
         comment       => 'Managed by Puppet',
         tag           => "${variable_prefix}_name_resolution"

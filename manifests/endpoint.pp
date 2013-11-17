@@ -9,8 +9,8 @@ define kickstack::endpoint (
   # Installs the service user endpoint.
   class { $fullclassname:
     password          => $service_password,
-    public_address    => "${hostname}${::kickstack::keystone_public_suffix}",
-    admin_address     => "${hostname}${::kickstack::keystone_admin_suffix}",
+    public_address    => "${hostname}${kickstack::keystone_public_suffix}",
+    admin_address     => "${hostname}${kickstack::keystone_admin_suffix}",
     internal_address  => $hostname,
     region            => $::kickstack::keystone_region,
     require           => Class['::keystone'],

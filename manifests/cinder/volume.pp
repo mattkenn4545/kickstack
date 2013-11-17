@@ -5,7 +5,7 @@ class kickstack::cinder::volume inherits kickstack {
     package_ensure => $package_version,
   }
 
-  case $::kickstack::cinder_backend {
+  case $cinder_backend {
     'iscsi': {
       $pv = $cinder_lvm_pv
       $vg = $cinder_lvm_vg

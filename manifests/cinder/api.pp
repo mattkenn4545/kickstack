@@ -10,7 +10,7 @@ class kickstack::cinder::api inherits kickstack {
     keystone_user       => 'cinder',
     keystone_password   => $service_password,
     keystone_auth_host  => $keystone_internal_address,
-    package_ensure      => $::kickstack::package_version
+    package_ensure      => $package_version
   }
 
   kickstack::endpoint { 'cinder':
