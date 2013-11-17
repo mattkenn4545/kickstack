@@ -1,8 +1,8 @@
 class kickstack::heat::api inherits kickstack {
   include pwgen
-  include ::kickstack::heat::config
+  include kickstack::heat::config
 
-  $apis = split($::kickstack::heat_apis, ',')
+  $apis = split($heat_apis, ',')
 
   if 'heat' in $apis {
     $heat_admin_password = pick(getvar("${fact_prefix}heat_keystone_password"), pwgen())

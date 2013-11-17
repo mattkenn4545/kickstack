@@ -1,5 +1,4 @@
 class kickstack::ceilometer::api inherits kickstack {
-
   include kickstack::ceilometer::config
   include pwgen
 

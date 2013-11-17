@@ -1,4 +1,6 @@
 class kickstack::rpc inherits kickstack {
+  include pwgen
+
   case $rpc {
     'rabbitmq': {
       Class['nova::rabbitmq'] -> Exportfact::Export<| tag == 'rabbit' |>
