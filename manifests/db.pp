@@ -1,8 +1,8 @@
 define kickstack::db {
   include pwgen
 
-  $fact_prefix  = $fact_prefix
-  $database     = $database
+  $fact_prefix  = $kickstack::fact_prefix
+  $database     = $kickstack::database
 
   $servicename  = $name
   $username     = $name
