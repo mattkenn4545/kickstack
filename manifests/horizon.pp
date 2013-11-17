@@ -21,7 +21,7 @@ class kickstack::horizon inherits kickstack {
 
   class { '::horizon':
     require               => Package['memcached'],
-    secret_key            => $new_secret_key,
+    secret_key            => $secret_key,
     fqdn                  => $horizon_allow_any_hostname ? {
                                true => '*',
                                default => pick($fqdn, $hostname)
