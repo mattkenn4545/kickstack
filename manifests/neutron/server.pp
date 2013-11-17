@@ -18,7 +18,7 @@ class kickstack::neutron::server inherits kickstack {
     require           => Class['::neutron::server']
   }
 
-  kickstack::exportfact::export { "neutron_host":
+  kickstack::exportfact::export { 'neutron_host':
     value             => $hostname,
     tag               => 'neutron',
     require           => Class['::neutron::server']
