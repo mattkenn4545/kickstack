@@ -11,7 +11,7 @@ class kickstack::neutron::agent::l2::network inherits kickstack {
           $local_tunnel_ip  = getvar("ipaddress_${nic_data}")
           $bridge_uplinks   = ["${external_bridge}:${nic_external}"]
 
-          class { 'neutron::agents::ovs':
+          class { '::neutron::agents::ovs':
             bridge_mappings     => [],
             bridge_uplinks      => [],
             integration_bridge  => $neutron_integration_bridge,
@@ -28,7 +28,7 @@ class kickstack::neutron::agent::l2::network inherits kickstack {
           } else {
             $bridge_uplinks = ["br-${nic_data}:${nic_data}"]
           }
-          class { 'neutron::agents::ovs':
+          class { '::neutron::agents::ovs':
             bridge_mappings     => ["${neutron_physnet}:br-${nic_data}"],
             bridge_uplinks      => $bridge_uplinks,
             integration_bridge  => $neutron_integration_bridge,
@@ -40,7 +40,7 @@ class kickstack::neutron::agent::l2::network inherits kickstack {
       }
     }
     'linuxbridge': {
-      class { 'neutron::agents::linuxbridge':
+      class { '::neutron::agents::linuxbridge':
         physical_interface_mappings => "default:${nic_data}",
         package_ensure              => $package_version,
       }

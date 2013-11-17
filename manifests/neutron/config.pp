@@ -15,7 +15,7 @@ class kickstack::neutron::config inherits kickstack {
       $rabbit_host      = getvar("${fact_prefix}rabbit_host")
       $rabbit_password  = getvar("${fact_prefix}rabbit_password")
       if $rabbit_host and $rabbit_password {
-        class { 'neutron':
+        class { '::neutron':
           rpc_backend           => 'neutron.openstack.common.rpc.impl_kombu',
           rabbit_host           => $rabbit_host,
           rabbit_virtual_host   => $rabbit_virtual_host,
@@ -35,7 +35,7 @@ class kickstack::neutron::config inherits kickstack {
       $qpid_hostname  = getvar("${fact_prefix}qpid_hostname")
       $qpid_password  = getvar("${fact_prefix}rabbit_password")
       if $qpid_hostname and $qpid_password {
-        class { 'neutron':
+        class { '::neutron':
           rpc_backend           => 'neutron.openstack.common.rpc.impl_qpid',
           qpid_hostname         => $qpid_hostname,
           qpid_realm            => $qpid_realm,

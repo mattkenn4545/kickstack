@@ -28,7 +28,7 @@ define kickstack::db {
   # can connect to the database from anywhere.
   case $database {
     'mysql': {
-      class { "${servicename}::db::mysql":
+      class { "::${servicename}::db::mysql":
         user          => $username,
         password      => $sql_password,
         charset       => 'utf8',
@@ -37,7 +37,7 @@ define kickstack::db {
       }
     }
     default: {
-      class { "${name}::db::${database}":
+      class { "::${name}::db::${database}":
         password      => $sql_password
       }
     }

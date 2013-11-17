@@ -4,7 +4,7 @@ define kickstack::endpoint (
   $classname   = 'auth',
   $factname  = "${name}_keystone_password" )
 {
-  $fullclassname = "${servicename}::keystone::${classname}"
+  $fullclassname = "::${servicename}::keystone::${classname}"
 
   # Installs the service user endpoint.
   class { $fullclassname:
@@ -12,7 +12,7 @@ define kickstack::endpoint (
     public_address    => "${hostname}${kickstack::keystone_public_suffix}",
     admin_address     => "${hostname}${kickstack::keystone_admin_suffix}",
     internal_address  => $hostname,
-    region            => $::kickstack::keystone_region,
+    region            => $kickstack::keystone_region,
     require           => Class['::keystone'],
   }
 

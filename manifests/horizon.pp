@@ -2,7 +2,7 @@ class kickstack::horizon inherits kickstack {
   include pwgen
 
   $keystone_host  = getvar("${fact_prefix}keystone_internal_address")
-  $secret_key = pick(getvar("${fact_prefix}horizon_secret_key"), pwgen())
+  $secret_key     = pick(getvar("${fact_prefix}horizon_secret_key"), pwgen())
 
   package { 'memcached':
     ensure => installed;
@@ -44,4 +44,3 @@ class kickstack::horizon inherits kickstack {
     require => Class['::horizon']
   }
 }
-

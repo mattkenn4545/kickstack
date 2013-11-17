@@ -6,7 +6,7 @@ class kickstack::cinder::config inherits kickstack {
       $rabbit_host      = getvar("${fact_prefix}rabbit_host")
       $rabbit_password  = getvar("${fact_prefix}rabbit_password")
       if $rabbit_host and $rabbit_password {
-        class { 'cinder':
+        class { '::cinder':
           sql_connection      => $sql_conn,
           rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
           rabbit_host         => $rabbit_host,
@@ -26,7 +26,7 @@ class kickstack::cinder::config inherits kickstack {
       $qpid_hostname = getvar("${fact_prefix}qpid_hostname")
       $qpid_password = getvar("${fact_prefix}rabbit_password")
       if $qpid_hostname and $qpid_password {
-        class { 'cinder':
+        class { '::cinder':
           sql_connection      => $sql_conn,
           rpc_backend         => 'cinder.openstack.common.rpc.impl_qpid',
           qpid_hostname       => $qpid_hostname,

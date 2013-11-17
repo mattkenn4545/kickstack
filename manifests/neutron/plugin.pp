@@ -10,7 +10,7 @@ class kickstack::neutron::plugin inherits kickstack {
 
   case $neutron_plugin {
     'ovs': {
-      class { 'neutron::plugins::ovs':
+      class { '::neutron::plugins::ovs':
         sql_connection      => $sql_conn,
         tenant_network_type => $tenant_network_type,
         network_vlan_ranges => $network_vlan_ranges,
@@ -25,7 +25,7 @@ class kickstack::neutron::plugin inherits kickstack {
       }
     }
     'linuxbridge': {
-      class { 'neutron::plugins::linuxbridge':
+      class { '::neutron::plugins::linuxbridge':
         sql_connection      => $sql_conn,
         tenant_network_type => $tenant_network_type,
         network_vlan_ranges => $network_vlan_ranges,
