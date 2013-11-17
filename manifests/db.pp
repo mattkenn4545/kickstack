@@ -2,11 +2,11 @@ define kickstack::db {
 
   include pwgen
 
-  $fact_prefix = $::kickstack::fact_prefix
-  $database = $::kickstack::database
+  $fact_prefix  = $::kickstack::fact_prefix
+  $database     = $::kickstack::database
 
-  $servicename = $name
-  $username = $name
+  $servicename  = $name
+  $username     = $name
 
   # Retrieve the currently set password for the service from its
   # kickstack_*_sql_connection fact.
@@ -49,5 +49,4 @@ define kickstack::db {
     value => "${database}://${name}:${sql_password}@${hostname}/${name}",
     tag => "$database"
   }
-
 }

@@ -1,23 +1,23 @@
 class kickstack::node::controller inherits kickstack {
 
-  $keystone_internal_address = getvar("${fact_prefix}keystone_internal_address")
-  $glance_sql_conn = getvar("${fact_prefix}glance_sql_connection")
-  $glance_keystone_password = getvar("${fact_prefix}glance_keystone_password")
-  $cinder_sql_conn = getvar("${fact_prefix}cinder_sql_connection")
-  $cinder_keystone_password = getvar("${fact_prefix}cinder_keystone_password")
-  $nova_sql_conn = getvar("${fact_prefix}nova_sql_connection")
-  $nova_keystone_password = getvar("${fact_prefix}nova_keystone_password")
-  $neutron_sql_conn = getvar("${fact_prefix}neutron_sql_connection")
-  $neutron_keystone_password = getvar("${fact_prefix}neutron_keystone_password")
+  $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
+  $glance_sql_conn            = getvar("${fact_prefix}glance_sql_connection")
+  $glance_keystone_password   = getvar("${fact_prefix}glance_keystone_password")
+  $cinder_sql_conn            = getvar("${fact_prefix}cinder_sql_connection")
+  $cinder_keystone_password   = getvar("${fact_prefix}cinder_keystone_password")
+  $nova_sql_conn              = getvar("${fact_prefix}nova_sql_connection")
+  $nova_keystone_password     = getvar("${fact_prefix}nova_keystone_password")
+  $neutron_sql_conn           = getvar("${fact_prefix}neutron_sql_connection")
+  $neutron_keystone_password  = getvar("${fact_prefix}neutron_keystone_password")
 
   case $::kickstack::rpc {
     'rabbitmq': {
-      $amqp_host = getvar("${::kickstack::fact_prefix}rabbit_host")
-      $amqp_password = getvar("${::kickstack::fact_prefix}rabbit_password")
+      $amqp_host      = getvar("${fact_prefix}rabbit_host")
+      $amqp_password  = getvar("${fact_prefix}rabbit_password")
     }
     'qpid': {
-      $amqp_host = getvar("${::kickstack::fact_prefix}qpid_host")
-      $amqp_password = getvar("${::kickstack::fact_prefix}qpid_password")
+      $amqp_host      = getvar("${fact_prefix}qpid_host")
+      $amqp_password  = getvar("${fact_prefix}qpid_password")
     }
   }
 
