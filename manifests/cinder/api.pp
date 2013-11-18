@@ -1,6 +1,5 @@
 class kickstack::cinder::api inherits kickstack {
   include kickstack::cinder::config
-  include pwgen
 
   $service_password           = pick(getvar("${fact_prefix}cinder_keystone_password"), pwgen())
   $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
