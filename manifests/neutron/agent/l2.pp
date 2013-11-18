@@ -1,15 +1,11 @@
-class kickstack::neutron::agent::l2::network inherits kickstack {
+class kickstack::neutron::agent::l2 inherits kickstack {
   include kickstack::neutron::config
-
-  $tenant_network_type  = $neutron_tenant_network_type
-  $external_bridge      = $neutron_external_bridge
 
   case $neutron_plugin {
     'ovs': {
-      case $tenant_network_type {
+      case $neutron_tenant_network_type {
         'gre': {
-          $local_tunnel_ip  = getvar("ipaddress_${nic_data}")
-          $bridge_uplinks   = ["${external_bridge}:${nic_external}"]
+          $local_tunnel_ip = getvar("ipaddress_${nic_data}")
 
           class { '::neutron::agents::ovs':
             bridge_mappings     => [],
@@ -18,7 +14,6 @@ class kickstack::neutron::agent::l2::network inherits kickstack {
             enable_tunneling    => true,
             local_ip            => $local_tunnel_ip,
             tunnel_bridge       => $neutron_tunnel_bridge,
-            require             => Class['neutron::agent::l3'],
             package_ensure      => $package_version,
           }
         }
