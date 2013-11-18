@@ -27,8 +27,10 @@ class kickstack::node::network inherits kickstack {
     include kickstack::neutron::agent::dhcp
     include kickstack::neutron::agent::l3
     if $neutron_sql_conn {
-      include kickstack::neutron::agent::l2::network
+      Class['neutron::agent::l3'] -> Class['kickstack::neutron::agent::l2']
+      include kickstack::neutron::agent::l2
     }
+
     if $neutron_metadata_shared_secret {
       include kickstack::neutron::agent::metadata
     }

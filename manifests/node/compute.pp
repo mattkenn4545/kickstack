@@ -24,7 +24,7 @@ class kickstack::node::compute inherits kickstack {
   $ceilometer_metering_secret   = getvar("${fact_prefix}ceilometer_metering_secret")
 
   if $amqp_host and $amqp_password {
-    include kickstack::neutron::agent::l2::compute
+    include kickstack::neutron::agent::l2
     if $nova_sql_conn and $nova_keystone_password and $glance_api_host {
       include kickstack::nova::compute
     }
