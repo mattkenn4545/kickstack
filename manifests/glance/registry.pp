@@ -6,8 +6,8 @@ class kickstack::glance::registry inherits kickstack {
   $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
 
   class { '::glance::registry':
-    verbose           => $kickstack::verbose,
-    debug             => $kickstack::debug,
+    verbose           => $verbose,
+    debug             => $debug,
     auth_host         => $keystone_internal_address,
     keystone_tenant   => $keystone_service_tenant,
     keystone_user     => 'glance',
@@ -17,7 +17,7 @@ class kickstack::glance::registry inherits kickstack {
 
   # Export the registry host name string for the service
   kickstack::exportfact::export { 'glance_registry_host':
-    value             => '$hostname',
+    value             => $hostname,
     tag               => 'glance',
     require           => Class['::glance::registry']
   }
