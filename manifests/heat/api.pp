@@ -1,5 +1,4 @@
 class kickstack::heat::api inherits kickstack {
-  include pwgen
   include kickstack::heat::config
 
   $apis = split($heat_apis, ',')

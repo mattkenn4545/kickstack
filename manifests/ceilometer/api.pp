@@ -1,6 +1,5 @@
 class kickstack::ceilometer::api inherits kickstack {
   include kickstack::ceilometer::config
-  include pwgen
 
   $auth_host        = getvar("${fact_prefix}keystone_internal_address")
   $service_password = pick(getvar("${fact_prefix}ceilometer_keystone_password"), pwgen())

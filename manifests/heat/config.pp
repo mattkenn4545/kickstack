@@ -1,6 +1,4 @@
 class kickstack::heat::config inherits kickstack {
-  include pwgen
-
   $admin_password = getvar("${fact_prefix}heat_keystone_password")
   $auth_host      = getvar("${fact_prefix}keystone_internal_address")
   $auth_uri       = "http://${auth_host}:5000/v2.0"

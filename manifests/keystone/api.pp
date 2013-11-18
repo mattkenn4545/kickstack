@@ -1,6 +1,4 @@
 class kickstack::keystone::api inherits kickstack {
-  include pwgen  
-
   $admin_token    = pick(getvar("${fact_prefix}keystone_admin_token"), pwgen())
   $admin_password = pick(getvar("${fact_prefix}keystone_admin_password"), pwgen())
   $admin_tenant   = $keystone_admin_tenant

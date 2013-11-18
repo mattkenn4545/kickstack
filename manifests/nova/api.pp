@@ -1,6 +1,5 @@
 class kickstack::nova::api inherits kickstack {
   include kickstack::nova::config
-  include pwgen
 
   # Grab the Keystone admin password from a kickstack fact and configure
   # Keystone accordingly. If no fact has been set, generate a password.

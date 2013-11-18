@@ -1,6 +1,4 @@
 class kickstack::rpc inherits kickstack {
-  include pwgen
-
   case $rpc {
     'rabbitmq': {
       Class['::nova::rabbitmq'] -> Exportfact::Export<| tag == 'rabbit' |>
@@ -47,7 +45,7 @@ class kickstack::rpc inherits kickstack {
       }
     }
     default: {
-      warn("Unsupported RPC server type: ${rpc_server}")
+      warn("Unsupported RPC server type: ${rpc}")
     }
   }
 }

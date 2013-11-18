@@ -1,6 +1,4 @@
 class kickstack::ceilometer::config inherits kickstack {
-  include pwgen
-
   $admin_password   = getvar("${fact_prefix}ceilometer_keystone_password")
   $sql_conn         = getvar("${fact_prefix}ceilometer_sql_connection")
 

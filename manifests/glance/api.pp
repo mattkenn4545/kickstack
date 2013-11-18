@@ -1,6 +1,5 @@
 class kickstack::glance::api inherits kickstack {
   include kickstack::glance::config
-  include pwgen
 
   $auth_host        = getvar("${fact_prefix}keystone_internal_address")
   $service_password = pick(getvar("${fact_prefix}glance_keystone_password"), pwgen())

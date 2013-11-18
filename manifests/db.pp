@@ -1,6 +1,4 @@
 define kickstack::db {
-  include pwgen
-
   $fact_prefix  = $kickstack::fact_prefix
   $database     = $kickstack::database
 
