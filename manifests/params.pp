@@ -161,7 +161,7 @@ class kickstack::params {
                                       'gre')
 
   # The Neutron physical network name to define (ignored if
-  # tenant_network_type=='gre'
+  # neutron_tenant_network_type=='gre'
   $neutron_physnet = pick(getvar("::${variable_prefix}neutron_physnet"),
                           'physnet1')
 
