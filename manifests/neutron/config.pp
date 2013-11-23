@@ -1,5 +1,5 @@
 class kickstack::neutron::config inherits kickstack {
-  $allow_overlapping_ips = "$neutron_network_type" ? {
+  $allow_overlapping_ips = $neutron_network_type ? {
     'single-flat'       => false,
     'provider-router'   => false,
     'per-tenant-router' => true
