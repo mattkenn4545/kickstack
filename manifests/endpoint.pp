@@ -2,8 +2,8 @@ define kickstack::endpoint (
   $service_password,
   $servicename = $name,
   $classname   = 'auth',
-  $factname  = "${name}_keystone_password" )
-{
+  $factname  = "${name}_keystone_password"
+) {
   $fullclassname = "::${servicename}::keystone::${classname}"
 
   # Installs the service user endpoint.

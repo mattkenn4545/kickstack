@@ -7,7 +7,8 @@ class kickstack::database inherits kickstack {
                       { config_hash => {
                         'root_password' => $mysql_root_password,
                         'bind_address'  => '0.0.0.0'
-                      }})
+                        }
+                      })
       ensure_resource('file',
                       '/etc/mysql/conf.d/skip-name-resolve.cnf',
                       { source => 'puppet:///modules/kickstack/mysql/skip-name-resolve.cnf',
