@@ -19,7 +19,7 @@ class kickstack::neutron::agent::l2 inherits kickstack {
         }
         default: {
           if $neutron_network_type == 'single-flat' {
-            $bridge_uplinks += ["${$neutron_external_bridge}:${nic_external}"]
+            $bridge_uplinks += ["${neutron_external_bridge}:${nic_external}"]
           } else {
             $bridge_uplinks = ["br-${nic_data}:${nic_data}"]
           }
