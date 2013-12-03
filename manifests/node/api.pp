@@ -29,6 +29,7 @@ class kickstack::node::api inherits kickstack {
 
   if $keystone_internal_address and $amqp_host and $amqp_password {
     include kickstack::neutron::server
+
     if $neutron_sql_conn {
       include kickstack::neutron::plugin
     }

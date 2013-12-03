@@ -10,7 +10,7 @@ class kickstack::ceilometer::config inherits kickstack {
     $metering_secret = pwgen()
     kickstack::exportfact::export { 'ceilometer_metering_secret':
       value => $metering_secret,
-      tag => 'ceilometer'
+      tag   => 'ceilometer'
     }
   }
 

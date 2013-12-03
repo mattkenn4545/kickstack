@@ -14,7 +14,7 @@ class kickstack::neutron::plugin inherits kickstack {
         tenant_network_type => $neutron_tenant_network_type,
         network_vlan_ranges => $network_vlan_ranges,
         tunnel_id_ranges    => $tunnel_id_ranges,
-        package_ensure      => $package_version,
+        package_ensure      => $package_version
       }
       # This needs to be set for the plugin, not the agent
       # (the latter is what the Neutron module assumes)
@@ -29,7 +29,7 @@ class kickstack::neutron::plugin inherits kickstack {
         sql_connection      => $sql_conn,
         tenant_network_type => $neutron_tenant_network_type,
         network_vlan_ranges => $network_vlan_ranges,
-        package_ensure      => $package_version,
+        package_ensure      => $package_version
       }
     }
   }

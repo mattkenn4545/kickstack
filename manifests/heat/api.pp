@@ -5,6 +5,7 @@ class kickstack::heat::api inherits kickstack {
 
   if 'heat' in $apis {
     $heat_admin_password = pick(getvar("${fact_prefix}heat_keystone_password"), pwgen())
+
     class { '::heat::api':
       enabled           => true
     }
@@ -25,7 +26,7 @@ class kickstack::heat::api inherits kickstack {
     $cfn_admin_password = pick(getvar("${fact_prefix}heat_cfn_keystone_password"), pwgen())
 
     class { '::heat::api_cfn':
-      enabled           => true,
+      enabled           => true
     }
 
     kickstack::endpoint { 'heat_cfn':
@@ -39,7 +40,7 @@ class kickstack::heat::api inherits kickstack {
 
   if 'cloudwatch' in $apis {
     class { '::heat::api_cloudwatch':
-      enabled => true,
+      enabled => true
     }
 
     kickstack::exportfact::export { 'heat_watch_server':

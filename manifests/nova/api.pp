@@ -37,6 +37,7 @@ class kickstack::nova::api inherits kickstack {
     tag       => 'nova',
     require   => Class['::nova::api']
   }
+
   kickstack::exportfact::export { 'neutron_metadata_shared_secret':
     value     => $neutron_secret,
     tag       => 'nova',

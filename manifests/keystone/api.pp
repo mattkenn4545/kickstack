@@ -10,7 +10,7 @@ class kickstack::keystone::api inherits kickstack {
     debug             => $debug,
     catalog_type      => 'sql',
     admin_token       => $admin_token,
-    sql_connection    => $sql_conn,
+    sql_connection    => $sql_conn
   }
 
   # Installs the service user endpoint.
@@ -19,19 +19,19 @@ class kickstack::keystone::api inherits kickstack {
     admin_address     => "${hostname}${keystone_admin_suffix}",
     internal_address  => $hostname,
     region            => $keystone_region,
-    require           => Class['::keystone']
+    require           => Class[ '::keystone' ]
   }
 
   kickstack::exportfact::export { 'keystone_admin_token':
     value             => $admin_token,
     tag               => 'keystone',
-    require           => Class['::keystone']
+    require           => Class[ '::keystone' ]
   }
 
   kickstack::exportfact::export { 'keystone_internal_address':
     value             => $hostname,
     tag               => 'keystone',
-    require           => Class['::keystone::endpoint']
+    require           => Class[ '::keystone::endpoint' ]
   }
 
   # Adds the admin credential to keystone.
@@ -40,7 +40,7 @@ class kickstack::keystone::api inherits kickstack {
     password          => $admin_password,
     admin_tenant      => $admin_tenant,
     service_tenant    => $keystone_service_tenant,
-    require           => Class['::keystone::endpoint']
+    require           => Class[ '::keystone::endpoint' ]
   }
 
   file { '/root/openstackrc':
@@ -48,12 +48,12 @@ class kickstack::keystone::api inherits kickstack {
     group             => 'root',
     mode              => '0640',
     content           => template('kickstack/openstackrc.erb'),
-    require           => Class['::keystone::roles::admin']
+    require           => Class[ '::keystone::roles::admin' ]
   }
 
   kickstack::exportfact::export { 'keystone_admin_password':
     value             => $admin_password,
     tag               => 'keystone',
-    require           => Class['::keystone::roles::admin']
+    require           => Class[ '::keystone::roles::admin' ]
   }
 }

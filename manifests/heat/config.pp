@@ -9,6 +9,7 @@ class kickstack::heat::config inherits kickstack {
     'rabbitmq': {
       $rabbit_host      = getvar("${fact_prefix}rabbit_host")
       $rabbit_password  = getvar("${fact_prefix}rabbit_password")
+
       class { '::heat':
         package_ensure      => $package_version,
         auth_uri            => $auth_uri,
@@ -30,6 +31,7 @@ class kickstack::heat::config inherits kickstack {
     'qpid': {
       $qpid_hostname = getvar("${fact_prefix}qpid_hostname")
       $qpid_password = getvar("${fact_prefix}qpid_password")
+
       class { '::heat':
         package_ensure      => $package_version,
         sql_connection      => $sql_conn,
@@ -44,7 +46,7 @@ class kickstack::heat::config inherits kickstack {
         keystone_user       => 'heat',
         keystone_password   => $admin_password,
         verbose             => $verbose,
-        debug               => $debug,
+        debug               => $debug
       }
     }
   } 

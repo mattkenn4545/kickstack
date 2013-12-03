@@ -27,7 +27,7 @@ class kickstack::neutron::agent::l3 inherits kickstack {
     gateway_external_network_id => $neutron_network_type ? {
                                           'provider-router'   => $neutron_gateway_external_network_id,
                                           default             => undef },
-    package_ensure    => $package_version,
-    require           => Vs_bridge[$external_bridge],
+    package_ensure              => $package_version,
+    require                     => Vs_bridge[ $external_bridge ]
   }
 }

@@ -9,17 +9,17 @@ class kickstack::neutron::server inherits kickstack {
     auth_user       => 'neutron',
     auth_password   => $service_password,
     auth_host       => $keystone_internal_address,
-    package_ensure  => $package_version,
+    package_ensure  => $package_version
   }
 
   kickstack::endpoint { 'neutron':
     service_password  => $service_password,
-    require           => Class['::neutron::server']
+    require           => Class[ '::neutron::server' ]
   }
 
   kickstack::exportfact::export { 'neutron_host':
     value             => $hostname,
     tag               => 'neutron',
-    require           => Class['::neutron::server']
+    require           => Class[ '::neutron::server' ]
   }
 }

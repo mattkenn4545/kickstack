@@ -33,12 +33,12 @@ class kickstack::horizon inherits kickstack {
     api_result_limit      => 1000,
     log_level             => $log_level,
     can_set_mount_point   => 'True',
-    listen_ssl            => false;
+    listen_ssl            => false
   }
 
   kickstack::exportfact::export { 'horizon_secret_key':
-    value   => $secret_key,
-    tag     => 'horizon',
-    require => Class['::horizon']
+    value                 => $secret_key,
+    tag                   => 'horizon',
+    require               => Class[ '::horizon' ]
   }
 }

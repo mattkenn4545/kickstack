@@ -8,6 +8,6 @@ class kickstack::ceilometer::auth inherits kickstack {
     auth_region      => $keystone_region,
     auth_user        => 'ceilometer',
     auth_password    => $service_password,
-    auth_tenant_name => $keystone_service_tenant,
+    auth_tenant_name => $keystone_service_tenant
   }
 }

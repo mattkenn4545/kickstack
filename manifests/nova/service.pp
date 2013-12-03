@@ -1,6 +1,5 @@
 define kickstack::nova::service {
-  $servicename  = $name
-  $classname    = "::nova::${servicename}"
+  $classname    = "::nova::${name}"
 
   # Installs the Nova service
   class { $classname:

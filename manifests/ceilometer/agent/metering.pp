@@ -5,6 +5,6 @@ class kickstack::ceilometer::agent::metering inherits kickstack {
   class { '::ceilometer::collector': }
 
   class { '::ceilometer::agent::central':
-    require => Class['::ceilometer::collector'],
+    require => Class[ '::ceilometer::collector' ]
   }
 }

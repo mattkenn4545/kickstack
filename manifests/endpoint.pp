@@ -13,7 +13,7 @@ define kickstack::endpoint (
     admin_address     => "${hostname}${kickstack::keystone_admin_suffix}",
     internal_address  => $hostname,
     region            => $kickstack::keystone_region,
-    require           => Class['::keystone'],
+    require           => Class['::keystone']
   }
 
   kickstack::exportfact::export { $factname:

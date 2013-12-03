@@ -34,7 +34,7 @@ class kickstack::cinder::config inherits kickstack {
           qpid_username       => $qpid_username,
           qpid_password       => $qpid_password,
           verbose             => $verbose,
-          debug               => $debug,
+          debug               => $debug
         }
       }
       else {

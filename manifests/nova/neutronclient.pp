@@ -13,6 +13,6 @@ class kickstack::nova::neutronclient inherits kickstack {
     neutron_region_name       => $keystone_region,
     neutron_admin_username    => 'neutron',
     neutron_admin_auth_url    => "http://${keystone_internal_address}:35357/v2.0",
-    security_group_api        => 'neutron',
+    security_group_api        => 'neutron'
   }
 }

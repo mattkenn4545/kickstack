@@ -14,7 +14,7 @@ class kickstack::ceilometer::api inherits kickstack {
 
   kickstack::endpoint { 'ceilometer':
     service_password => $service_password,
-    require          => Class['::ceilometer::api']
+    require          => Class[ '::ceilometer::api' ]
   }
 
   class { '::ceilometer::db':
