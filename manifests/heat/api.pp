@@ -40,7 +40,7 @@ class kickstack::heat::api inherits kickstack {
 
   if 'cloudwatch' in $apis {
     class { '::heat::api_cloudwatch':
-      enabled => true
+      enabled           => true
     }
 
     kickstack::exportfact::export { 'heat_watch_server':

@@ -2,7 +2,7 @@ class kickstack::cinder::volume inherits kickstack {
   include kickstack::cinder::config
 
   class { '::cinder::volume':
-    package_ensure => $package_version
+    package_ensure        => $package_version
   }
 
   case $cinder_backend {
@@ -11,18 +11,18 @@ class kickstack::cinder::volume inherits kickstack {
       $vg = $cinder_lvm_vg
 
       physical_volume { $pv:
-        ensure => present
+        ensure            => present
       }
 
       volume_group { $vg:
         ensure            => present,
         physical_volumes  => $pv,
-        require           => Physical_volume[$pv]
+        require           => Physical_volume[ $pv ]
       }
 
       class { '::cinder::volume::iscsi': 
         iscsi_ip_address  => getvar("ipaddress_${nic_management}"),
-        require           => Volume_group[$vg]
+        require           => Volume_group[ $vg ]
       }
     }
     'rbd': {
