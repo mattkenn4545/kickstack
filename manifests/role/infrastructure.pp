@@ -1,4 +1,4 @@
-class kickstack::node::infrastructure inherits kickstack {
+class kickstack::role::infrastructure inherits kickstack {
   include kickstack::rpc
   include kickstack::database
 

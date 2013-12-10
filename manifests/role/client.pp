@@ -1,4 +1,4 @@
-class kickstack::node::client inherits kickstack {
+class kickstack::role::client inherits kickstack {
   include ::keystone::client
   include ::glance::client
   include ::cinder::client

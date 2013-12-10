@@ -1,4 +1,4 @@
-class kickstack::node::api inherits kickstack {
+class kickstack::role::api inherits kickstack {
 
   $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
   $glance_sql_conn            = getvar("${fact_prefix}glance_sql_connection")

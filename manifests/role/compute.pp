@@ -1,5 +1,5 @@
-class kickstack::node::compute inherits kickstack {
-  # Compute nodes require AMQP connectivity, 
+class kickstack::role::compute inherits kickstack {
+  # Compute nodes require AMQP connectivity,
   # a nova Keystone endpoint, an SQL connection,
   # and a glance API server
 
@@ -8,7 +8,7 @@ class kickstack::node::compute inherits kickstack {
       $amqp_host      = getvar("${fact_prefix}rabbit_host")
       $amqp_password  = getvar("${fact_prefix}rabbit_password")
     }
-  
+
     'qpid': {
       $amqp_host      = getvar("${fact_prefix}qpid_host")
       $amqp_password  = getvar("${fact_prefix}qpid_password")

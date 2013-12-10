@@ -1,4 +1,4 @@
-class kickstack::node::storage inherits kickstack {
+class kickstack::role::storage inherits kickstack {
   $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
   $cinder_sql_conn            = getvar("${fact_prefix}cinder_sql_connection")
   $cinder_keystone_password   = getvar("${fact_prefix}cinder_keystone_password")

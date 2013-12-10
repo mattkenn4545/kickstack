@@ -1,4 +1,4 @@
-class kickstack::node::orchestration inherits kickstack {
+class kickstack::role::orchestration inherits kickstack {
   $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
   $heat_sql_conn              = getvar("${fact_prefix}heat_sql_connection")
   $heat_keystone_password     = getvar("${fact_prefix}heat_keystone_password")

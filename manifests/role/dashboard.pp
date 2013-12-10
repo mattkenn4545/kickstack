@@ -1,4 +1,4 @@
-class kickstack::node::dashboard inherits kickstack {
+class kickstack::role::dashboard inherits kickstack {
   $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
   $nova_keystone_password     = getvar("${fact_prefix}nova_keystone_password")
 
