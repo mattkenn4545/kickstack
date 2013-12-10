@@ -40,21 +40,21 @@ Kickstack-enabled small OpenStack cloud with a handful of nodes might
 look like this:
 
 ```puppet
-node alice {
-  include kickstack::node::infrastructure
-  include kickstack::node::auth
-  include kickstack::node::controller
-  include kickstack::node::api
-  include kickstack::node::storage
-  include kickstack::node::dashboard
+role alice {
+  include kickstack::role::infrastructure
+  include kickstack::role::auth
+  include kickstack::role::controller
+  include kickstack::role::api
+  include kickstack::role::storage
+  include kickstack::role::dashboard
 }
 
 node bob {
-  include kickstack::node::network
+  include kickstack::role::network
 }
 
 node default {
-  include kickstack::node::compute
+  include kickstack::role::compute
 }
 ```
 
@@ -71,8 +71,8 @@ use Apache Qpid instead of the default RabbitMQ as your AMQP server:
 kickstack_rpc = 'qpid'
 
 node alice {
-  include kickstack::node::infrastructure
-  include kickstack::node::auth
+  include kickstack::role::infrastructure
+  include kickstack::role::auth
   # ... continued as above
 ```
 
@@ -97,14 +97,14 @@ and a `kickstack` group before adding nodes:
 ```sql
 INSERT INTO node_classes (name, created_at, updated_at)
   VALUES (
-    ('kickstack::node::infrastructure',NOW(),NOW()),
-    ('kickstack::node::auth',NOW(),NOW()),
-    ('kickstack::node::api',NOW(),NOW()),
-    ('kickstack::node::controller',NOW(),NOW()),
-    ('kickstack::node::storage',NOW(),NOW()),
-    ('kickstack::node::dashboard',NOW(),NOW()),
-    ('kickstack::node::network',NOW(),NOW()),
-    ('kickstack::node::compute',NOW(),NOW())
+    ('kickstack::role::infrastructure',NOW(),NOW()),
+    ('kickstack::role::auth',NOW(),NOW()),
+    ('kickstack::role::api',NOW(),NOW()),
+    ('kickstack::role::controller',NOW(),NOW()),
+    ('kickstack::role::storage',NOW(),NOW()),
+    ('kickstack::role::dashboard',NOW(),NOW()),
+    ('kickstack::role::network',NOW(),NOW()),
+    ('kickstack::role::compute',NOW(),NOW())
   );
 INSERT INTO node_groups (name, created_at, updated_at)
   VALUES (
@@ -126,5 +126,5 @@ for details.
 
 If you already have a self-written ENC, however, all you need to do to
 make Kickstack work is to have it include the appropriate
-`kickstack::node::` classes in the YAML output for your nodes, and set
+`kickstack::role::` classes in the YAML output for your nodes, and set
 the `kickstack_` variables for them.
