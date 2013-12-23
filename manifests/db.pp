@@ -2,35 +2,35 @@ define kickstack::db (
   $password,
   $allowed_hosts = '%'
 ) {
-  $database     = $kickstack::database::server
+  if (defined('kickstack::database')) {
 
-  $servicename  = $name
-  $username     = $name
+    $database     = $kickstack::database::server
 
-  if ($password == "${servicename}_pass") {
-    notify {"${name} is using the default password.  To fix set kickstack::${name}::db::password": }
+    $servicename  = $name
+    $username     = $name
 
-    if (!$kickstack::params::allow_default_passwords) {
-      fail("Default password for '${name}' and default passwords are not allowed.")
-    }
-  }
+    if ($password == "${servicename}_pass") {
+      warning("${name} is using the default password on ${::hostname}")
 
-  # Configure the service database (classes look like nova::db::mysql or
-  # glance::db:postgresql, for example).
-  # If running on mysql, set the "allowed_hosts" parameter to % so we
-  # can connect to the database from anywhere.
-  case $database {
-    'mysql': {
-      class { "::${servicename}::db::mysql":
-        user          => $username,
-        password      => $password,
-        charset       => 'utf8',
-        allowed_hosts => $allowed_hosts
+      if (!$kickstack::params::allow_default_passwords) {
+        fail("Default password for '${name}' and default passwords are not allowed.")
       }
     }
-    default: {
-      class { "::${servicename}::db::${database}":
-        password      => $password
+
+    case $database {
+      'mysql': {
+        class { "::${servicename}::db::mysql":
+          user          => $username,
+          password      => $password,
+          charset       => 'utf8',
+          allowed_hosts => $allowed_hosts
+        }
+      }
+
+      default: {
+        class { "::${servicename}::db::${database}":
+          password      => $password
+        }
       }
     }
   }

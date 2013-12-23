@@ -35,24 +35,6 @@ class kickstack (
   $verbose                              = hiera('kickstack::verbose',                             false),
   $debug                                = hiera('kickstack::debug',                               false),
 
-  $keystone_region                      = hiera('kickstack::keystone_region',                     'kickstack'),
-
-  # The suffix to append to the keystone hostname for publishing
-  # the public service endpoint (default: none)
-  $keystone_public_suffix               = hiera('kickstack::keystone_public_suffix',              undef),
-
-  # The suffix to append to the keystone hostname for publishing
-  # the admin service endpoint (default: none)
-  $keystone_admin_suffix                = hiera('kickstack::keystone_admin_suffix',               undef),
-
-  # The special tenant set up for administrative purposes
-  $keystone_admin_tenant                = hiera('kickstack::keystone_admin_tenant',               'openstack'),
-
-  # The tenant set up so that individual OpenStack services can
-  # authenticate with Keystone
-  $keystone_service_tenant              = hiera('kickstack::keystone_service_tenant',             'services'),
-
-  $keystone_admin_email                 = hiera('kickstack::keystone_admin_email',                "admin@${hostname}"),
   $cinder_backend                       = hiera('kickstack::cinder_backend',                      'iscsi'),
 
   # The device to create the LVM physical volume on.
@@ -172,12 +154,6 @@ class kickstack (
     name_resolution                       => $name_resolution,
     verbose                               => $verbose,
     debug                                 => $debug,
-    keystone_region                       => $keystone_region,
-    keystone_public_suffix                => $keystone_public_suffix,
-    keystone_admin_suffix                 => $keystone_admin_suffix,
-    keystone_admin_tenant                 => $keystone_admin_tenant,
-    keystone_service_tenant               => $keystone_service_tenant,
-    keystone_admin_email                  => $keystone_admin_email,
     cinder_backend                        => $cinder_backend,
     cinder_lvm_pv                         => $cinder_lvm_pv,
     cinder_lvm_vg                         => $cinder_lvm_vg,

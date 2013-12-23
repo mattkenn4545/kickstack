@@ -1,8 +1,29 @@
-class kickstack::keystone::api inherits kickstack {
-  $admin_token    = pick(getvar("${fact_prefix}keystone_admin_token"), pwgen())
-  $admin_password = pick(getvar("${fact_prefix}keystone_admin_password"), pwgen())
-  $admin_tenant   = $keystone_admin_tenant
-  $sql_conn       = getvar("${fact_prefix}keystone_sql_connection")
+class kickstack::keystone::api (
+  $admin_token              = hiera('kickstack::keystone::api::admin_token',      'admin_token'),
+  $admin_password           = hiera('kickstack::keystone::api::admin_password',   'admin_password'),
+
+  # The special tenant set up for administrative purposes
+  $admin_tenant             = hiera('kickstack::keystone::api::admin_tenant',     'openstack'),
+
+  $region                   = hiera('kickstack::keystone::api::region',           'kickstack'),
+
+  # The suffix to append to the keystone hostname for publishing
+  # the public service endpoint (default: none)
+  $public_suffix            = hiera('kickstack::keystone::api::public_suffix',    undef),
+
+  # The suffix to append to the keystone hostname for publishing
+  # the admin service endpoint (default: none)
+  $admin_suffix             = hiera('kickstack::keystone::api::admin_suffix',     undef),
+
+  # The tenant set up so that individual OpenStack services can
+  # authenticate with Keystone
+  $service_tenant           = hiera('kickstack::keystone::api::service_tenant',   'services'),
+
+  $admin_email              = hiera('kickstack::keystone::api::admin_email',      "admin@${hostname}")
+) inherits kickstack::keystone::params {
+  include kickstack::keystone::db
+
+  $sql_connection     = $kickstack::keystone::db::sql_connection
 
   class { '::keystone':
     package_ensure    => $package_version,
@@ -10,36 +31,24 @@ class kickstack::keystone::api inherits kickstack {
     debug             => $debug,
     catalog_type      => 'sql',
     admin_token       => $admin_token,
-    sql_connection    => $sql_conn
+    sql_connection    => $sql_connection
   }
 
   # Installs the service user endpoint.
   class { '::keystone::endpoint':
-    public_address    => "${hostname}${keystone_public_suffix}",
-    admin_address     => "${hostname}${keystone_admin_suffix}",
+    public_address    => "${hostname}${public_suffix}",
+    admin_address     => "${hostname}${admin_suffix}",
     internal_address  => $hostname,
-    region            => $keystone_region,
+    region            => $region,
     require           => Class[ '::keystone' ]
-  }
-
-  kickstack::exportfact::export { 'keystone_admin_token':
-    value             => $admin_token,
-    tag               => 'keystone',
-    require           => Class[ '::keystone' ]
-  }
-
-  kickstack::exportfact::export { 'keystone_internal_address':
-    value             => $hostname,
-    tag               => 'keystone',
-    require           => Class[ '::keystone::endpoint' ]
   }
 
   # Adds the admin credential to keystone.
   class { '::keystone::roles::admin':
-    email             => $keystone_admin_email,
+    email             => $admin_email,
     password          => $admin_password,
     admin_tenant      => $admin_tenant,
-    service_tenant    => $keystone_service_tenant,
+    service_tenant    => $service_tenant,
     require           => Class[ '::keystone::endpoint' ]
   }
 
@@ -48,12 +57,6 @@ class kickstack::keystone::api inherits kickstack {
     group             => 'root',
     mode              => '0640',
     content           => template('kickstack/openstackrc.erb'),
-    require           => Class[ '::keystone::roles::admin' ]
-  }
-
-  kickstack::exportfact::export { 'keystone_admin_password':
-    value             => $admin_password,
-    tag               => 'keystone',
     require           => Class[ '::keystone::roles::admin' ]
   }
 }
