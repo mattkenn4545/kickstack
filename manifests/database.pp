@@ -1,11 +1,14 @@
-class kickstack::database inherits kickstack {
-  case $database {
+class kickstack::database (
+  $server           = hiera('kickstack::database::server',          'mysql'),
+  $root_password    = hiera('kickstack::database::root_password',   'kickstack')
+
+)inherits kickstack::params {
+  case $server {
     'mysql': {
-      $mysql_service = 'mysql'
       ensure_resource('class',
                       'mysql::server',
                       { config_hash => {
-                        'root_password' => $mysql_root_password,
+                        'root_password' => $root_password,
                         'bind_address'  => '0.0.0.0'
                         }
                       })
@@ -22,10 +25,13 @@ class kickstack::database inherits kickstack {
                         'ip_mask_deny_postgres_user'  => '0.0.0.0/32',
                         'ip_mask_allow_all_users'     => '0.0.0.0/0',
                         'listen_addresses'            => '*',
-                        'postgres_password'           => $postgres_password }})
+                        'postgres_password'           => $root_password
+                        }
+                      })
     }
+
     default: {
-      fail("Unsupported value for \$database: ${database}")
+      fail("Unsupported kickstack::database::server: ${server}")
     }
   }
 }

@@ -34,21 +34,7 @@ class kickstack (
 
   $verbose                              = hiera('kickstack::verbose',                             false),
   $debug                                = hiera('kickstack::debug',                               false),
-  $database                             = hiera('kickstack::database',                            'mysql'),
 
-  # The mysql "root" user's password
-  # (ignored unless database=='mysql')
-  $mysql_root_password                  = hiera('kickstack::mysql_root_password',                 'kickstack'),
-
-  # The "postgres" user's password
-  # (ignored unless kickstack_database=='postgresql')
-  $postgres_password                    = hiera('kickstack::postgres_password',                   'kickstack'),
-
-  $rpc                                  = hiera('kickstack::rpc',                                 'rabbitmq'),
-  $rabbit_userid                        = hiera('kickstack::rabbit_userid',                       'kickstack'),
-  $rabbit_virtual_host                  = hiera('kickstack::rabbit_virtual_host',                 '/'),
-  $qpid_username                        = hiera('kickstack::qpid_username',                       'kickstack'),
-  $qpid_realm                           = hiera('kickstack::qpid_realm',                          undef),
   $keystone_region                      = hiera('kickstack::keystone_region',                     'kickstack'),
 
   # The suffix to append to the keystone hostname for publishing
@@ -185,14 +171,6 @@ class kickstack (
     name_resolution                       => $name_resolution,
     verbose                               => $verbose,
     debug                                 => $debug,
-    database                              => $database,
-    mysql_root_password                   => $mysql_root_password,
-    postgres_password                     => $postgres_password,
-    rpc                                   => $rpc,
-    rabbit_userid                         => $rabbit_userid,
-    rabbit_virtual_host                   => $rabbit_virtual_host,
-    qpid_username                         => $qpid_username,
-    qpid_realm                            => $qpid_realm,
     keystone_region                       => $keystone_region,
     keystone_public_suffix                => $keystone_public_suffix,
     keystone_admin_suffix                 => $keystone_admin_suffix,

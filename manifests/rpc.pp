@@ -1,51 +1,33 @@
-class kickstack::rpc inherits kickstack {
-  case $rpc {
+class kickstack::rpc (
+  $server                 = hiera('kickstack::rpc::server',                 'rabbitmq'),
+
+  $userid                 = hiera('kickstack::rpc::userid',                 'kickstack'),
+  $password               = hiera('kickstack::rpc::password',               'rpc_pass'),
+
+  $rabbit_virtual_host    = hiera('kickstack::rpc::rabbit_virtual_host',    '/'),
+  $qpid_realm             = hiera('kickstack::rpc::qpid_realm',             'OPENSTACK')
+
+) inherits kickstack::params {
+  #TODO Warn if password is default
+
+  case $server {
     'rabbitmq': {
-      Class['::nova::rabbitmq'] -> Exportfact::Export<| tag == 'rabbit' |>
-
-      $rabbit_password = pick(getvar("${fact_prefix}rabbit_password"), pwgen())
-
       class { '::nova::rabbitmq':
-        userid        => $rabbit_userid,
-        password      => $rabbit_password,
+        userid        => $userid,
+        password      => $password,
         virtual_host  => $rabbit_virtual_host
       }
-
-      kickstack::exportfact::export { 'rabbit_host':
-        value         => $hostname,
-        tag           => 'rabbit'
-      }
-
-      kickstack::exportfact::export { 'rabbit_password':
-        value         => $rabbit_password,
-        tag           => 'rabbit'
-      }
-
     }
 
     'qpid': {
-      Class['::nova::qpid'] -> Exportfact::Export<| tag == 'qpid' |>
-
-      $qpid_password = pick(getvar("${fact_prefix}qpid_password"),pwgen())
-
       class { '::nova::qpid':
-        user          => $qpid_username,
-        password      => $qpid_password,
+        user          => $userid,
+        password      => $password,
         realm         => $qpid_realm
-      }
-
-      kickstack::exportfact::export { 'qpid_hostname':
-        value         => $hostname,
-        tag           => 'qpid'
-      }
-
-      kickstack::exportfact::export { 'qpid_password':
-        value         => $qpid_password,
-        tag           => 'qpid'
       }
     }
     default: {
-      warn("Unsupported RPC server type: ${rpc}")
+      warn("Unsupported RPC server type: ${server}")
     }
   }
 }
