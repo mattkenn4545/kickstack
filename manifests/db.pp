@@ -9,6 +9,10 @@ define kickstack::db (
 
   if ($password == "${servicename}_pass") {
     notify {"${name} is using the default password.  To fix set kickstack::${name}::db::password": }
+
+    if (!$kickstack::params::allow_default_passwords) {
+      fail("Default password for '${name}' and default passwords are not allowed.")
+    }
   }
 
   # Configure the service database (classes look like nova::db::mysql or

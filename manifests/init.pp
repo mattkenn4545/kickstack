@@ -163,7 +163,8 @@ class kickstack (
   # Enabled Heat APIs (comma-separated list of exposed APIs)
   # Can be any combination of 'heat', 'cfn', and 'cloudwatch'
   # Default is just (the native Heat API)
-  $heat_apis                            = hiera('kickstack::heat_apis', 'heat')
+  $heat_apis                            = hiera('kickstack::heat_apis',                           'heat'),
+  $allow_default_passwords              = hiera('kickstack::allow_default_passwords',             false)
 ) {
   class { 'kickstack::params':
     release                               => $release,
@@ -202,7 +203,8 @@ class kickstack (
     xenapi_connection_username            => $xenapi_connection_username,
     xenapi_connection_password            => $xenapi_connection_password,
     horizon_allow_any_hostname            => $horizon_allow_any_hostname,
-    heat_apis                             => $heat_apis
+    heat_apis                             => $heat_apis,
+    allow_default_passwords               => $allow_default_passwords
   }
 
   include kickstack::repo
