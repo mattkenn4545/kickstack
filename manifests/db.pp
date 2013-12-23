@@ -2,7 +2,7 @@ define kickstack::db (
   $password,
   $allowed_hosts = '%'
 ) {
-  if (defined('kickstack::database')) {
+  if (defined(Class['kickstack::database'])) {
 
     $database     = $kickstack::database::server
 
