@@ -1,5 +1,5 @@
 class kickstack::keystone::api (
-  $admin_token              = hiera('kickstack::keystone::api::api::admin_token',      'admin_token'),
+  $admin_token              = hiera('kickstack::keystone::api::api::admin_token', 'admin_token'),
   $admin_password           = hiera('kickstack::keystone::api::admin_password',   'admin_password'),
 
   # The special tenant set up for administrative purposes
@@ -54,6 +54,12 @@ class kickstack::keystone::api (
 
   kickstack::exportfact::export { 'auth_host':
     value             => $fqdn,
+    tag               => 'keystone',
+    require           => Class[ '::keystone::endpoint' ]
+  }
+
+  kickstack::exportfact::export { 'service_tenant':
+    value             => $service_tenant,
     tag               => 'keystone',
     require           => Class[ '::keystone::endpoint' ]
   }

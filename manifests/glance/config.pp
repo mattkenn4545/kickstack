@@ -1,4 +1,4 @@
-class kickstack::glance::config inherits kickstack::glance::params {
+class kickstack::glance::config inherits kickstack::glance {
   class { '::glance':
     package_ensure => $package_version
   }

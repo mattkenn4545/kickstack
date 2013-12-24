@@ -35,6 +35,13 @@ class kickstack (
   $verbose                              = hiera('kickstack::verbose',                             false),
   $debug                                = hiera('kickstack::debug',                               false),
 
+  #RPC
+  $rpc_server                           = hiera('kickstack::rpc_server',                          'rabbitmq'),
+  $rpc_user                             = hiera('kickstack::rpc_user',                            'kickstack'),
+  $rpc_password                         = hiera('kickstack::rpc_password',                        'rpc_pass'),
+  $rabbit_virtual_host                  = hiera('kickstack::rabbit_virtual_host',                 '/'),
+  $qpid_realm                           = hiera('kickstack::qpid_realm',                          'OPENSTACK'),
+
   $cinder_backend                       = hiera('kickstack::cinder_backend',                      'iscsi'),
 
   # The device to create the LVM physical volume on.
@@ -156,6 +163,11 @@ class kickstack (
     name_resolution                       => $name_resolution,
     verbose                               => $verbose,
     debug                                 => $debug,
+    rpc_server                            => $rpc_server,
+    rpc_user                              => $rpc_user,
+    rpc_password                          => $rpc_password,
+    rabbit_virtual_host                   => $rabbit_virtual_host,
+    qpid_realm                            => $qpid_realm,
     cinder_backend                        => $cinder_backend,
     cinder_lvm_pv                         => $cinder_lvm_pv,
     cinder_lvm_vg                         => $cinder_lvm_vg,

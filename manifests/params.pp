@@ -4,6 +4,11 @@ class kickstack::params (
   $name_resolution,
   $verbose,
   $debug,
+  $rpc_server,
+  $rpc_user,
+  $rpc_password,
+  $rabbit_virtual_host,
+  $qpid_realm,
   $cinder_backend,
   $cinder_lvm_pv,
   $cinder_lvm_vg,
@@ -35,6 +40,14 @@ class kickstack::params (
 ) {
   validate_bool($verbose, $debug, $horizon_allow_any_hostname, $allow_default_passwords)
 
-  $db_host    = getvar("${partition}_db_host")
-  $auth_host  = getvar("${partition}_auth_host")
+  #Infrastructure
+  $db_host              = getvar("${partition}_db_host")
+  $rpc_host             = getvar("${partition}_rpc_host")
+
+  #Keystone
+  $auth_host            = getvar("${partition}_auth_host")
+  $service_tenant       = getvar("${partition}_service_tenant")
+
+  #Glance
+  $glance_registry_host = getvar("${partition}_glance_registry_host")
 }

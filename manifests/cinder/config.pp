@@ -1,44 +1,30 @@
-class kickstack::cinder::config inherits kickstack {
-  $sql_conn = getvar("${fact_prefix}cinder_sql_connection")
+class kickstack::cinder::config inherits kickstack::cinder {
+  $sql_connection             = $kickstack::cinder::db::sql_connection
 
-  case $rpc {
+  case $rpc_server {
     'rabbitmq': {
-      $rabbit_host      = getvar("${fact_prefix}rabbit_host")
-      $rabbit_password  = getvar("${fact_prefix}rabbit_password")
-      if $rabbit_host and $rabbit_password {
-        class { '::cinder':
-          sql_connection      => $sql_conn,
-          rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
-          rabbit_host         => $rabbit_host,
-          rabbit_virtual_host => $rabbit_virtual_host,
-          rabbit_userid       => $rabbit_userid,
-          rabbit_password     => $rabbit_password,
-          verbose             => $verbose,
-          debug               => $debug,
-        }
-      }
-      else {
-        warning("Facts ${fact_prefix}rabbit_host or ${fact_prefix}rabbit_password unset, cannot configure cinder")
+      class { '::cinder':
+        sql_connection      => $sql_connection,
+        rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
+        rabbit_host         => $rpc_host,
+        rabbit_virtual_host => $rabbit_virtual_host,
+        rabbit_userid       => $rpc_user,
+        rabbit_password     => $rpc_password,
+        verbose             => $verbose,
+        debug               => $debug
       }
     }
 
     'qpid': {
-      $qpid_hostname = getvar("${fact_prefix}qpid_hostname")
-      $qpid_password = getvar("${fact_prefix}rabbit_password")
-      if $qpid_hostname and $qpid_password {
-        class { '::cinder':
-          sql_connection      => $sql_conn,
-          rpc_backend         => 'cinder.openstack.common.rpc.impl_qpid',
-          qpid_hostname       => $qpid_hostname,
-          qpid_realm          => $qpid_realm,
-          qpid_username       => $qpid_username,
-          qpid_password       => $qpid_password,
-          verbose             => $verbose,
-          debug               => $debug
-        }
-      }
-      else {
-        warning("Facts ${fact_prefix}qpid_hostname or ${fact_prefix}qpid_password unset, cannot configure cinder")
+      class { '::cinder':
+        sql_connection      => $sql_connection,
+        rpc_backend         => 'cinder.openstack.common.rpc.impl_qpid',
+        qpid_hostname       => $rpc_host,
+        qpid_realm          => $qpid_realm,
+        qpid_username       => $rpc_user,
+        qpid_password       => $rpc_password,
+        verbose             => $verbose,
+        debug               => $debug
       }
     }
   }
