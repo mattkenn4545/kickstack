@@ -1,7 +1,4 @@
-class kickstack::glance::registry (
-  $service_password   = hiera('kickstack::glance::registry::service_password',     'glance_password')
-
-) inherits kickstack::glance {
+class kickstack::glance::registry inherits kickstack::glance {
   include kickstack::glance::config
 
   $sql_connection             = $kickstack::glance::db::sql_connection

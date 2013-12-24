@@ -1,8 +1,7 @@
 define kickstack::endpoint (
   $service_password,
-  $servicename = $name,
-  $classname   = 'auth',
-  $factname  = "${name}_keystone_password"
+  $servicename        = $name,
+  $classname          = 'auth'
 ) {
   $fullclassname = "::${servicename}::keystone::${classname}"
 
@@ -14,11 +13,5 @@ define kickstack::endpoint (
     internal_address  => $hostname,
     region            => $kickstack::keystone_region,
     require           => Class['::keystone']
-  }
-
-  kickstack::exportfact::export { $factname:
-    value             => $service_password,
-    tag               => $servicename,
-    require           => Class[$fullclassname]
   }
 }
