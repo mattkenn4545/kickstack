@@ -34,8 +34,8 @@ class kickstack::database (
     }
   }
 
-  kickstack::exportfact::export { 'dbhost':
+  kickstack::exportfact::export { 'db_host':
     value             => $fqdn,
-    tag               => 'dbhost'
+    tag               => 'db_host'
   }
 }

@@ -34,4 +34,7 @@ class kickstack::params (
   $partition
 ) {
   validate_bool($verbose, $debug, $horizon_allow_any_hostname, $allow_default_passwords)
+
+  $db_host    = getvar("${partition}_db_host")
+  $auth_host  = getvar("${partition}_auth_host")
 }

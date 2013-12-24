@@ -52,7 +52,7 @@ class kickstack::keystone::api (
     require           => Class[ '::keystone::endpoint' ]
   }
 
-  kickstack::exportfact::export { 'keystone_internal_address':
+  kickstack::exportfact::export { 'auth_host':
     value             => $fqdn,
     tag               => 'keystone',
     require           => Class[ '::keystone::endpoint' ]
