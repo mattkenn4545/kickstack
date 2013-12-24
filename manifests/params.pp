@@ -46,7 +46,6 @@ class kickstack::params (
 
   #Keystone
   $auth_host            = getvar("${partition}_auth_host")
-  $service_tenant       = getvar("${partition}_service_tenant")
 
   #Glance
   $glance_registry_host = getvar("${partition}_glance_registry_host")

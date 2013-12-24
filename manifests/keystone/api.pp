@@ -5,20 +5,6 @@ class kickstack::keystone::api (
   # The special tenant set up for administrative purposes
   $admin_tenant             = hiera('kickstack::keystone::api::admin_tenant',     'openstack'),
 
-  $region                   = hiera('kickstack::keystone::api::region',           'kickstack'),
-
-  # The suffix to append to the keystone hostname for publishing
-  # the public service endpoint (default: none)
-  $public_suffix            = hiera('kickstack::keystone::api::public_suffix',    undef),
-
-  # The suffix to append to the keystone hostname for publishing
-  # the admin service endpoint (default: none)
-  $admin_suffix             = hiera('kickstack::keystone::api::admin_suffix',     undef),
-
-  # The tenant set up so that individual OpenStack services can
-  # authenticate with Keystone
-  $service_tenant           = hiera('kickstack::keystone::api::service_tenant',   'services'),
-
   $admin_email              = hiera('kickstack::keystone::api::admin_email',      "admin@${hostname}")
 ) inherits kickstack::keystone {
   include kickstack::keystone::db
@@ -54,12 +40,6 @@ class kickstack::keystone::api (
 
   kickstack::exportfact::export { 'auth_host':
     value             => $fqdn,
-    tag               => 'keystone',
-    require           => Class[ '::keystone::endpoint' ]
-  }
-
-  kickstack::exportfact::export { 'service_tenant':
-    value             => $service_tenant,
     tag               => 'keystone',
     require           => Class[ '::keystone::endpoint' ]
   }
