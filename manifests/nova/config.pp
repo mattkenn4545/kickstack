@@ -1,42 +1,36 @@
-class kickstack::nova::config inherits kickstack {
+class kickstack::nova::config inherits kickstack::nova {
+  $sql_connection             = $kickstack::nova::db::sql_connection
 
-  $sql_conn           = getvar("${fact_prefix}nova_sql_connection")
-  $glance_api_servers = getvar("${fact_prefix}glance_api_host")
-
-  case $rpc {
+  case $rpc_server {
     'rabbitmq': {
-      $rabbit_host      = getvar("${fact_prefix}rabbit_host")
-      $rabbit_password  = getvar("${fact_prefix}rabbit_password")
       class { '::nova':
         ensure_package      => $package_version,
-        sql_connection      => $sql_conn,
+        sql_connection      => $sql_connection,
         rpc_backend         => 'nova.openstack.common.rpc.impl_kombu',
-        rabbit_host         => $rabbit_host,
-        rabbit_password     => $rabbit_password,
+        rabbit_host         => $rpc_host,
+        rabbit_password     => $rpc_password,
         rabbit_virtual_host => $rabbit_virtual_host,
-        rabbit_userid       => $rabbit_userid,
+        rabbit_userid       => $rpc_user,
         auth_strategy       => 'keystone',
         verbose             => $verbose,
         debug               => $debug,
-        glance_api_servers  => "${glance_api_servers}:9292"
+        glance_api_servers  => "${glance_registry_host}:9292"
       }
     }
     'qpid': {
-      $qpid_hostname  = getvar("${fact_prefix}qpid_hostname")
-      $qpid_password  = getvar("${fact_prefix}qpid_password")
       class { '::nova':
         ensure_package      => $package_version,
-        sql_connection      => $sql_conn,
+        sql_connection      => $sql_connection,
         rpc_backend         => 'nova.openstack.common.rpc.impl_qpid',
-        qpid_hostname       => $qpid_hostname,
-        qpid_password       => $qpid_password,
+        qpid_hostname       => $rpc_host,
+        qpid_password       => $rpc_password,
         qpid_realm          => $qpid_realm,
-        qpid_user           => $qpid_user,
+        qpid_user           => $rpc_user,
         auth_strategy       => 'keystone',
         verbose             => $verbose,
         debug               => $debug,
-        glance_api_servers  => "${glance_api_servers}:9292"
+        glance_api_servers  => "${glance_registry_host}:9292"
       }
     }
-  } 
+  }
 }
