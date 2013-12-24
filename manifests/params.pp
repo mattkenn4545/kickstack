@@ -30,7 +30,8 @@ class kickstack::params (
   $xenapi_connection_password,
   $horizon_allow_any_hostname,
   $heat_apis,
-  $allow_default_passwords
+  $allow_default_passwords,
+  $partition
 ) {
   validate_bool($verbose, $debug, $horizon_allow_any_hostname, $allow_default_passwords)
 }

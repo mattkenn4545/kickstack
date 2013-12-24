@@ -1,7 +1,6 @@
 class kickstack::database (
   $server           = hiera('kickstack::database::server',          'mysql'),
   $root_password    = hiera('kickstack::database::root_password',   'kickstack')
-
 )inherits kickstack::params {
   case $server {
     'mysql': {
@@ -33,5 +32,10 @@ class kickstack::database (
     default: {
       fail("Unsupported kickstack::database::server: ${server}")
     }
+  }
+
+  kickstack::exportfact::export { 'dbhost':
+    value             => $fqdn,
+    tag               => 'dbhost'
   }
 }

@@ -1,4 +1,4 @@
-class kickstack::keystone::api inherits kickstack::keystone::params {
+class kickstack::keystone::api inherits kickstack::keystone {
   include kickstack::keystone::db
 
   $sql_connection     = $kickstack::keystone::db::sql_connection
@@ -27,6 +27,12 @@ class kickstack::keystone::api inherits kickstack::keystone::params {
     password          => $admin_password,
     admin_tenant      => $admin_tenant,
     service_tenant    => $service_tenant,
+    require           => Class[ '::keystone::endpoint' ]
+  }
+
+  kickstack::exportfact::export { 'keystone_internal_address':
+    value             => $fqdn,
+    tag               => 'keystone',
     require           => Class[ '::keystone::endpoint' ]
   }
 

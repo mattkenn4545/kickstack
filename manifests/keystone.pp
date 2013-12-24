@@ -20,15 +20,6 @@ class kickstack::keystone (
   $service_tenant           = hiera('kickstack::keystone::service_tenant',   'services'),
 
   $admin_email              = hiera('kickstack::keystone::admin_email',      "admin@${hostname}")
-) {
-  class { 'kickstack::keystone::params':
-    admin_token              => $admin_token,
-    admin_password           => $admin_password,
-    admin_tenant             => $admin_tenant,
-    region                   => $region,
-    public_suffix            => $public_suffix,
-    admin_suffix             => $admin_suffix,
-    service_tenant           => $service_tenant,
-    admin_email              => $admin_email
-  }
+) inherits kickstack::params {
+  $service_name = 'keystone'
 }

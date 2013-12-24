@@ -1,4 +1,4 @@
-class kickstack::glance::api inherits kickstack {
+class kickstack::glance::api inherits kickstack::glance {
   include kickstack::glance::config
 
   $auth_host        = getvar("${fact_prefix}keystone_internal_address")
