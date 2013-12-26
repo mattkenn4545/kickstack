@@ -49,4 +49,5 @@ class kickstack::params (
 
   #Glance
   $glance_registry_host = getvar("${partition}_glance_registry_host")
+  $glance_api_host      = getvar("${partition}_glance_api_host")
 }
