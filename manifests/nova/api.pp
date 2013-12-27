@@ -1,5 +1,6 @@
 class kickstack::nova::api inherits kickstack::nova {
   include kickstack::nova::config
+
   include kickstack::neutron
   include kickstack::keystone
 
