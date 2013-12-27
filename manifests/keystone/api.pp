@@ -1,12 +1,4 @@
-class kickstack::keystone::api (
-  $admin_token              = hiera('kickstack::keystone::api::api::admin_token', 'admin_token'),
-  $admin_password           = hiera('kickstack::keystone::api::admin_password',   'admin_password'),
-
-  # The special tenant set up for administrative purposes
-  $admin_tenant             = hiera('kickstack::keystone::api::admin_tenant',     'openstack'),
-
-  $admin_email              = hiera('kickstack::keystone::api::admin_email',      "admin@${hostname}")
-) inherits kickstack::keystone {
+class kickstack::keystone::api inherits kickstack::keystone {
   include kickstack::keystone::db
 
   $sql_connection     = $kickstack::keystone::db::sql_connection
