@@ -1,5 +1,6 @@
 class kickstack::glance::registry inherits kickstack::glance {
   include kickstack::glance::config
+  include kickstack::glance::db
 
   $sql_connection             = $kickstack::glance::db::sql_connection
 

@@ -1,5 +1,6 @@
 class kickstack::glance::api inherits kickstack::glance {
   include kickstack::glance::config
+  include kickstack::glance::db
   include kickstack::keystone
 
   $sql_connection             = $kickstack::glance::db::sql_connection

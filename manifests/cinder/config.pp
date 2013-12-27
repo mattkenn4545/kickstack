@@ -1,4 +1,6 @@
 class kickstack::cinder::config inherits kickstack::cinder {
+  include kickstack::cinder::db
+
   $sql_connection             = $kickstack::cinder::db::sql_connection
 
   case $rpc_server {

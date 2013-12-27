@@ -1,4 +1,6 @@
 class kickstack::nova::config inherits kickstack::nova {
+  include kickstack::nova::db
+
   $sql_connection             = $kickstack::nova::db::sql_connection
 
   case $rpc_server {
