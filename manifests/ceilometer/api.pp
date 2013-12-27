@@ -1,13 +1,15 @@
-class kickstack::ceilometer::api inherits kickstack {
+class kickstack::ceilometer::api inherits kickstack::ceilometer {
   include kickstack::ceilometer::config
 
-  $auth_host        = getvar("${fact_prefix}keystone_internal_address")
-  $service_password = pick(getvar("${fact_prefix}ceilometer_keystone_password"), pwgen())
-  $sql_conn         = getvar("${fact_prefix}ceilometer_sql_connection")
+  include kickstack::ceilometer::db
+
+  include kickstack::keystone
+
+  $sql_connection = $kickstack::ceilometer::db::sql_connection
 
   class { '::ceilometer::api':
     keystone_host       => $auth_host,
-    keystone_tenant     => $keystone_service_tenant,
+    keystone_tenant     => $kickstack::keystone::service_tenant,
     keystone_user       => 'ceilometer',
     keystone_password   => $service_password
   }
@@ -18,6 +20,6 @@ class kickstack::ceilometer::api inherits kickstack {
   }
 
   class { '::ceilometer::db':
-    database_connection => $sql_conn
+    database_connection => $sql_connection
   }
 }
