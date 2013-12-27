@@ -30,8 +30,9 @@ class kickstack::neutron (
 
   # The tunnel ID ranges to use with the Neutron ovs plugin, when in gre mode
   # Ignored unless neutron_tenant_network_type == 'gre'
-  $tunnel_id_ranges       = hiera('kickstack::neutron::tunnel_id_ranges',         '1:1000')
+  $tunnel_id_ranges       = hiera('kickstack::neutron::tunnel_id_ranges',         '1:1000'),
 
+  $metadata_secret        = hiera('kickstack::neutron::metadata_secret',          'metadata_secret')
 ) inherits kickstack::params {
   $service_name = 'neutron'
 
