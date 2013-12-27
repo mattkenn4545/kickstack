@@ -35,7 +35,5 @@ class kickstack::neutron (
   $metadata_secret        = hiera('kickstack::neutron::metadata_secret',          'metadata_secret')
 ) inherits kickstack::params {
   $service_name = 'neutron'
-
-  include kickstack::neutron::db
 }
 

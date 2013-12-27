@@ -22,6 +22,4 @@ class kickstack::keystone (
   $admin_suffix             = hiera('kickstack::keystone::admin_suffix',          undef)
 ) inherits kickstack::params {
   $service_name = 'keystone'
-
-  include kickstack::keystone::db
 }
