@@ -11,7 +11,7 @@ class kickstack (
   # * override by setting to 'folsom' (not recommended) or 'havana'
   # This is for new installations only; don't expect this to magically
   # support rolling releases.
-  $release                              = hiera('kickstack::release',                             'grizzly'),
+  $release                              = hiera('kickstack::release',                             'havana'),
 
   # Version number of OpenStack *server* packages.
   #
@@ -59,37 +59,6 @@ class kickstack (
   # The RADOS user to use for volumes.
   # Ignored unless $cinder_backend == rbd.
   $cinder_rbd_user                      = hiera('kickstack::cinder_rbd_user',                     'cinder'),
-
-  # The network type to configure for Neutron.  See
-  # http://docs.openstack.org/grizzly/openstack-network/admin/content/use_cases.html
-  # Supported:
-  # single-flat
-  # provider-router
-  # per-tenant-router (default)
-  $neutron_network_type                 = hiera('kickstack::neutron_network_type', 'per-tenant-router'),
-
-  # The plugin to use with Neutron.
-  # Supported:
-  # linuxbridge
-  # ovs (default)
-  $neutron_plugin                       = hiera('kickstack::neutron_plugin',                      'ovs'),
-
-  # The Neutron physical network name to define
-  # Ignored if neutron_tenant_network_type=='gre'
-  $neutron_physnet                      = hiera('kickstack::neutron_physnet',                     'physnet1'),
-
-  # The tenant network type to use with the Neutron ovs and linuxbridge plugins
-  # Supported: gre (default), flat, vlan
-  $neutron_tenant_network_type          = hiera('kickstack::neutron_tenant_network_type',         'gre'),
-
-  # The network VLAN ranges to use with the Neutron ovs and
-  # linuxbridge plugins (ignored unless neutron_tenant_network_type ==
-  # 'vlan')
-  $neutron_network_vlan_ranges          = hiera('kickstack::neutron_network_vlan_ranges',         '2000:3999'),
-
-  # The tunnel ID ranges to use with the Neutron ovs plugin, when in gre mode
-  # Ignored unless neutron_tenant_network_type == 'gre'
-  $neutron_tunnel_id_ranges             = hiera('kickstack::neutron_tunnel_id_ranges',            '1:1000'),
 
   # The Neutron integration bridge
   # Normally doesn't need to be changed
@@ -173,12 +142,6 @@ class kickstack (
     cinder_lvm_vg                         => $cinder_lvm_vg,
     cinder_rbd_pool                       => $cinder_rbd_pool,
     cinder_rbd_user                       => $cinder_rbd_user,
-    neutron_network_type                  => $neutron_network_type,
-    neutron_plugin                        => $neutron_plugin,
-    neutron_physnet                       => $neutron_physnet,
-    neutron_tenant_network_type           => $neutron_tenant_network_type,
-    neutron_network_vlan_ranges           => $neutron_network_vlan_ranges,
-    neutron_tunnel_id_ranges              => $neutron_tunnel_id_ranges,
     neutron_integration_bridge            => $neutron_integration_bridge,
     neutron_tunnel_bridge                 => $neutron_tunnel_bridge,
     neutron_external_bridge               => $neutron_external_bridge,

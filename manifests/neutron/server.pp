@@ -1,14 +1,12 @@
-class kickstack::neutron::server inherits kickstack {
+class kickstack::neutron::server inherits kickstack::neutron {
   include kickstack::neutron::config
-
-  $service_password           = pick(getvar("${fact_prefix}neutron_keystone_password"), pwgen())
-  $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
+  include kickstack::keystone
 
   class { '::neutron::server':
-    auth_tenant     => $keystone_service_tenant,
+    auth_tenant     => $kickstack::keystone::service_tenant,
     auth_user       => 'neutron',
     auth_password   => $service_password,
-    auth_host       => $keystone_internal_address,
+    auth_host       => $auth_host,
     package_ensure  => $package_version
   }
 
@@ -18,7 +16,7 @@ class kickstack::neutron::server inherits kickstack {
   }
 
   kickstack::exportfact::export { 'neutron_host':
-    value             => $hostname,
+    value             => $fqdn,
     tag               => 'neutron',
     require           => Class[ '::neutron::server' ]
   }

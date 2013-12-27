@@ -14,12 +14,6 @@ class kickstack::params (
   $cinder_lvm_vg,
   $cinder_rbd_pool,
   $cinder_rbd_user,
-  $neutron_network_type,
-  $neutron_plugin,
-  $neutron_physnet,
-  $neutron_tenant_network_type,
-  $neutron_network_vlan_ranges,
-  $neutron_tunnel_id_ranges,
   $neutron_integration_bridge,
   $neutron_tunnel_bridge,
   $neutron_external_bridge,
@@ -50,4 +44,7 @@ class kickstack::params (
   #Glance
   $glance_registry_host = getvar("${partition}_glance_registry_host")
   $glance_api_host      = getvar("${partition}_glance_api_host")
+
+  #Neutron
+  $neutron_host         = getvar("${partition}_neutron_host")
 }
