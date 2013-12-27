@@ -1,6 +1,9 @@
 class kickstack::glance::registry inherits kickstack::glance {
   include kickstack::glance::config
+
   include kickstack::glance::db
+
+  include kickstack::keystone
 
   $sql_connection             = $kickstack::glance::db::sql_connection
 
@@ -8,7 +11,7 @@ class kickstack::glance::registry inherits kickstack::glance {
     verbose           => $verbose,
     debug             => $debug,
     auth_host         => $auth_host,
-    keystone_tenant   => $service_tenant,
+    keystone_tenant   => $kickstack::keystone::service_tenant,
     keystone_user     => 'glance',
     keystone_password => $service_password,
     sql_connection    => $sql_connection
