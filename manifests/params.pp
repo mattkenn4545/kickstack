@@ -28,7 +28,6 @@ class kickstack::params (
   $xenapi_connection_username,
   $xenapi_connection_password,
   $horizon_allow_any_hostname,
-  $heat_apis,
   $allow_default_passwords,
   $partition
 ) {
@@ -47,4 +46,7 @@ class kickstack::params (
 
   #Neutron
   $neutron_host         = getvar("${partition}_neutron_host")
+
+  #Heat
+  $heat_metadata_host   = getvar("${partition}_heat_metadata_host")
 }

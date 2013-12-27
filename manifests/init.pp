@@ -118,10 +118,6 @@ class kickstack (
   # tunnel, etc.
   $horizon_allow_any_hostname           = hiera('kickstack::horizon_allow_any_hostname',          false),
 
-  # Enabled Heat APIs (comma-separated list of exposed APIs)
-  # Can be any combination of 'heat', 'cfn', and 'cloudwatch'
-  # Default is just (the native Heat API)
-  $heat_apis                            = hiera('kickstack::heat_apis',                           'heat'),
   $allow_default_passwords              = hiera('kickstack::allow_default_passwords',             false),
 
   $partition                            = hiera('kickstack::partition',                           pick($partition, 'default'))
@@ -156,7 +152,6 @@ class kickstack (
     xenapi_connection_username            => $xenapi_connection_username,
     xenapi_connection_password            => $xenapi_connection_password,
     horizon_allow_any_hostname            => $horizon_allow_any_hostname,
-    heat_apis                             => $heat_apis,
     allow_default_passwords               => $allow_default_passwords,
     partition                             => $partition
   }
