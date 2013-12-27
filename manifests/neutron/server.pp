@@ -1,5 +1,6 @@
 class kickstack::neutron::server inherits kickstack::neutron {
   include kickstack::neutron::config
+
   include kickstack::keystone
 
   class { '::neutron::server':
