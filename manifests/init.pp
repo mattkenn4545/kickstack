@@ -7,8 +7,8 @@
 
 class kickstack (
   # The OpenStack release to install
-  # * default 'grizzly'
-  # * override by setting to 'folsom' (not recommended) or 'havana'
+  # * default 'havana'
+  # * override by setting to 'folsom' (not recommended) or 'grizzly'
   # This is for new installations only; don't expect this to magically
   # support rolling releases.
   $release                              = hiera('kickstack::release',                             'havana'),
@@ -116,7 +116,6 @@ class kickstack (
   # FQDN of the dashboard host.
   # Set to true if you want to access by IP address, through an SSH
   # tunnel, etc.
-  $horizon_allow_any_hostname           = hiera('kickstack::horizon_allow_any_hostname',          false),
 
   $allow_default_passwords              = hiera('kickstack::allow_default_passwords',             false),
 
@@ -151,7 +150,6 @@ class kickstack (
     xenapi_connection_url                 => $xenapi_connection_url,
     xenapi_connection_username            => $xenapi_connection_username,
     xenapi_connection_password            => $xenapi_connection_password,
-    horizon_allow_any_hostname            => $horizon_allow_any_hostname,
     allow_default_passwords               => $allow_default_passwords,
     partition                             => $partition
   }

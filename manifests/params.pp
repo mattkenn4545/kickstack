@@ -27,11 +27,10 @@ class kickstack::params (
   $xenapi_connection_url,
   $xenapi_connection_username,
   $xenapi_connection_password,
-  $horizon_allow_any_hostname,
   $allow_default_passwords,
   $partition
 ) {
-  validate_bool($verbose, $debug, $horizon_allow_any_hostname, $allow_default_passwords)
+  validate_bool($verbose, $debug, $allow_default_passwords)
 
   #Infrastructure
   $db_host              = getvar("${partition}_db_host")
@@ -49,4 +48,7 @@ class kickstack::params (
 
   #Heat
   $heat_metadata_host   = getvar("${partition}_heat_metadata_host")
+
+  #Nova
+  $vncproxy_host        = getvar("${partition}_vncproxy_host")
 }

@@ -1,4 +1,4 @@
-class kickstack::nova::vncproxy inherits kickstack {
+class kickstack::nova::vncproxy inherits kickstack::nova {
   include kickstack::nova::config
 
   class { '::nova::vncproxy':
@@ -8,7 +8,7 @@ class kickstack::nova::vncproxy inherits kickstack {
   }
 
   kickstack::exportfact::export { 'vncproxy_host':
-    value   => $hostname,
+    value   => $fqdn,
     tag     => 'nova',
     require => Class['::nova::vncproxy']
   }
