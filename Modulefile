@@ -15,7 +15,6 @@ dependency 'puppetlabs/keystone', '>= 2.0.0'
 dependency 'puppetlabs/lvm', '>= 0.1.2'
 dependency 'puppetlabs/nova', '>= 2.0.0'
 dependency 'puppetlabs/openstack', '>= 2.0.0'
-dependency 'rgevaert/pwgen', '>= 0.0.1'
 
 # The dependencies below are currently unresolvable,
 # as the relevant modules haven't yet been published
