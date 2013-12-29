@@ -1,8 +1,8 @@
 define kickstack::exportfact::export (
   $value
 ) {
-  ::exportfact::export { "${kickstack::params::partition}_${name}":
+  ::exportfact::export { "${kickstack::partition}_${name}":
     value     => $value,
-    category  => $kickstack::params::partition
+    category  => $kickstack::partition
   }
 }

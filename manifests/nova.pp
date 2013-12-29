@@ -15,6 +15,6 @@ class kickstack::nova (
   $xenapi_connection_url            = hiera('kickstack::nova::xenapi_connection_url',           undef),
   $xenapi_connection_username       = hiera('kickstack::nova::xenapi_connection_username',      undef),
   $xenapi_connection_password       = hiera('kickstack::nova::xenapi_connection_password',      undef)
-) inherits kickstack::params {
+) inherits kickstack {
   $service_name = 'nova'
 }

@@ -20,6 +20,10 @@ class kickstack::keystone (
   # The suffix to append to the keystone hostname for publishing
   # the admin service endpoint (default: none)
   $admin_suffix             = hiera('kickstack::keystone::admin_suffix',          undef)
-) inherits kickstack::params {
+) inherits kickstack {
   $service_name = 'keystone'
+
+  if (!$allow_default_passwords and $admin_password == 'admin_password') {
+    fail('kickstack::keystone::admin_password set to default and kickstack::allow_default_passwords is false.')
+  }
 }

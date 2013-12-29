@@ -54,7 +54,7 @@ class kickstack::neutron (
   # The Neutron external network uuid
   # Irrelevant unless $neutron_network_type == 'provider_router')
   $external_network_id    = hiera('kickstack::neutron::external_network_id',      undef)
-) inherits kickstack::params {
+) inherits kickstack {
   $service_name = 'neutron'
 }
 

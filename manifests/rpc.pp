@@ -1,4 +1,4 @@
-class kickstack::rpc inherits kickstack::params {
+class kickstack::rpc inherits kickstack {
   case $rpc_server {
     'rabbitmq': {
       class { '::nova::rabbitmq':

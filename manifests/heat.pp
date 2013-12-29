@@ -6,6 +6,6 @@ class kickstack::heat (
   # Can be any combination of 'heat', 'cfn', and 'cloudwatch'
   # Default is just (the native Heat API)
   $apis                           = hiera('kickstack::heat::apis',                          'heat')
-) inherits kickstack::params {
+) inherits kickstack {
   $service_name = 'heat'
 }

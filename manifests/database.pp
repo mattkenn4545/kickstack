@@ -1,7 +1,7 @@
 class kickstack::database (
   $server           = hiera('kickstack::database::server',          'mysql'),
   $root_password    = hiera('kickstack::database::root_password',   'kickstack')
-)inherits kickstack::params {
+)inherits kickstack {
   case $server {
     'mysql': {
       ensure_resource('class',
