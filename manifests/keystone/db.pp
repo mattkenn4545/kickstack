@@ -1,7 +1,9 @@
 class kickstack::keystone::db (
   $password = hiera('kickstack::keystone::db::password',  'keystone_pass')
 ) inherits kickstack::keystone {
-  if (defined(Class['kickstack::database'])) {
+  include kickstack::database
+
+  if (defined(Class['kickstack::database::install'])) {
     kickstack::db { 'keystone':
       password => $password
     }

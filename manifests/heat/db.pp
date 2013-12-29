@@ -1,7 +1,9 @@
 class kickstack::heat::db (
   $password = hiera('kickstack::heat::db::password',  'heat_pass')
 ) inherits kickstack::heat {
-  if (defined(Class['kickstack::database'])) {
+  include kickstack::database
+
+  if (defined(Class['kickstack::database::install'])) {
     kickstack::db { 'heat':
       password => $password
     }

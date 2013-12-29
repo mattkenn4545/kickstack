@@ -1,7 +1,9 @@
 class kickstack::neutron::db (
   $password = hiera('kickstack::neutron::db::password',  'neutron_pass')
 ) inherits kickstack::neutron {
-  if (defined(Class['kickstack::database'])) {
+  include kickstack::database
+
+  if (defined(Class['kickstack::database::install'])) {
     kickstack::db { 'neutron':
       password => $password
     }

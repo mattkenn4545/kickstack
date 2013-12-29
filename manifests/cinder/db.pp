@@ -1,7 +1,9 @@
 class kickstack::cinder::db (
   $password = hiera('kickstack::cinder::db::password',  'cinder_pass')
 ) inherits kickstack::cinder {
-  if (defined(Class['kickstack::database'])) {
+  include kickstack::database
+
+  if (defined(Class['kickstack::database::install'])) {
     kickstack::db { 'cinder':
       password => $password
     }

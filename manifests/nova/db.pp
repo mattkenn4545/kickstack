@@ -1,7 +1,9 @@
 class kickstack::nova::db (
   $password = hiera('kickstack::nova::db::password',  'nova_pass')
 ) inherits kickstack::nova {
-  if (defined(Class['kickstack::database'])) {
+  include kickstack::database
+
+  if (defined(Class['kickstack::database::install'])) {
     kickstack::db { 'nova':
       password => $password
     }

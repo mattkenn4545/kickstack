@@ -1,7 +1,9 @@
 class kickstack::glance::db (
   $password = hiera('kickstack::glance::db::password',  'glance_pass')
 ) inherits kickstack::glance {
-  if (defined(Class['kickstack::database'])) {
+  include kickstack::database
+
+  if (defined(Class['kickstack::database::install'])) {
     kickstack::db { 'glance':
       password => $password
     }

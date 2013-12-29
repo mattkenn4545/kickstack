@@ -1,6 +1,6 @@
 class kickstack::role::infrastructure inherits kickstack {
   include kickstack::rpc
-  include kickstack::database
+  include kickstack::database::install
 
   include kickstack::keystone::db
   include kickstack::glance::db
