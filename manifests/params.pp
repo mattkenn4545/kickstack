@@ -14,14 +14,9 @@ class kickstack::params (
   $cinder_lvm_vg,
   $cinder_rbd_pool,
   $cinder_rbd_user,
-  $neutron_integration_bridge,
-  $neutron_tunnel_bridge,
-  $neutron_external_bridge,
   $nic_management,
   $nic_data,
   $nic_external,
-  $neutron_router_id,
-  $neutron_gateway_external_network_id,
   $nova_compute_driver,
   $nova_compute_libvirt_type,
   $xenapi_connection_url,
@@ -51,4 +46,5 @@ class kickstack::params (
 
   #Nova
   $vncproxy_host        = getvar("${partition}_vncproxy_host")
+  $nova_metadata_ip     = getvar("${partition}_nova_metadata_ip")
 }

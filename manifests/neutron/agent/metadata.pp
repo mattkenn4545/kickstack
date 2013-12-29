@@ -1,21 +1,17 @@
-class kickstack::neutron::agent::metadata inherits kickstack {
+class kickstack::neutron::agent::metadata inherits kickstack::neutron {
   include kickstack::neutron::config
 
-  $secret                     = getvar("${fact_prefix}neutron_metadata_shared_secret")
-
-  $service_password           = getvar("${fact_prefix}neutron_keystone_password")
-  $metadata_ip                = getvar("${fact_prefix}nova_metadata_ip")
-  $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
+  include kickstack::keystone
 
   class { '::neutron::agents::metadata':
-    shared_secret     => $secret,
+    shared_secret     => $metadata_secret,
     auth_password     => $service_password,
-    debug             => $kickstack::debug,
-    auth_tenant       => $kickstack::keystone_service_tenant,
+    debug             => $debug,
+    auth_tenant       => $kickstack::keystone::service_tenant,
     auth_user         => 'neutron',
-    auth_url          => "http://${keystone_internal_address}:35357/v2.0", 
-    auth_region       => $kickstack::keystone_region,
-    metadata_ip       => $metadata_ip,
+    auth_url          => "http://${auth_host}:35357/v2.0",
+    auth_region       => $kickstack::keystone::region,
+    metadata_ip       => $nova_metadata_ip,
     package_ensure    => $package_version,
   }
 }

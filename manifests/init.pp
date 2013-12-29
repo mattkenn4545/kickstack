@@ -60,19 +60,6 @@ class kickstack (
   # Ignored unless $cinder_backend == rbd.
   $cinder_rbd_user                      = hiera('kickstack::cinder_rbd_user',                     'cinder'),
 
-  # The Neutron integration bridge
-  # Normally doesn't need to be changed
-  $neutron_integration_bridge           = hiera('kickstack::neutron_integration_bridge',          'br-int'),
-
-  # The Neutron tunnel bridge
-  # Irrelevant unless $neutron_tenant_network_type == 'gre')
-  # Normally doesn't need to be changed
-  $neutron_tunnel_bridge                = hiera('kickstack::neutron_tunnel_bridge',               'br-tun'),
-
-  # The Neutron external bridge
-  # Normally doesn't need to be changed
-  $neutron_external_bridge              = hiera('kickstack::neutron_external_bridge',             'br-ex'),
-
   # The interface over which to run your nodes' management network traffic.
   # Normally, this would be your primary network interface.
   $nic_management                       = hiera('kickstack::nic_management',                      'eth0'),
@@ -87,14 +74,6 @@ class kickstack (
   # possibly also on your API nodes if you wish to expose the API
   # services publicly.
   $nic_external                         = hiera('kickstack::nic_external',                        'eth2'),
-
-  # The Neutron router uuid
-  # Irrelevant unless $neutron_network_type == 'provider_router')
-  $neutron_router_id                    = hiera('kickstack::neutron_router_id',                   undef),
-
-  # The Neutron external network uuid
-  # Irrelevant unless $neutron_network_type == 'provider_router')
-  $neutron_gateway_external_network_id  = hiera('kickstack::neutron_gateway_external_network_id', undef),
 
   # The nova-compute backend driver.
   # Supported: libvirt (default), xenserver
@@ -137,14 +116,9 @@ class kickstack (
     cinder_lvm_vg                         => $cinder_lvm_vg,
     cinder_rbd_pool                       => $cinder_rbd_pool,
     cinder_rbd_user                       => $cinder_rbd_user,
-    neutron_integration_bridge            => $neutron_integration_bridge,
-    neutron_tunnel_bridge                 => $neutron_tunnel_bridge,
-    neutron_external_bridge               => $neutron_external_bridge,
     nic_management                        => $nic_management,
     nic_data                              => $nic_data,
     nic_external                          => $nic_external,
-    neutron_router_id                     => $neutron_router_id,
-    neutron_gateway_external_network_id   => $neutron_gateway_external_network_id,
     nova_compute_driver                   => $nova_compute_driver,
     nova_compute_libvirt_type             => $nova_compute_libvirt_type,
     xenapi_connection_url                 => $xenapi_connection_url,

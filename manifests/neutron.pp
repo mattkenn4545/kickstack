@@ -32,7 +32,28 @@ class kickstack::neutron (
   # Ignored unless neutron_tenant_network_type == 'gre'
   $tunnel_id_ranges       = hiera('kickstack::neutron::tunnel_id_ranges',         '1:1000'),
 
-  $metadata_secret        = hiera('kickstack::neutron::metadata_secret',          'metadata_secret')
+  $metadata_secret        = hiera('kickstack::neutron::metadata_secret',          'metadata_secret'),
+
+  # The Neutron integration bridge
+  # Normally doesn't need to be changed
+  $integration_bridge     = hiera('kickstack::neutron::integration_bridge',       'br-int'),
+
+  # The Neutron tunnel bridge
+  # Irrelevant unless $neutron_tenant_network_type == 'gre')
+  # Normally doesn't need to be changed
+  $tunnel_bridge          = hiera('kickstack::neutron::tunnel_bridge',            'br-tun'),
+
+  # The Neutron external bridge
+  # Normally doesn't need to be changed
+  $external_bridge        = hiera('kickstack::neutron::external_bridge',          'br-ex'),
+
+  # The Neutron router uuid
+  # Irrelevant unless $neutron_network_type == 'provider_router')
+  $router_id              = hiera('kickstack::neutron::router_id',                undef),
+
+  # The Neutron external network uuid
+  # Irrelevant unless $neutron_network_type == 'provider_router')
+  $external_network_id    = hiera('kickstack::neutron::external_network_id',      undef)
 ) inherits kickstack::params {
   $service_name = 'neutron'
 }
