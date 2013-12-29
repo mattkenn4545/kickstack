@@ -75,21 +75,6 @@ class kickstack (
   # services publicly.
   $nic_external                         = hiera('kickstack::nic_external',                        'eth2'),
 
-  # The nova-compute backend driver.
-  # Supported: libvirt (default), xenserver
-  $nova_compute_driver                  = hiera('kickstack::nova_compute_driver',                 'libvirt'),
-
-  # The hypervisor to use with libvirt
-  # Ignored unless nova_compute_driver == libvirt
-  # Supported: kvm (default), qemu
-  $nova_compute_libvirt_type            = hiera('kickstack::nova_compute_libvirt_type',           'kvm'),
-
-  # The XenAPI
-  # Ignored unless nova_compute_driver == xenserver
-  $xenapi_connection_url                = hiera('kickstack::xenapi_connection_url',               undef),
-  $xenapi_connection_username           = hiera('kickstack::xenapi_connection_username',          undef),
-  $xenapi_connection_password           = hiera('kickstack::xenapi_connection_password',          undef),
-
   # Allow access to Horizon using any host name?
   # Default is false, meaning allow Horizon access only through the
   # FQDN of the dashboard host.
@@ -119,11 +104,6 @@ class kickstack (
     nic_management                        => $nic_management,
     nic_data                              => $nic_data,
     nic_external                          => $nic_external,
-    nova_compute_driver                   => $nova_compute_driver,
-    nova_compute_libvirt_type             => $nova_compute_libvirt_type,
-    xenapi_connection_url                 => $xenapi_connection_url,
-    xenapi_connection_username            => $xenapi_connection_username,
-    xenapi_connection_password            => $xenapi_connection_password,
     allow_default_passwords               => $allow_default_passwords,
     partition                             => $partition
   }

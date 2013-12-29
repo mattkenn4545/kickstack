@@ -1,10 +1,6 @@
-class kickstack::nova::compute inherits kickstack {
+class kickstack::nova::compute inherits kickstack::nova {
   include kickstack::nova::config
 
-  $keystone_internal_address  = getvar("${fact_prefix}keystone_internal_address")
-  $neutron_admin_password     = getvar("${fact_prefix}neutron_keystone_password")
-  $neutron_host               = getvar("${fact_prefix}neutron_host")
-  $vncproxy_host              = getvar("${fact_prefix}vncproxy_host")
   $vncserver_listen_address   = getvar("ipaddress_${nic_management}")
 
   class { '::nova::compute':
@@ -18,16 +14,16 @@ class kickstack::nova::compute inherits kickstack {
   case $nova_compute_driver {
     'libvirt': {
       class { '::nova::compute::libvirt':
-        libvirt_type      => $nova_compute_libvirt_type,
+        libvirt_type      => $libvirt_type,
         vncserver_listen  => $vncserver_listen_address
       }
     }
 
     'xenserver': {
       class { '::nova::compute::xenserver':
-        xenapi_connection_url       => $nova_compute_xenapi_connection_url,
-        xenapi_connection_username  => $nova_compute_xenapi_connection_username,
-        xenapi_connection_password  => $nova_compute_xenapi_connection_password
+        xenapi_connection_url       => $xenapi_connection_url,
+        xenapi_connection_username  => $xenapi_connection_username,
+        xenapi_connection_password  => $xenapi_connection_password
       }
     }
   }

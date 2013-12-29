@@ -17,11 +17,6 @@ class kickstack::params (
   $nic_management,
   $nic_data,
   $nic_external,
-  $nova_compute_driver,
-  $nova_compute_libvirt_type,
-  $xenapi_connection_url,
-  $xenapi_connection_username,
-  $xenapi_connection_password,
   $allow_default_passwords,
   $partition
 ) {
