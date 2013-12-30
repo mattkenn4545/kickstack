@@ -123,7 +123,7 @@ class kickstack (
   $exported_fact_provider = {
     'db_host'               => 'kickstack::database::install',
     'rpc_host'              => 'kickstack::rpc',
-    'auth_host'             => 'kickstack::keystone::api',
+    'auth_host'             => 'kickstack::keystone::config',
     'glance_registry_host'  => 'kickstack::glance::registry',
     'glance_api_host'       => 'kickstack::glance::api',
     'neutron_host'          => 'kickstack::neutron::server',

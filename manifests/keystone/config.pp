@@ -1,4 +1,4 @@
-class kickstack::keystone::api inherits kickstack::keystone {
+class kickstack::keystone::config inherits kickstack::keystone {
   if (!$db_host) {
     $missing_fact = 'db_host'
   }

@@ -1,13 +1,13 @@
 class kickstack::keystone (
   $region                   = hiera('kickstack::keystone::region',                'kickstack'),
 
-  $admin_token              = hiera('kickstack::keystone::api::api::admin_token', 'admin_token'),
-  $admin_password           = hiera('kickstack::keystone::api::admin_password',   'admin_password'),
+  $admin_token              = hiera('kickstack::keystone::admin_token',           'admin_token'),
+  $admin_password           = hiera('kickstack::keystone::admin_password',        'admin_password'),
 
   # The special tenant set up for administrative purposes
-  $admin_tenant             = hiera('kickstack::keystone::api::admin_tenant',     'openstack'),
+  $admin_tenant             = hiera('kickstack::keystone::admin_tenant',          'openstack'),
 
-  $admin_email              = hiera('kickstack::keystone::api::admin_email',      "admin@${hostname}"),
+  $admin_email              = hiera('kickstack::keystone::admin_email',           "admin@${hostname}"),
 
   # The tenant set up so that individual OpenStack services can
   # authenticate with Keystone
