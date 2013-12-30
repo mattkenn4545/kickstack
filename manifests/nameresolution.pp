@@ -18,10 +18,11 @@ class kickstack::nameresolution inherits kickstack {
         ip            => getvar("ipaddress_${nic_management}"),
         host_aliases  => $aliases,
         comment       => 'Managed by Puppet',
-        tag           => "${variable_prefix}_name_resolution"
+        tag           => "${partition}_name_resolution"
       }
-      Host <<| tag == "${variable_prefix}_name_resolution" |>> { }
+      Host <<| tag == "${partition}_name_resolution" |>>
     }
+
     default: {
       fail("Unsupported value for \$name_resolution: ${name_resolution}")
     }
