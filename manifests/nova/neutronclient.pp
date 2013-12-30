@@ -1,6 +1,8 @@
 class kickstack::nova::neutronclient inherits kickstack::nova {
    if (!$auth_host) {
      $missing_fact = 'auth_host'
+   } elsif (!$neutron_host) {
+     $missing_fact = 'neutron_host'
    }
 
   if $missing_fact {
