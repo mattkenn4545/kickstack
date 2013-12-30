@@ -16,19 +16,23 @@ class kickstack::cinder::api inherits kickstack::cinder {
   } else {
     include kickstack::cinder::config
 
-    include kickstack::keystone
+    if (defined(Class['::cinder'])) {
+      include kickstack::keystone
 
-    class { '::cinder::api':
-      keystone_tenant     => $kickstack::keystone::service_tenant,
-      keystone_user       => 'cinder',
-      keystone_password   => $service_password,
-      keystone_auth_host  => $auth_host,
-      package_ensure      => $package_version
-    }
+      class { '::cinder::api':
+        keystone_tenant     => $kickstack::keystone::service_tenant,
+        keystone_user       => 'cinder',
+        keystone_password   => $service_password,
+        keystone_auth_host  => $auth_host,
+        package_ensure      => $package_version
+      }
 
-    kickstack::endpoint { 'cinder':
-      service_password    => $service_password,
-      require             => Class['::cinder::api']
+      kickstack::endpoint { 'cinder':
+        service_password    => $service_password,
+        require             => Class['::cinder::api']
+      }
+    } else {
+      notify { 'Unable to apply ::cinder::api': }
     }
   }
 }
