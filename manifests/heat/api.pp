@@ -1,50 +1,54 @@
 class kickstack::heat::api inherits kickstack::heat {
   include kickstack::heat::config
 
-  $enabled_apis = split($apis, ',')
+  if (defined(Class['::heat'])) {
+    $enabled_apis = split($apis, ',')
 
-  if 'heat' in $enabled_apis {
-    class { '::heat::api':
-      enabled           => true
+    if 'heat' in $enabled_apis {
+      class { '::heat::api':
+        enabled           => true
+      }
+
+      kickstack::endpoint { 'heat':
+        service_password  => $service_password,
+        require           => Class[ '::heat::api' ]
+      }
+
+      kickstack::exportfact::export { 'heat_metadata_host':
+        value             => $fqdn,
+        tag               => 'heat',
+        require           => Class[ '::heat::api' ]
+      }
     }
 
-    kickstack::endpoint { 'heat':
-      service_password  => $service_password,
-      require           => Class[ '::heat::api' ]
+    if 'cfn' in $enabled_apis {
+      class { '::heat::api_cfn':
+        enabled           => true
+      }
+
+      kickstack::endpoint { 'heat_cfn':
+        servicename       => 'heat',
+        classname         => 'auth_cfn',
+        service_password  => $cfn_service_password,
+        require           => Class[ '::heat::api_cfn' ]
+      }
     }
 
-    kickstack::exportfact::export { 'heat_metadata_host':
-      value             => $fqdn,
-      tag               => 'heat',
-      require           => Class[ '::heat::api' ]
-    }
-  }
+    if 'cloudwatch' in $enabled_apis {
+      class { '::heat::api_cloudwatch':
+        enabled           => true
+      }
 
-  if 'cfn' in $enabled_apis {
-    class { '::heat::api_cfn':
-      enabled           => true
-    }
+      kickstack::exportfact::export { 'heat_cloudwatch_host':
+        value             => $fqdn,
+        tag               => 'heat',
+        require           => Class[ '::heat::api_cloudwatch' ]
+      }
 
-    kickstack::endpoint { 'heat_cfn':
-      servicename       => 'heat',
-      classname         => 'auth_cfn',
-      service_password  => $cfn_service_password,
-      require           => Class[ '::heat::api_cfn' ]
+      # The puppet-heat module has no facility for setting up the
+      # CloudWatch Keystone endpoint.
     }
-  }
-
-  if 'cloudwatch' in $enabled_apis {
-    class { '::heat::api_cloudwatch':
-      enabled           => true
-    }
-
-    kickstack::exportfact::export { 'heat_cloudwatch_host':
-      value             => $fqdn,
-      tag               => 'heat',
-      require           => Class[ '::heat::api_cloudwatch' ]
-    }
-
-    # The puppet-heat module has no facility for setting up the
-    # CloudWatch Keystone endpoint.
+  } else {
+    notify { 'Unable to apply heat apis': }
   }
 }

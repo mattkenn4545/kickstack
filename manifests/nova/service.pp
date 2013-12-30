@@ -1,9 +1,13 @@
 define kickstack::nova::service {
-  $classname    = "::nova::${name}"
-
   # Installs the Nova service
-  class { $classname:
-    enabled         => true,
-    ensure_package  => $package_version
+  if (defined(Class['::nova'])) {
+    $classname    = "::nova::${name}"
+
+    class { $classname:
+      enabled         => true,
+      ensure_package  => $package_version
+    }
+  } else {
+    notify { "Unable to apply ${classname}": }
   }
 }
