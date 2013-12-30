@@ -1,24 +1,40 @@
 class kickstack::neutron::server inherits kickstack::neutron {
-  include kickstack::neutron::config
+   if (!$auth_host) {
+     $missing_fact = 'auth_host'
+   }
 
-  include kickstack::keystone
+  if $missing_fact {
+    $class = $exported_fact_provider[$missing_fact]
 
-  class { '::neutron::server':
-    auth_tenant     => $kickstack::keystone::service_tenant,
-    auth_user       => 'neutron',
-    auth_password   => $service_password,
-    auth_host       => $auth_host,
-    package_ensure  => $package_version
-  }
+    if (defined(Class[$class])) {
+      $message = inline_template($missing_fact_template)
+      notify { $message: }
+    } else {
+      $message = inline_template($missing_fact_fail)
+      fail($message)
+    }
+  } else {
+    include kickstack::neutron::config
 
-  kickstack::endpoint { 'neutron':
-    service_password  => $service_password,
-    require           => Class[ '::neutron::server' ]
-  }
+    include kickstack::keystone
 
-  kickstack::exportfact::export { 'neutron_host':
-    value             => $fqdn,
-    tag               => 'neutron',
-    require           => Class[ '::neutron::server' ]
+    class { '::neutron::server':
+      auth_tenant     => $kickstack::keystone::service_tenant,
+      auth_user       => 'neutron',
+      auth_password   => $service_password,
+      auth_host       => $auth_host,
+      package_ensure  => $package_version
+    }
+
+    kickstack::endpoint { 'neutron':
+      service_password  => $service_password,
+      require           => Class[ '::neutron::server' ]
+    }
+
+    kickstack::exportfact::export { 'neutron_host':
+      value             => $fqdn,
+      tag               => 'neutron',
+      require           => Class[ '::neutron::server' ]
+    }
   }
 }

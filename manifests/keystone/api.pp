@@ -1,6 +1,8 @@
 class kickstack::keystone::api inherits kickstack::keystone {
   if (!$db_host) {
     $missing_fact = 'db_host'
+  } elsif (!$auth_host) {
+    $missing_fact = 'auth_host'
   }
 
   if $missing_fact {

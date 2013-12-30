@@ -3,6 +3,8 @@ class kickstack::heat::config inherits kickstack::heat {
     $missing_fact = 'db_host'
   } elsif (!$rpc_host) {
     $missing_fact = 'rpc_host'
+  } elsif (!$auth_host) {
+    $missing_fact = 'auth_host'
   }
 
   if $missing_fact {
