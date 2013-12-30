@@ -3,6 +3,8 @@ class kickstack::nova::config inherits kickstack::nova {
     $missing_fact = 'db_host'
   } elsif (!$rpc_host) {
     $missing_fact = 'rpc_host'
+  } elsif (!$glance_registry_host) {
+    $missing_fact = 'glance_registry_host'
   }
 
   if $missing_fact {

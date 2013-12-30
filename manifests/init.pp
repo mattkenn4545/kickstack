@@ -120,7 +120,8 @@ class kickstack (
   $missing_fact_fail      = "'<%= @missing_fact %>' exported fact missing. Ensure that '<%= @class %>' is applied for the ${partition} partition."
 
   $exported_fact_provider = {
-    'db_host'   => 'kickstack::database::install',
-    'rpc_host'  => 'kickstack::rpc'
+    'db_host'               => 'kickstack::database::install',
+    'rpc_host'              => 'kickstack::rpc',
+    'glance_registry_host'  => 'kickstack::glance::registry'
   }
 }
