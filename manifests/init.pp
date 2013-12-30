@@ -116,7 +116,8 @@ class kickstack (
   $vncproxy_host        = getvar("${partition}_vncproxy_host")
   $nova_metadata_ip     = getvar("${partition}_nova_metadata_ip")
 
-  $missing_fact_template  = "'<%= @missing_fact %>' exported fact missing but provider class '<%= @class %>' is defined.  '<%= @missing_fact %>' should be available next run."
+  #Missing fact templates
+  $missing_fact_warn      = "'<%= @missing_fact %>' exported fact missing but provider class '<%= @class %>' is defined.  '<%= @missing_fact %>' should be available next run."
   $missing_fact_fail      = "'<%= @missing_fact %>' exported fact missing. Ensure that '<%= @class %>' is applied for the ${partition} partition."
 
   $exported_fact_provider = {
@@ -126,5 +127,9 @@ class kickstack (
     'glance_registry_host'  => 'kickstack::glance::registry',
     'glance_api_host'       => 'kickstack::glance::api',
     'neutron_host'          => 'kickstack::neutron::server',
+    'heat_metadata_host'    => 'kickstack::heat::api',
+    'heat_cloudwatch_host'  => 'kickstack::heat::api',
+    'vncproxy_host'         => 'kickstack::nova::vncproxy',
+    'nova_metadata_ip'      => 'kickstack::nova::api',
   }
 }
