@@ -110,8 +110,16 @@ class kickstack (
 
   #Heat
   $heat_metadata_host   = getvar("${partition}_heat_metadata_host")
+  $heat_cloudwatch_host = getvar("${partition}_heat_cloudwatch_host")
 
   #Nova
   $vncproxy_host        = getvar("${partition}_vncproxy_host")
   $nova_metadata_ip     = getvar("${partition}_nova_metadata_ip")
+
+  $missing_fact_template  = "'<%= @missing_fact %>' exported fact missing but provider class '<%= @class %>' is defined.  '<%= @missing_fact %>' should be available next run."
+  $missing_fact_fail      = "'<%= @missing_fact %>' exported fact missing. Ensure that '<%= @class %>' is applied for the ${partition} partition."
+
+  $exported_fact_provider = {
+    'db_host' => 'kickstack::database::install'
+  }
 }
