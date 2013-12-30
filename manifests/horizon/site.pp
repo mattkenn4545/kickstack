@@ -1,5 +1,5 @@
 class kickstack::horizon::site inherits kickstack::horizon {
-s  if $debug {
+  if $debug {
     $django_debug = 'True'
     $log_level    = 'DEBUG'
   } elsif $verbose {
