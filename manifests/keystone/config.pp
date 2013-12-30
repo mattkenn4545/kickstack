@@ -56,7 +56,7 @@ class kickstack::keystone::config inherits kickstack::keystone {
       group             => 'root',
       mode              => '0640',
       content           => template('kickstack/openstackrc.erb'),
-      require           => Class[ '::keystone::roles::admin' ]
+      require           => [ Class[ '::keystone::roles::admin' ], Class[ '::keystone' ] ]
     }
   }
 }
