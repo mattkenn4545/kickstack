@@ -1,6 +1,8 @@
 class kickstack::cinder::config inherits kickstack::cinder {
   if (!$db_host) {
     $missing_fact = 'db_host'
+  } elsif (!$rpc_host) {
+    $missing_fact = 'rpc_host'
   }
 
   if $missing_fact {
