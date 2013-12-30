@@ -1,8 +1,6 @@
 class kickstack::glance::registry inherits kickstack::glance {
   if (!$db_host) {
     $missing_fact = 'db_host'
-  } elsif (!$glance_registry_host) {
-    $missing_fact = 'glance_registry_host'
   } elsif (!$auth_host) {
     $missing_fact = 'auth_host'
   }
