@@ -1,7 +1,7 @@
 class kickstack::nova::api inherits kickstack::nova {
-   if (!$auth_host) {
-     $missing_fact = 'auth_host'
-   }
+  if (!$auth_host) {
+    $missing_fact = 'auth_host'
+  }
 
   if $missing_fact {
     $class = $exported_fact_provider[$missing_fact]

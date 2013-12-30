@@ -15,6 +15,7 @@ class kickstack::keystone::config inherits kickstack::keystone {
     }
   } else {
     include kickstack::keystone::db
+
     $sql_connection     = $kickstack::keystone::db::sql_connection
 
     class { '::keystone':
