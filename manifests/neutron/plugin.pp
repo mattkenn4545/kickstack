@@ -25,6 +25,8 @@ class kickstack::neutron::plugin inherits kickstack::neutron {
                                                         default => "${physnet}:${vlan_ranges}" }
       $tunnel_id_ranges     = $tenant_network_type ?  { 'gre'   => $tunnel_id_ranges,
                                                         default => '' }
+      $tenant_network_type  = $tenant_network_type ? { 'flat'   => 'vlan',
+                                                        default => $tenant_network_type }
 
       case $plugin {
         'ovs': {
