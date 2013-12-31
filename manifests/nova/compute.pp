@@ -27,7 +27,7 @@ class kickstack::nova::compute inherits kickstack::nova {
         virtio_nic                    => true
       }
 
-      case $nova_compute_driver {
+      case $compute_driver {
         'libvirt': {
           class { '::nova::compute::libvirt':
             libvirt_type      => $libvirt_type,
