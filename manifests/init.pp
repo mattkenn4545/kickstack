@@ -42,24 +42,6 @@ class kickstack (
   $rabbit_virtual_host                  = hiera('kickstack::rabbit_virtual_host',                 '/'),
   $qpid_realm                           = hiera('kickstack::qpid_realm',                          'OPENSTACK'),
 
-  $cinder_backend                       = hiera('kickstack::cinder_backend',                      'iscsi'),
-
-  # The device to create the LVM physical volume on.
-  # Ignored unless $cinder_backend == iscsi.
-  $cinder_lvm_pv                        = hiera('kickstack::cinder_lvm_pv',                       '/dev/disk/by-partlabel/cinder-volumes'),
-
-  # The LVM volume group name to use for volumes.
-  # Ignored unless $cinder_backend == iscsi.
-  $cinder_lvm_vg                        = hiera('kickstack::cinder_lvm_vg',                       'cinder-volumes'),
-
-  # The RADOS pool to use for volumes.
-  # Ignored unless $cinder_backend == rbd.
-  $cinder_rbd_pool                      = hiera('kickstack::cinder_rbd_pool',                     'cinder-volumes'),
-
-  # The RADOS user to use for volumes.
-  # Ignored unless $cinder_backend == rbd.
-  $cinder_rbd_user                      = hiera('kickstack::cinder_rbd_user',                     'cinder'),
-
   # The interface over which to run your nodes' management network traffic.
   # Normally, this would be your primary network interface.
   $nic_management                       = hiera('kickstack::nic_management',                      'eth0'),
@@ -75,15 +57,10 @@ class kickstack (
   # services publicly.
   $nic_external                         = hiera('kickstack::nic_external',                        'eth2'),
 
-  # Allow access to Horizon using any host name?
-  # Default is false, meaning allow Horizon access only through the
-  # FQDN of the dashboard host.
-  # Set to true if you want to access by IP address, through an SSH
-  # tunnel, etc.
-
   $allow_default_passwords              = hiera('kickstack::allow_default_passwords',             false),
 
   $partition                            = hiera('kickstack::partition',                           pick($partition, 'default'))
+
 ) {
   include ::exportfact
 

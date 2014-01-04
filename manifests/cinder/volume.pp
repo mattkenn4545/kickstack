@@ -1,39 +1,42 @@
-##TODO CONVERT TO NEW ORG
-class kickstack::cinder::volume inherits kickstack {
+class kickstack::cinder::volume inherits kickstack::cinder {
   include kickstack::cinder::config
 
-  class { '::cinder::volume':
-    package_ensure        => $package_version
-  }
+  if (defined(Class['::cinder'])) {
+    class { '::cinder::volume':
+      package_ensure        => $package_version
+    }
 
-  case $cinder_backend {
-    'iscsi': {
-      $pv = $cinder_lvm_pv
-      $vg = $cinder_lvm_vg
-
-      physical_volume { $pv:
-        ensure            => present
+    case $backend {
+      'iscsi': {
+        physical_volume { $lvm_pv:
+          ensure            => present
+        } ->
+        volume_group { $lvm_vg:
+          ensure            => present,
+          physical_volumes  => $lvm_pv
+        } ->
+        class { '::cinder::volume::iscsi':
+          iscsi_ip_address  => getvar("ipaddress_${nic_data}")
+        }
       }
 
-      volume_group { $vg:
-        ensure            => present,
-        physical_volumes  => $pv,
-        require           => Physical_volume[ $pv ]
+      'rbd': {
+        if (!$rbd_secret_uuid) {
+          fail('Unable to use \'rbd\' cinder backend. $rbd_secret_uuid not set.')
+        }
+
+        class { '::cinder::volume::rbd':
+          rbd_pool          => $rbd_pool,
+          rbd_user          => $rbd_user,
+          rbd_secret_uuid   => $rbd_secret_uuid
+        }
       }
 
-      class { '::cinder::volume::iscsi':
-        iscsi_ip_address  => getvar("ipaddress_${nic_management}"),
-        require           => Volume_group[ $vg ]
+      default: {
+        fail("Unsupported Cinder backend: ${backend}")
       }
     }
-    'rbd': {
-      $rbd_secret_uuid = getvar("${fact_prefix}rbd_secret_uuid")
-
-      class { '::cinder::volume::rbd':
-        rbd_pool          => $cinder_rbd_pool,
-        rbd_user          => $cinder_rbd_user,
-        rbd_secret_uuid   => $rbd_secret_uuid
-      }
-    }
+  } else {
+    notify { 'Unable to apply ::cinder::volume': }
   }
 }
