@@ -7,7 +7,7 @@ define kickstack::db (
   $servicename  = $name
   $username     = $name
 
-  if ($password == "${servicename}_pass") {
+  if ($password == "${servicename}_dbpass") {
     warning("${name} is using the default password on ${::hostname}")
 
     if (!$kickstack::allow_default_passwords) {
