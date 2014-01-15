@@ -6,13 +6,8 @@ class kickstack::ceilometer::auth inherits kickstack::ceilometer {
   if $missing_fact {
     $class = $exported_fact_provider[$missing_fact]
 
-    if (defined(Class[$class])) {
-      $message = inline_template($missing_fact_warn)
-      notify { $message: }
-    } else {
-      $message = inline_template($missing_fact_fail)
-      fail($message)
-    }
+    $message = inline_template($missing_fact_template)
+    notify { $message: }
   } else {
     include kickstack::ceilometer::config
 

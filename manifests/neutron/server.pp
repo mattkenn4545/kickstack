@@ -8,13 +8,8 @@ class kickstack::neutron::server inherits kickstack::neutron {
   if $missing_fact {
     $class = $exported_fact_provider[$missing_fact]
 
-    if (defined(Class[$class])) {
-      $message = inline_template($missing_fact_warn)
-      notify { $message: }
-    } else {
-      $message = inline_template($missing_fact_fail)
-      fail($message)
-    }
+    $message = inline_template($missing_fact_template)
+    notify { $message: }
   } else {
     include kickstack::neutron::config
 
@@ -32,6 +27,13 @@ class kickstack::neutron::server inherits kickstack::neutron {
         auth_host       => $auth_host,
         sql_connection  => $sql_connection,
         package_ensure  => $package_version
+      }
+
+      if (!defined(Class['kickstack::neutron::agent::l2'])) {
+        neutron_plugin_ovs {
+          'OVS/enable_tunneling': value => $tenant_network_type ? { 'gre'     => true,
+                                                                    default   => false }
+        }
       }
 
       kickstack::endpoint { 'neutron':

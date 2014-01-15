@@ -93,9 +93,7 @@ class kickstack (
   $vncproxy_host        = getvar("${partition}_vncproxy_host")
   $nova_metadata_ip     = getvar("${partition}_nova_metadata_ip")
 
-  #Missing fact templates
-  $missing_fact_warn      = "'<%= @missing_fact %>' exported fact missing and should be available to '<%= @title %>' when provider class '<%= @class %>' is applied."
-  $missing_fact_fail      = "'<%= @missing_fact %>' exported fact missing. Ensure that '<%= @class %>' is applied in the ${partition} partition."
+  $missing_fact_template      = "'<%= @missing_fact %>' exported fact missing which is needed by '<%= @title %>'. Ensure that provider class '<%= @class %>' is applied in the ${partition} partition."
 
   $exported_fact_provider = {
     'db_host'               => 'kickstack::database::install',
