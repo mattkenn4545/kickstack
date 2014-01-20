@@ -59,41 +59,40 @@ class kickstack (
 
   $allow_default_passwords              = hiera('kickstack::allow_default_passwords',             false),
 
-  $partition                            = hiera('kickstack::partition',                           pick($partition, 'default'))
-
+  $kickstack_environment                = hiera('kickstack::kickstack_environment',               pick($kickstack_environment, 'default'))
 ) {
   include ::exportfact
 
   include kickstack::repo
   include kickstack::nameresolution
 
-  ::exportfact::import { $partition: }
+  ::exportfact::import { $kickstack_environment: }
 
   validate_bool($verbose, $debug, $allow_default_passwords)
 
   #Infrastructure
-  $db_host              = getvar("${partition}_db_host")
-  $rpc_host             = getvar("${partition}_rpc_host")
+  $db_host              = getvar("${kickstack_environment}_db_host")
+  $rpc_host             = getvar("${kickstack_environment}_rpc_host")
 
   #Keystone
-  $auth_host            = getvar("${partition}_auth_host")
+  $auth_host            = getvar("${kickstack_environment}_auth_host")
 
   #Glance
-  $glance_registry_host = getvar("${partition}_glance_registry_host")
-  $glance_api_host      = getvar("${partition}_glance_api_host")
+  $glance_registry_host = getvar("${kickstack_environment}_glance_registry_host")
+  $glance_api_host      = getvar("${kickstack_environment}_glance_api_host")
 
   #Neutron
-  $neutron_host         = getvar("${partition}_neutron_host")
+  $neutron_host         = getvar("${kickstack_environment}_neutron_host")
 
   #Heat
-  $heat_metadata_host   = getvar("${partition}_heat_metadata_host")
-  $heat_cloudwatch_host = getvar("${partition}_heat_cloudwatch_host")
+  $heat_metadata_host   = getvar("${kickstack_environment}_heat_metadata_host")
+  $heat_cloudwatch_host = getvar("${kickstack_environment}_heat_cloudwatch_host")
 
   #Nova
-  $vncproxy_host        = getvar("${partition}_vncproxy_host")
-  $nova_metadata_ip     = getvar("${partition}_nova_metadata_ip")
+  $vncproxy_host        = getvar("${kickstack_environment}_vncproxy_host")
+  $nova_metadata_ip     = getvar("${kickstack_environment}_nova_metadata_ip")
 
-  $missing_fact_template      = "'<%= @missing_fact %>' exported fact missing which is needed by '<%= @title %>'. Ensure that provider class '<%= @class %>' is applied in the ${partition} partition."
+  $missing_fact_template      = "'<%= @missing_fact %>' exported fact missing which is needed by '<%= @title %>'. Ensure that provider class '<%= @class %>' is applied in the ${kickstack_environment} kickstack_environment."
 
   if ($allow_default_passwords) {
     $default_password_template  = "Default password for service '<%= @service_name %>'."

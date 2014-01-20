@@ -18,9 +18,9 @@ class kickstack::nameresolution inherits kickstack {
         ip            => getvar("ipaddress_${nic_management}"),
         host_aliases  => $aliases,
         comment       => 'Managed by Puppet',
-        tag           => "${partition}_name_resolution"
+        tag           => "${kickstack_environment}_name_resolution"
       }
-      Host <<| tag == "${partition}_name_resolution" |>>
+      Host <<| tag == "${kickstack_environment}_name_resolution" |>>
     }
 
     default: {
