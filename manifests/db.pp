@@ -2,16 +2,18 @@ define kickstack::db (
   $password,
   $allowed_hosts = '%'
 ) {
+  include kickstack::database::install
+
   $database     = $kickstack::database::server
 
   $servicename  = $name
   $username     = $name
 
   if ($password == "${servicename}_dbpass") {
-    warning("${name} is using the default password on ${::hostname}")
-
-    if (!$kickstack::allow_default_passwords) {
-      fail("Default password for '${name}' and default passwords are not allowed.")
+    if ($kickstack::allow_default_passwords) {
+      warning("Default password for database ${name}.")
+    } else {
+      fail("Default password for database ${name} and default passwords are not allowed.")
     }
   }
 

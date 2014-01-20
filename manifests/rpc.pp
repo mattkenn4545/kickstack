@@ -16,7 +16,7 @@ class kickstack::rpc inherits kickstack {
       }
     }
     default: {
-      fail("Unsupported RPC server type: ${rpc_server}")
+      fail("Unsupported RPC server: ${rpc_server}")
     }
   }
 

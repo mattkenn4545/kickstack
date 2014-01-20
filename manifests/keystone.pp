@@ -23,7 +23,11 @@ class kickstack::keystone (
 ) inherits kickstack {
   $service_name = 'keystone'
 
-  if (!$allow_default_passwords and $admin_password == 'admin_password') {
-    fail('kickstack::keystone::admin_password set to default and kickstack::allow_default_passwords is false.')
+  if ($admin_password == 'admin_password' or $admin_token == 'admin_token') {
+    if ($kickstack::allow_default_passwords) {
+      warning(inline_template($kickstack::default_password_template))
+    } else {
+      fail(inline_template($kickstack::default_password_template))
+    }
   }
 }

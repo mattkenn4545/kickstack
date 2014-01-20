@@ -8,4 +8,12 @@ class kickstack::heat (
   $apis                           = hiera('kickstack::heat::apis',                          'heat')
 ) inherits kickstack {
   $service_name = 'heat'
+
+  if ($service_password == "${service_name}_password") {
+    if ($kickstack::allow_default_passwords) {
+      warning(inline_template($kickstack::default_password_template))
+    } else {
+      fail(inline_template($kickstack::default_password_template))
+    }
+  }
 }

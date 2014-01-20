@@ -56,5 +56,13 @@ class kickstack::neutron (
   $external_network_id    = hiera('kickstack::neutron::external_network_id',      undef)
 ) inherits kickstack {
   $service_name = 'neutron'
+
+  if ($service_password == "${service_name}_password") {
+    if ($kickstack::allow_default_passwords) {
+      warning(inline_template($kickstack::default_password_template))
+    } else {
+      fail(inline_template($kickstack::default_password_template))
+    }
+  }
 }
 

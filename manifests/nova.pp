@@ -17,4 +17,12 @@ class kickstack::nova (
   $xenapi_connection_password       = hiera('kickstack::nova::xenapi_connection_password',      undef)
 ) inherits kickstack {
   $service_name = 'nova'
+
+  if ($admin_password == "admin_password") {
+    if ($kickstack::allow_default_passwords) {
+      warning(inline_template($kickstack::default_password_template))
+    } else {
+      fail(inline_template($kickstack::default_password_template))
+    }
+  }
 }

@@ -95,6 +95,12 @@ class kickstack (
 
   $missing_fact_template      = "'<%= @missing_fact %>' exported fact missing which is needed by '<%= @title %>'. Ensure that provider class '<%= @class %>' is applied in the ${partition} partition."
 
+  if ($allow_default_passwords) {
+    $default_password_template  = "Default password for service '<%= @service_name %>'."
+  } else {
+    $default_password_template  = "Default password for service '<%= @service_name %>' and default passwords are not allowed."
+  }
+
   $exported_fact_provider = {
     'db_host'               => 'kickstack::database::install',
     'rpc_host'              => 'kickstack::rpc',
@@ -106,5 +112,14 @@ class kickstack (
     'heat_cloudwatch_host'  => 'kickstack::heat::api',
     'vncproxy_host'         => 'kickstack::nova::vncproxy',
     'nova_metadata_ip'      => 'kickstack::nova::api',
+  }
+
+  if ($rpc_password == 'rpc_pass') {
+    $base_message = 'Default rpc password'
+    if ($kickstack::allow_default_passwords) {
+      warning("${base_message}.")
+    } else {
+      fail("${base_message} and default passwords are not allowed.")
+    }
   }
 }
