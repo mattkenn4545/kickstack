@@ -21,6 +21,10 @@ class kickstack::neutron::agent::l3 inherits kickstack::neutron {
         package_ensure              => $package_version,
         require                     => Vs_bridge[ $external_bridge ]
       }
+
+      sysctl::value { 'net.ipv4.ip_forward':              value => 1 }
+      sysctl::value { 'net.ipv4.conf.all.rp_filter':      value => 0 }
+      sysctl::value { 'net.ipv4.conf.default.rp_filter':  value => 0 }
     }
   } else {
     notify { 'Unable to apply ::neutron::agents::l3': }
