@@ -35,6 +35,6 @@ class kickstack::neutron::agent::l2 inherits kickstack::neutron {
       }
     }
   } else {
-    notify { "Unable to apply ::neutron::agents::${$plugin}": }
+    notify { "Unable to apply ::neutron::agents::${plugin}": }
   }
 }
