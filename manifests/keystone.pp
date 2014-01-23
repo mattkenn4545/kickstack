@@ -21,7 +21,7 @@ class kickstack::keystone (
   # the admin service endpoint (default: none)
   $admin_suffix             = hiera('kickstack::keystone::admin_suffix',          undef),
 
-  $token_provider           = hiera('kickstack::keystone::token_provider',        undef)
+  $token_provider           = hiera('kickstack::keystone::token_provider',        'keystone.token.providers.uuid.Provider')
 ) inherits kickstack {
   $service_name = 'keystone'
 
