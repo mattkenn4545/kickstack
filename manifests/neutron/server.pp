@@ -26,7 +26,8 @@ class kickstack::neutron::server inherits kickstack::neutron {
         auth_password   => $service_password,
         auth_host       => $auth_host,
         sql_connection  => $sql_connection,
-        package_ensure  => $package_version
+        package_ensure  => $package_version,
+        api_workers     => $::processorcount
       }
 
       if (!defined(Class['kickstack::neutron::agent::l2'])) {
