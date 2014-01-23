@@ -19,7 +19,8 @@ class kickstack::keystone::config inherits kickstack::keystone {
       debug             => $debug,
       catalog_type      => 'sql',
       admin_token       => $admin_token,
-      sql_connection    => $sql_connection
+      sql_connection    => $sql_connection,
+      token_provider    => $token_provider
     }
 
     # Installs the service user endpoint.

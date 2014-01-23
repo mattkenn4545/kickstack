@@ -19,7 +19,9 @@ class kickstack::keystone (
 
   # The suffix to append to the keystone hostname for publishing
   # the admin service endpoint (default: none)
-  $admin_suffix             = hiera('kickstack::keystone::admin_suffix',          undef)
+  $admin_suffix             = hiera('kickstack::keystone::admin_suffix',          undef),
+
+  $token_provider           = hiera('kickstack::keystone::token_provider',        undef)
 ) inherits kickstack {
   $service_name = 'keystone'
 
