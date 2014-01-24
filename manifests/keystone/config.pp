@@ -41,7 +41,7 @@ class kickstack::keystone::config inherits kickstack::keystone {
       require           => Class[ '::keystone::endpoint' ]
     }
 
-    kickstack::exportfact::export { 'auth_host':
+    kickstack::exportfact { 'auth_host':
       require           => Class[ '::keystone::endpoint' ]
     }
 

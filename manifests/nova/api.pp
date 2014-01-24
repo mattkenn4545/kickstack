@@ -38,7 +38,7 @@ class kickstack::nova::api inherits kickstack::nova {
         require           => Class['::nova::api']
       }
 
-      kickstack::exportfact::export { 'nova_metadata_ip':
+      kickstack::exportfact { 'nova_metadata_ip':
         require           => Class['::nova::api']
       }
     } else {

@@ -1,4 +1,4 @@
-define kickstack::exportfact::export {
+define kickstack::exportfact {
   include kickstack
 
   $value = getvar("kickstack::params::${name}")

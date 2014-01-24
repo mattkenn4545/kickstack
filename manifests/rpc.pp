@@ -20,5 +20,5 @@ class kickstack::rpc inherits kickstack::params {
     }
   }
 
-  kickstack::exportfact::export { 'rpc_host': }
+  kickstack::exportfact { 'rpc_host': }
 }

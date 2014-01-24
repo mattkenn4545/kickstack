@@ -31,5 +31,5 @@ class kickstack::database::install inherits kickstack::database {
     }
   }
 
-  kickstack::exportfact::export { 'db_host': }
+  kickstack::exportfact { 'db_host': }
 }

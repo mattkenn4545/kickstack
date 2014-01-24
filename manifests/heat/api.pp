@@ -14,7 +14,7 @@ class kickstack::heat::api inherits kickstack::heat {
         require           => Class[ '::heat::api' ]
       }
 
-      kickstack::exportfact::export { 'heat_metadata_host':
+      kickstack::exportfact { 'heat_metadata_host':
         require           => Class[ '::heat::api' ]
       }
     }
@@ -37,7 +37,7 @@ class kickstack::heat::api inherits kickstack::heat {
         enabled           => true
       }
 
-      kickstack::exportfact::export { 'heat_cloudwatch_host':
+      kickstack::exportfact { 'heat_cloudwatch_host':
         require           => Class[ '::heat::api_cloudwatch' ]
       }
 
