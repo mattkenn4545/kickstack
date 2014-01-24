@@ -61,4 +61,13 @@ class kickstack::params (
     'vncproxy_host'         => 'kickstack::nova::vncproxy',
     'nova_metadata_ip'      => 'kickstack::nova::api',
   }
+
+  if ($rpc_password == 'rpc_pass') {
+    $base_message = 'Default rpc password'
+    if ($allow_default_passwords) {
+      warning("${base_message}.")
+    } else {
+      fail("${base_message} and default passwords are not allowed.")
+    }
+  }
 }

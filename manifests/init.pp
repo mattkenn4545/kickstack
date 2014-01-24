@@ -119,13 +119,4 @@ class kickstack (
 
   include kickstack::repo
   include kickstack::nameresolution
-
-  if ($rpc_password == 'rpc_pass') {
-    $base_message = 'Default rpc password'
-    if ($allow_default_passwords) {
-      warning("${base_message}.")
-    } else {
-      fail("${base_message} and default passwords are not allowed.")
-    }
-  }
 }
