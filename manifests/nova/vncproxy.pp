@@ -9,9 +9,7 @@ class kickstack::nova::vncproxy inherits kickstack::nova {
     }
 
     kickstack::exportfact::export { 'vncproxy_host':
-      value   => $fqdn,
-      tag     => 'nova',
-      require => Class['::nova::vncproxy']
+      require         => Class['::nova::vncproxy']
     }
   } else {
     notify { 'Unable to apply ::nova::vncproxy': }

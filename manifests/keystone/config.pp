@@ -42,8 +42,6 @@ class kickstack::keystone::config inherits kickstack::keystone {
     }
 
     kickstack::exportfact::export { 'auth_host':
-      value             => $fqdn,
-      tag               => 'keystone',
       require           => Class[ '::keystone::endpoint' ]
     }
 

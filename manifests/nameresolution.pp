@@ -5,7 +5,7 @@
 #
 # Currently supports only entries in /etc/hosts. Alternative
 # implementations might dynamically manage DNS entries.
-class kickstack::nameresolution inherits kickstack {
+class kickstack::nameresolution inherits kickstack::params {
   case $name_resolution {
     'hosts': {
       $host = pick($fqdn, $hostname)

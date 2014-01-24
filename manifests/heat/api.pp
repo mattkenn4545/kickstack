@@ -15,8 +15,6 @@ class kickstack::heat::api inherits kickstack::heat {
       }
 
       kickstack::exportfact::export { 'heat_metadata_host':
-        value             => $fqdn,
-        tag               => 'heat',
         require           => Class[ '::heat::api' ]
       }
     }
@@ -40,8 +38,6 @@ class kickstack::heat::api inherits kickstack::heat {
       }
 
       kickstack::exportfact::export { 'heat_cloudwatch_host':
-        value             => $fqdn,
-        tag               => 'heat',
         require           => Class[ '::heat::api_cloudwatch' ]
       }
 

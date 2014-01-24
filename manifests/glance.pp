@@ -1,13 +1,13 @@
 class kickstack::glance (
   $service_password   = hiera('kickstack::glance::service_password',     'glance_password')
-) inherits kickstack {
+) inherits kickstack::params {
   $service_name = 'glance'
 
   if ($service_password == "${service_name}_password") {
-    if ($kickstack::allow_default_passwords) {
-      warning(inline_template($kickstack::default_password_template))
+    if ($allow_default_passwords) {
+      warning(inline_template($default_password_template))
     } else {
-      fail(inline_template($kickstack::default_password_template))
+      fail(inline_template($default_password_template))
     }
   }
 }

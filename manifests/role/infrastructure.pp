@@ -1,5 +1,6 @@
 class kickstack::role::infrastructure inherits kickstack {
   include kickstack::rpc
+
   include kickstack::database::install
 
   include kickstack::keystone::db
@@ -7,8 +8,6 @@ class kickstack::role::infrastructure inherits kickstack {
   include kickstack::cinder::db
   include kickstack::neutron::db
   include kickstack::nova::db
-
   include kickstack::heat::db
-
   include kickstack::ceilometer::db
 }

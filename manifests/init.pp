@@ -59,63 +59,70 @@ class kickstack (
 
   $allow_default_passwords              = hiera('kickstack::allow_default_passwords',             false),
 
-  $kickstack_environment                = hiera('kickstack::kickstack_environment',               pick($kickstack_environment, 'default'))
+  $kickstack_environment                = hiera('kickstack::kickstack_environment',               pick($kickstack_environment, 'default')),
+
+  #Infrastructure
+  $db_host                              = undef,
+  $rpc_host                             = undef,
+
+  #Keystone
+  $auth_host                            = undef,
+
+  #Glance
+  $glance_registry_host                 = undef,
+  $glance_api_host                      = undef,
+
+  #Neutron
+  $neutron_host                         = undef,
+
+  #Heat
+  $heat_metadata_host                   = undef,
+  $heat_cloudwatch_host                 = undef,
+
+  #Nova
+  $vncproxy_host                        = undef,
+  $nova_metadata_ip                     = undef
 ) {
   include ::exportfact
-
-  include kickstack::repo
-  include kickstack::nameresolution
 
   ::exportfact::import { $kickstack_environment: }
 
   validate_bool($verbose, $debug, $allow_default_passwords)
 
-  #Infrastructure
-  $db_host              = getvar("${kickstack_environment}_db_host")
-  $rpc_host             = getvar("${kickstack_environment}_rpc_host")
-
-  #Keystone
-  $auth_host            = getvar("${kickstack_environment}_auth_host")
-
-  #Glance
-  $glance_registry_host = getvar("${kickstack_environment}_glance_registry_host")
-  $glance_api_host      = getvar("${kickstack_environment}_glance_api_host")
-
-  #Neutron
-  $neutron_host         = getvar("${kickstack_environment}_neutron_host")
-
-  #Heat
-  $heat_metadata_host   = getvar("${kickstack_environment}_heat_metadata_host")
-  $heat_cloudwatch_host = getvar("${kickstack_environment}_heat_cloudwatch_host")
-
-  #Nova
-  $vncproxy_host        = getvar("${kickstack_environment}_vncproxy_host")
-  $nova_metadata_ip     = getvar("${kickstack_environment}_nova_metadata_ip")
-
-  $missing_fact_template      = "'<%= @missing_fact %>' exported fact missing which is needed by '<%= @title %>'. Ensure that provider class '<%= @class %>' is applied in the ${kickstack_environment} kickstack_environment."
-
-  if ($allow_default_passwords) {
-    $default_password_template  = "Default password for service '<%= @service_name %>'."
-  } else {
-    $default_password_template  = "Default password for service '<%= @service_name %>' and default passwords are not allowed."
+  class { 'kickstack::params':
+    release                              => $release,
+    package_version                      => $package_version,
+    name_resolution                      => $name_resolution,
+    verbose                              => $verbose,
+    debug                                => $debug,
+    rpc_server                           => $rpc_server,
+    rpc_user                             => $rpc_user,
+    rpc_password                         => $rpc_password,
+    rabbit_virtual_host                  => $rabbit_virtual_host,
+    qpid_realm                           => $qpid_realm,
+    nic_management                       => $nic_management,
+    nic_data                             => $nic_data,
+    nic_external                         => $nic_external,
+    allow_default_passwords              => $allow_default_passwords,
+    kickstack_environment                => $kickstack_environment,
+    db_host                              => $db_host,
+    rpc_host                             => $rpc_host,
+    auth_host                            => $auth_host,
+    glance_registry_host                 => $glance_registry_host,
+    glance_api_host                      => $glance_api_host,
+    neutron_host                         => $neutron_host,
+    heat_metadata_host                   => $heat_metadata_host,
+    heat_cloudwatch_host                 => $heat_cloudwatch_host,
+    vncproxy_host                        => $vncproxy_host,
+    nova_metadata_ip                     => $nova_metadata_ip
   }
 
-  $exported_fact_provider = {
-    'db_host'               => 'kickstack::database::install',
-    'rpc_host'              => 'kickstack::rpc',
-    'auth_host'             => 'kickstack::keystone::config',
-    'glance_registry_host'  => 'kickstack::glance::registry',
-    'glance_api_host'       => 'kickstack::glance::api',
-    'neutron_host'          => 'kickstack::neutron::server',
-    'heat_metadata_host'    => 'kickstack::heat::api',
-    'heat_cloudwatch_host'  => 'kickstack::heat::api',
-    'vncproxy_host'         => 'kickstack::nova::vncproxy',
-    'nova_metadata_ip'      => 'kickstack::nova::api',
-  }
+  include kickstack::repo
+  include kickstack::nameresolution
 
   if ($rpc_password == 'rpc_pass') {
     $base_message = 'Default rpc password'
-    if ($kickstack::allow_default_passwords) {
+    if ($allow_default_passwords) {
       warning("${base_message}.")
     } else {
       fail("${base_message} and default passwords are not allowed.")

@@ -1,4 +1,4 @@
-class kickstack::rpc inherits kickstack {
+class kickstack::rpc inherits kickstack::params {
   case $rpc_server {
     'rabbitmq': {
       class { '::nova::rabbitmq':
@@ -20,8 +20,5 @@ class kickstack::rpc inherits kickstack {
     }
   }
 
-  kickstack::exportfact::export { 'rpc_host':
-    value             => $fqdn,
-    tag               => 'rpc_host'
-  }
+  kickstack::exportfact::export { 'rpc_host': }
 }

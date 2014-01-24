@@ -39,8 +39,6 @@ class kickstack::glance::api inherits kickstack::glance {
     }
 
     kickstack::exportfact::export { 'glance_api_host':
-      value             => $fqdn,
-      tag               => 'glance',
       require           => Class['::glance::api']
     }
   }

@@ -54,14 +54,14 @@ class kickstack::neutron (
   # The Neutron external network uuid
   # Irrelevant unless $neutron_network_type == 'provider_router')
   $external_network_id    = hiera('kickstack::neutron::external_network_id',      undef)
-) inherits kickstack {
+) inherits kickstack::params {
   $service_name = 'neutron'
 
   if ($service_password == "${service_name}_password") {
-    if ($kickstack::allow_default_passwords) {
-      warning(inline_template($kickstack::default_password_template))
+    if ($allow_default_passwords) {
+      warning(inline_template($default_password_template))
     } else {
-      fail(inline_template($kickstack::default_password_template))
+      fail(inline_template($default_password_template))
     }
   }
 }

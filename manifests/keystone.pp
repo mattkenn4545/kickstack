@@ -22,14 +22,14 @@ class kickstack::keystone (
   $admin_suffix             = hiera('kickstack::keystone::admin_suffix',          undef),
 
   $token_provider           = hiera('kickstack::keystone::token_provider',        'keystone.token.providers.uuid.Provider')
-) inherits kickstack {
+) inherits kickstack::params {
   $service_name = 'keystone'
 
   if ($admin_password == 'admin_password' or $admin_token == 'admin_token') {
-    if ($kickstack::allow_default_passwords) {
-      warning(inline_template($kickstack::default_password_template))
+    if ($allow_default_passwords) {
+      warning(inline_template($default_password_template))
     } else {
-      fail(inline_template($kickstack::default_password_template))
+      fail(inline_template($default_password_template))
     }
   }
 }

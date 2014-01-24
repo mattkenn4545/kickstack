@@ -10,7 +10,7 @@ define kickstack::db (
   $username     = $name
 
   if ($password == "${servicename}_dbpass") {
-    if ($kickstack::allow_default_passwords) {
+    if ($kickstack::params::allow_default_passwords) {
       warning("Default password for database ${name}.")
     } else {
       fail("Default password for database ${name} and default passwords are not allowed.")

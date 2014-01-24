@@ -31,8 +31,6 @@ class kickstack::glance::registry inherits kickstack::glance {
 
     # Export the registry host name string for the service
     kickstack::exportfact::export { 'glance_registry_host':
-      value             => $fqdn,
-      tag               => 'glance',
       require           => Class[ '::glance::registry' ]
     }
   }

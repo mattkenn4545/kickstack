@@ -15,14 +15,14 @@ class kickstack::nova (
   $xenapi_connection_url            = hiera('kickstack::nova::xenapi_connection_url',           undef),
   $xenapi_connection_username       = hiera('kickstack::nova::xenapi_connection_username',      undef),
   $xenapi_connection_password       = hiera('kickstack::nova::xenapi_connection_password',      undef)
-) inherits kickstack {
+) inherits kickstack::params {
   $service_name = 'nova'
 
   if ($admin_password == "admin_password") {
-    if ($kickstack::allow_default_passwords) {
-      warning(inline_template($kickstack::default_password_template))
+    if ($allow_default_passwords) {
+      warning(inline_template($default_password_template))
     } else {
-      fail(inline_template($kickstack::default_password_template))
+      fail(inline_template($default_password_template))
     }
   }
 }

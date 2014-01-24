@@ -6,14 +6,14 @@ class kickstack::heat (
   # Can be any combination of 'heat', 'cfn', and 'cloudwatch'
   # Default is just (the native Heat API)
   $apis                           = hiera('kickstack::heat::apis',                          'heat')
-) inherits kickstack {
+) inherits kickstack::params {
   $service_name = 'heat'
 
   if ($service_password == "${service_name}_password") {
-    if ($kickstack::allow_default_passwords) {
-      warning(inline_template($kickstack::default_password_template))
+    if ($allow_default_passwords) {
+      warning(inline_template($default_password_template))
     } else {
-      fail(inline_template($kickstack::default_password_template))
+      fail(inline_template($default_password_template))
     }
   }
 }

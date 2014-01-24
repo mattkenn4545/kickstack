@@ -39,9 +39,7 @@ class kickstack::nova::api inherits kickstack::nova {
       }
 
       kickstack::exportfact::export { 'nova_metadata_ip':
-        value     => getvar("ipaddress_${nic_management}"),
-        tag       => 'nova',
-        require   => Class['::nova::api']
+        require           => Class['::nova::api']
       }
     } else {
       notify { 'Unable to apply ::nova::api': }
