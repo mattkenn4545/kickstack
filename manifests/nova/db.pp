@@ -1,5 +1,5 @@
 class kickstack::nova::db (
-  $password = hiera('kickstack::nova::db::password',  'nova_dbpass')
+  $password = 'nova_dbpass'
 ) inherits kickstack::nova {
   include kickstack::database
 

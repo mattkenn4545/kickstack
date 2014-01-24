@@ -1,5 +1,5 @@
 class kickstack::ceilometer::db (
-  $password = hiera('kickstack::ceilometer::db::password',  'ceilometer_dbpass')
+  $password = 'ceilometer_dbpass'
 ) inherits kickstack::ceilometer {
   include kickstack::database
 

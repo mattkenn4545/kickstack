@@ -1,5 +1,5 @@
 class kickstack::cinder::db (
-  $password = hiera('kickstack::cinder::db::password',  'cinder_dbpass')
+  $password = 'cinder_dbpass'
 ) inherits kickstack::cinder {
   include kickstack::database
 

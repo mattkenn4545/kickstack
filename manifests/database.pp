@@ -1,6 +1,6 @@
 class kickstack::database (
-  $server           = hiera('kickstack::database::server',          'mysql'),
-  $root_password    = hiera('kickstack::database::root_password',   'kickstack')
+  $server           = 'mysql',
+  $root_password    = 'kickstack'
 ) inherits kickstack::params {
   if ($root_password == 'kickstack') {
     $base_message = "Default ${server} root password"

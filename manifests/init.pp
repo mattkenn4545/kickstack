@@ -11,7 +11,7 @@ class kickstack (
   # * override by setting to 'folsom' (not recommended) or 'grizzly'
   # This is for new installations only; don't expect this to magically
   # support rolling releases.
-  $release                              = hiera('kickstack::release',                             'havana'),
+  $release                              = 'havana',
 
   # Version number of OpenStack *server* packages.
   #
@@ -25,41 +25,41 @@ class kickstack (
   # Note: if you set this to a specific version, then this assumes
   # that your distro synchronizes version numbers across OpenStack
   # server packages.
-  $package_version                      = hiera('kickstack::package_version',                     'installed'),
+  $package_version                      = 'installed',
 
   # The strategy to use so machines can make their hostnames known to
   # each other.
   # * default "hosts" -- manage /etc/hosts
-  $name_resolution                      = hiera('kickstack::name_resolution',                     'hosts'),
+  $name_resolution                      = 'hosts',
 
-  $verbose                              = hiera('kickstack::verbose',                             false),
-  $debug                                = hiera('kickstack::debug',                               false),
+  $verbose                              = false,
+  $debug                                = false,
 
   #RPC
-  $rpc_server                           = hiera('kickstack::rpc_server',                          'rabbitmq'),
-  $rpc_user                             = hiera('kickstack::rpc_user',                            'kickstack'),
-  $rpc_password                         = hiera('kickstack::rpc_password',                        'rpc_pass'),
-  $rabbit_virtual_host                  = hiera('kickstack::rabbit_virtual_host',                 '/'),
-  $qpid_realm                           = hiera('kickstack::qpid_realm',                          'OPENSTACK'),
+  $rpc_server                           = 'rabbitmq',
+  $rpc_user                             = 'kickstack',
+  $rpc_password                         = 'rpc_pass',
+  $rabbit_virtual_host                  = '/',
+  $qpid_realm                           = 'OPENSTACK',
 
   # The interface over which to run your nodes' management network traffic.
   # Normally, this would be your primary network interface.
-  $nic_management                       = hiera('kickstack::nic_management',                      'eth0'),
+  $nic_management                       = 'eth0',
 
   # The interface over which to run your tenant guest traffic.
   # This would be a secondary interface, present on your network node
   # and compute nodes.
-  $nic_data                             = hiera('kickstack::nic_data',                            'eth1'),
+  $nic_data                             = 'eth1',
 
   # The interface you use to connect to the public network.  This
   # interface would only be present on your network nodes, and
   # possibly also on your API nodes if you wish to expose the API
   # services publicly.
-  $nic_external                         = hiera('kickstack::nic_external',                        'eth2'),
+  $nic_external                         = 'eth2',
 
-  $allow_default_passwords              = hiera('kickstack::allow_default_passwords',             false),
+  $allow_default_passwords              = false,
 
-  $kickstack_environment                = hiera('kickstack::kickstack_environment',               pick($kickstack_environment, 'default')),
+  $kickstack_environment                = pick($kickstack_environment, 'default'),
 
   #Infrastructure
   $db_host                              = undef,
