@@ -3,8 +3,8 @@ class kickstack::heat::config inherits kickstack::heat {
     $missing_fact = 'db_host'
   } elsif (!$rpc_host) {
     $missing_fact = 'rpc_host'
-  } elsif (!$auth_host) {
-    $missing_fact = 'auth_host'
+  } elsif (!$keystone_api_host) {
+    $missing_fact = 'keystone_api_host'
   }
 
   if $missing_fact {
@@ -17,7 +17,7 @@ class kickstack::heat::config inherits kickstack::heat {
 
     include kickstack::keystone
 
-    $auth_uri       = "http://${auth_host}:5000/v2.0"
+    $auth_uri       = "http://${keystone_api_host}:5000/v2.0"
 
     $sql_connection = $kickstack::heat::db::sql_connection
 
@@ -32,7 +32,7 @@ class kickstack::heat::config inherits kickstack::heat {
           rabbit_password     => $rpc_password,
           rabbit_virtualhost  => $rabbit_virtual_host,
           rabbit_userid       => $rpc_user,
-          keystone_host       => $auth_host,
+          keystone_host       => $keystone_api_host,
           keystone_tenant     => $kickstack::keystone::service_tenant,
           keystone_user       => 'heat',
           keystone_password   => $service_password,
@@ -51,7 +51,7 @@ class kickstack::heat::config inherits kickstack::heat {
           qpid_password       => $rpc_password,
           qpid_realm          => $qpid_realm,
           qpid_user           => $rpc_user,
-          keystone_host       => $auth_host,
+          keystone_host       => $keystone_api_host,
           keystone_tenant     => $kickstack::keystone::service_tenant,
           keystone_user       => 'heat',
           keystone_password   => $service_password,

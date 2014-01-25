@@ -1,6 +1,6 @@
 class kickstack::nova::api inherits kickstack::nova {
-  if (!$auth_host) {
-    $missing_fact = 'auth_host'
+  if (!$keystone_api_host) {
+    $missing_fact = 'keystone_api_host'
   }
 
   if $missing_fact {
@@ -25,7 +25,7 @@ class kickstack::nova::api inherits kickstack::nova {
       class { '::nova::api':
         enabled                               => true,
         auth_strategy                         => 'keystone',
-        auth_host                             => $auth_host,
+        auth_host                             => $keystone_api_host,
         admin_tenant_name                     => $kickstack::keystone::service_tenant,
         admin_user                            => 'nova',
         admin_password                        => $admin_password,

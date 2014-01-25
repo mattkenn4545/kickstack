@@ -1,6 +1,6 @@
 class kickstack::horizon::site inherits kickstack::horizon {
-   if (!$auth_host) {
-     $missing_fact = 'auth_host'
+   if (!$keystone_api_host) {
+     $missing_fact = 'keystone_api_host'
    }
 
   if $missing_fact {
@@ -29,7 +29,7 @@ class kickstack::horizon::site inherits kickstack::horizon {
       cache_server_ip       => '127.0.0.1',
       cache_server_port     => '11211',
       swift                 => false,
-      keystone_host         => $auth_host,
+      keystone_host         => $keystone_api_host,
       keystone_default_role => 'Member',
       django_debug          => $django_debug,
       api_result_limit      => 1000,

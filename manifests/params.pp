@@ -20,7 +20,7 @@ class kickstack::params (
   $rpc_host             = pick(getvar("${kickstack_environment}_rpc_host"),               false),
 
   #Keystone
-  $auth_host            = pick(getvar("${kickstack_environment}_auth_host"),              false),
+  $keystone_api_host    = pick(getvar("${kickstack_environment}_keystone_api_host"),      false),
 
   #Glance
   $glance_registry_host = pick(getvar("${kickstack_environment}_glance_registry_host"),   false),
@@ -52,7 +52,7 @@ class kickstack::params (
   $exported_fact_provider = {
     'db_host'               => 'kickstack::database::install',
     'rpc_host'              => 'kickstack::rpc',
-    'auth_host'             => 'kickstack::keystone::config',
+    'keystone_api_host'     => 'kickstack::keystone::config',
     'glance_registry_host'  => 'kickstack::glance::registry',
     'glance_host'           => 'kickstack::glance::api',
     'neutron_host'          => 'kickstack::neutron::server',

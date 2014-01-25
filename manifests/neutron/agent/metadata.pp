@@ -1,6 +1,6 @@
 class kickstack::neutron::agent::metadata inherits kickstack::neutron {
-   if (!$auth_host) {
-     $missing_fact = 'auth_host'
+   if (!$keystone_api_host) {
+     $missing_fact = 'keystone_api_host'
    } elsif (!$nova_metadata_ip) {
      $missing_fact = 'nova_metadata_ip'
    }
@@ -22,7 +22,7 @@ class kickstack::neutron::agent::metadata inherits kickstack::neutron {
         debug             => $debug,
         auth_tenant       => $kickstack::keystone::service_tenant,
         auth_user         => 'neutron',
-        auth_url          => "http://${auth_host}:35357/v2.0",
+        auth_url          => "http://${keystone_api_host}:35357/v2.0",
         auth_region       => $kickstack::keystone::region,
         metadata_ip       => $nova_metadata_ip,
         package_ensure    => $package_version,

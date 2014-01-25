@@ -1,6 +1,6 @@
 class kickstack::cinder::api inherits kickstack::cinder {
-   if (!$auth_host) {
-     $missing_fact = 'auth_host'
+   if (!$keystone_api_host) {
+     $missing_fact = 'keystone_api_host'
    }
 
   if $missing_fact {
@@ -18,7 +18,7 @@ class kickstack::cinder::api inherits kickstack::cinder {
         keystone_tenant     => $kickstack::keystone::service_tenant,
         keystone_user       => 'cinder',
         keystone_password   => $service_password,
-        keystone_auth_host  => $auth_host,
+        keystone_auth_host  => $keystone_api_host,
         package_ensure      => $package_version
       }
 

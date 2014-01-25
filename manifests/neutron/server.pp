@@ -1,8 +1,8 @@
 class kickstack::neutron::server inherits kickstack::neutron {
   if (!$db_host) {
     $missing_fact = 'db_host'
-  } elsif (!$auth_host) {
-    $missing_fact = 'auth_host'
+  } elsif (!$keystone_api_host) {
+    $missing_fact = 'keystone_api_host'
   }
 
   if $missing_fact {
@@ -24,7 +24,7 @@ class kickstack::neutron::server inherits kickstack::neutron {
         auth_tenant     => $kickstack::keystone::service_tenant,
         auth_user       => 'neutron',
         auth_password   => $service_password,
-        auth_host       => $auth_host,
+        auth_host       => $keystone_api_host,
         sql_connection  => $sql_connection,
         package_ensure  => $package_version,
         api_workers     => $::processorcount

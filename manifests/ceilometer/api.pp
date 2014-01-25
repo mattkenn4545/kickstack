@@ -1,8 +1,8 @@
 class kickstack::ceilometer::api inherits kickstack::ceilometer {
   if (!$db_host) {
     $missing_fact = 'db_host'
-  } elsif (!$auth_host) {
-    $missing_fact = 'auth_host'
+  } elsif (!$keystone_api_host) {
+    $missing_fact = 'keystone_api_host'
   }
 
   if $missing_fact {
@@ -21,7 +21,7 @@ class kickstack::ceilometer::api inherits kickstack::ceilometer {
       $sql_connection = $kickstack::ceilometer::db::sql_connection
 
       class { '::ceilometer::api':
-        keystone_host       => $auth_host,
+        keystone_host       => $keystone_api_host,
         keystone_tenant     => $kickstack::keystone::service_tenant,
         keystone_user       => 'ceilometer',
         keystone_password   => $service_password

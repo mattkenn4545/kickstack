@@ -66,7 +66,7 @@ class kickstack (
   $rpc_host                             = undef,
 
   #Keystone
-  $auth_host                            = undef,
+  $keystone_api_host                    = undef,
 
   #Glance
   $glance_registry_host                 = undef,
@@ -107,7 +107,7 @@ class kickstack (
     kickstack_environment                => $kickstack_environment,
     db_host                              => $db_host,
     rpc_host                             => $rpc_host,
-    auth_host                            => $auth_host,
+    keystone_api_host                    => $keystone_api_host,
     glance_registry_host                 => $glance_registry_host,
     glance_host                          => $glance_host,
     neutron_host                         => $neutron_host,

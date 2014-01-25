@@ -34,10 +34,6 @@ class kickstack::keystone::config inherits kickstack::keystone {
       require           => Class[ '::keystone::endpoint' ]
     }
 
-    kickstack::exportfact { 'auth_host':
-      require           => Class[ '::keystone::endpoint' ]
-    }
-
     file { '/root/openstackrc':
       owner             => 'root',
       group             => 'root',

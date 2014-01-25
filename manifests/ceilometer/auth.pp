@@ -1,6 +1,6 @@
 class kickstack::ceilometer::auth inherits kickstack::ceilometer {
-  if (!$auth_host) {
-    $missing_fact = 'auth_host'
+  if (!$keystone_api_host) {
+    $missing_fact = 'keystone_api_host'
   }
 
   if $missing_fact {
@@ -14,7 +14,7 @@ class kickstack::ceilometer::auth inherits kickstack::ceilometer {
     if (defined(Class['::ceilometer'])) {
       include kickstack::keystone
 
-      $auth_url         = "http://${auth_host}:5000/v2.0"
+      $auth_url         = "http://${keystone_api_host}:5000/v2.0"
 
       class { '::ceilometer::agent::auth':
         auth_url         => $auth_url,

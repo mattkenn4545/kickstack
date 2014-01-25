@@ -3,8 +3,8 @@ class kickstack::glance::api inherits kickstack::glance {
     $missing_fact = 'db_host'
   } elsif (!$glance_registry_host) {
     $missing_fact = 'glance_registry_host'
-  } elsif (!$auth_host) {
-    $missing_fact = 'auth_host'
+  } elsif (!$keystone_api_host) {
+    $missing_fact = 'keystone_api_host'
   }
 
   if $missing_fact {
@@ -25,7 +25,7 @@ class kickstack::glance::api inherits kickstack::glance {
       verbose           => $verbose,
       debug             => $debug,
       auth_type         => 'keystone',
-      auth_host         => $auth_host,
+      auth_host         => $keystone_api_host,
       keystone_tenant   => $kickstack::keystone::service_tenant,
       keystone_user     => 'glance',
       keystone_password => $service_password,
