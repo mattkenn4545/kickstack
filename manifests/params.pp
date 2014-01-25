@@ -27,7 +27,7 @@ class kickstack::params (
   $glance_host          = pick(getvar("${kickstack_environment}_glance_host"),            false),
 
   #Neutron
-  $neutron_host         = pick(getvar("${kickstack_environment}_neutron_host"),           false),
+  $neutron_api_host     = pick(getvar("${kickstack_environment}_neutron_api_host"),       false),
 
   #Heat
   $heat_metadata_host   = pick(getvar("${kickstack_environment}_heat_metadata_host"),     false),
@@ -55,7 +55,7 @@ class kickstack::params (
     'keystone_api_host'     => 'kickstack::keystone::config',
     'glance_registry_host'  => 'kickstack::glance::registry',
     'glance_host'           => 'kickstack::glance::api',
-    'neutron_host'          => 'kickstack::neutron::server',
+    'neutron_api_host'      => 'kickstack::neutron::server',
     'heat_metadata_host'    => 'kickstack::heat::api',
     'heat_cloudwatch_host'  => 'kickstack::heat::api',
     'vncproxy_host'         => 'kickstack::nova::vncproxy',

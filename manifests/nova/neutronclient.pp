@@ -1,8 +1,8 @@
 class kickstack::nova::neutronclient inherits kickstack::nova {
   if (!$keystone_api_host) {
     $missing_fact = 'keystone_api_host'
-  } elsif (!$neutron_host) {
-    $missing_fact = 'neutron_host'
+  } elsif (!$neutron_api_host) {
+    $missing_fact = 'neutron_api_host'
   }
 
   if $missing_fact {
@@ -20,7 +20,7 @@ class kickstack::nova::neutronclient inherits kickstack::nova {
       class { '::nova::network::neutron':
         neutron_admin_password    => $kickstack::neutron::service_password,
         neutron_auth_strategy     => 'keystone',
-        neutron_url               => "http://${neutron_host}:9696",
+        neutron_url               => "http://${neutron_api_host}:9696",
         neutron_admin_tenant_name => $kickstack::keystone::service_tenant,
         neutron_region_name       => $kickstack::keystone::region,
         neutron_admin_username    => 'neutron',

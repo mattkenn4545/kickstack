@@ -73,7 +73,7 @@ class kickstack (
   $glance_host                          = undef,
 
   #Neutron
-  $neutron_host                         = undef,
+  $neutron_api_host                         = undef,
 
   #Heat
   $heat_metadata_host                   = undef,
@@ -110,7 +110,7 @@ class kickstack (
     keystone_api_host                    => $keystone_api_host,
     glance_registry_host                 => $glance_registry_host,
     glance_host                          => $glance_host,
-    neutron_host                         => $neutron_host,
+    neutron_api_host                     => $neutron_api_host,
     heat_metadata_host                   => $heat_metadata_host,
     heat_cloudwatch_host                 => $heat_cloudwatch_host,
     vncproxy_host                        => $vncproxy_host,

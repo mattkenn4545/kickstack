@@ -41,10 +41,6 @@ class kickstack::neutron::server inherits kickstack::neutron {
         service_password  => $service_password,
         require           => Class[ '::neutron::server' ]
       }
-
-      kickstack::exportfact { 'neutron_host':
-        require           => Class[ '::neutron::server' ]
-      }
     } else {
       notify { 'Unable to apply ::neutron::server': }
     }
