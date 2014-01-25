@@ -13,10 +13,6 @@ class kickstack::heat::api inherits kickstack::heat {
         service_password  => $service_password,
         require           => Class[ '::heat::api' ]
       }
-
-      kickstack::exportfact { 'heat_metadata_host':
-        require           => Class[ '::heat::api' ]
-      }
     }
 
     if 'cfn' in $enabled_apis {

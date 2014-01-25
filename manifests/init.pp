@@ -65,23 +65,22 @@ class kickstack (
   $db_host                              = undef,
   $rpc_host                             = undef,
 
-  #Keystone
-  $keystone_api_host                    = undef,
-
-  #Glance
-  $glance_registry_host                 = undef,
+  #Endpoint Hosts
+  $ceilometer_api_host                  = undef,
+  $nova_api_host                        = undef,
+  $cinder_api_host                      = undef,
+  $heat_api_host                        = undef,
+  $heat_cfn_api_host                    = undef,
   $glance_api_host                      = undef,
-
-  #Neutron
+  $keystone_api_host                    = undef,
   $neutron_api_host                     = undef,
 
-  #Heat
-  $heat_metadata_host                   = undef,
-  $heat_cloudwatch_host                 = undef,
-
-  #Nova
+  #Facts
+  $glance_registry_host                 = undef,
   $vncproxy_host                        = undef,
-  $nova_metadata_ip                     = undef
+
+  $nova_metadata_ip                     = undef,
+  $heat_cloudwatch_host                 = undef
 ) {
   include ::exportfact
 
@@ -107,14 +106,18 @@ class kickstack (
     kickstack_environment                => $kickstack_environment,
     db_host                              => $db_host,
     rpc_host                             => $rpc_host,
-    keystone_api_host                    => $keystone_api_host,
-    glance_registry_host                 => $glance_registry_host,
+    ceilometer_api_host                  => $ceilometer_api_host,
+    nova_api_host                        => $nova_api_host,
+    cinder_api_host                      => $cinder_api_host,
+    heat_api_host                        => $heat_api_host,
+    heat_cfn_api_host                    => $heat_cfn_api_host,
     glance_api_host                      => $glance_api_host,
+    keystone_api_host                    => $keystone_api_host,
     neutron_api_host                     => $neutron_api_host,
-    heat_metadata_host                   => $heat_metadata_host,
-    heat_cloudwatch_host                 => $heat_cloudwatch_host,
+    glance_registry_host                 => $glance_registry_host,
     vncproxy_host                        => $vncproxy_host,
-    nova_metadata_ip                     => $nova_metadata_ip
+    nova_metadata_ip                     => $nova_metadata_ip,
+    heat_cloudwatch_host                 => $heat_cloudwatch_host
   }
 
   include kickstack::repo

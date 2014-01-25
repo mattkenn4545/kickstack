@@ -16,26 +16,25 @@ class kickstack::params (
   $kickstack_environment,
 
   #Infrastructure
-  $db_host              = pick(getvar("${kickstack_environment}_db_host"),                false),
-  $rpc_host             = pick(getvar("${kickstack_environment}_rpc_host"),               false),
+  $db_host                      = pick(getvar("${kickstack_environment}_db_host"),                false),
+  $rpc_host                     = pick(getvar("${kickstack_environment}_rpc_host"),               false),
 
-  #Keystone
-  $keystone_api_host    = pick(getvar("${kickstack_environment}_keystone_api_host"),      false),
+  #Endpoint Hosts
+  $ceilometer_api_host          = pick(getvar("${kickstack_environment}_ceilometer_api_host"),    false),
+  $nova_api_host                = pick(getvar("${kickstack_environment}_nova_api_host"),          false),
+  $cinder_api_host              = pick(getvar("${kickstack_environment}_cinder_api_host"),        false),
+  $heat_api_host                = pick(getvar("${kickstack_environment}_heat_api_host"),          false),
+  $heat_cfn_api_host            = pick(getvar("${kickstack_environment}_heat_cfn_api_host"),      false),
+  $glance_api_host              = pick(getvar("${kickstack_environment}_glance_api_host"),        false),
+  $keystone_api_host            = pick(getvar("${kickstack_environment}_keystone_api_host"),      false),
+  $neutron_api_host             = pick(getvar("${kickstack_environment}_neutron_api_host"),       false),
 
-  #Glance
-  $glance_registry_host = pick(getvar("${kickstack_environment}_glance_registry_host"),   false),
-  $glance_api_host      = pick(getvar("${kickstack_environment}_glance_api_host"),        false),
+  #Facts
+  $glance_registry_host         = pick(getvar("${kickstack_environment}_glance_registry_host"),   false),
+  $vncproxy_host                = pick(getvar("${kickstack_environment}_vncproxy_host"),          false),
 
-  #Neutron
-  $neutron_api_host     = pick(getvar("${kickstack_environment}_neutron_api_host"),       false),
-
-  #Heat
-  $heat_metadata_host   = pick(getvar("${kickstack_environment}_heat_metadata_host"),     false),
-  $heat_cloudwatch_host = pick(getvar("${kickstack_environment}_heat_cloudwatch_host"),   false),
-
-  #Nova
-  $vncproxy_host        = pick(getvar("${kickstack_environment}_vncproxy_host"),          false),
-  $nova_metadata_ip     = pick(getvar("${kickstack_environment}_nova_metadata_ip"),       false)
+  $nova_metadata_ip             = pick(getvar("${kickstack_environment}_nova_metadata_ip"),       false),
+  $heat_cloudwatch_host         = pick(getvar("${kickstack_environment}_heat_cloudwatch_host"),   false)
 ) {
   if (!defined(Class['kickstack'])) {
     fail('Kickstack is NOT defined...')
@@ -52,13 +51,18 @@ class kickstack::params (
   $exported_fact_provider = {
     'db_host'               => 'kickstack::database::install',
     'rpc_host'              => 'kickstack::rpc',
-    'keystone_api_host'     => 'kickstack::keystone::config',
-    'glance_registry_host'  => 'kickstack::glance::registry',
+    'ceilometer_api_host'   => 'kickstack::ceilometer::api',
+    'nova_api_host'         => 'kickstack::nova::api',
+    'cinder_api_host'       => 'kickstack::cinder::api',
+    'heat_api_host'         => 'kickstack::heat::api',
+    'heat_cfn_api_host'     => 'kickstack::heat::api',
     'glance_api_host'       => 'kickstack::glance::api',
+    'keystone_api_host'     => 'kickstack::keystone::config',
     'neutron_api_host'      => 'kickstack::neutron::server',
-    'heat_metadata_host'    => 'kickstack::heat::api',
-    'heat_cloudwatch_host'  => 'kickstack::heat::api',
+
+    'glance_registry_host'  => 'kickstack::glance::registry',
     'vncproxy_host'         => 'kickstack::nova::vncproxy',
+
     'nova_metadata_ip'      => 'kickstack::nova::api',
   }
 
