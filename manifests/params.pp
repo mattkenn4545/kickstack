@@ -40,6 +40,10 @@ class kickstack::params (
     fail('Kickstack is NOT defined...')
   }
 
+  if (!$kickstack::enabled) {
+    fail('Kickstack is not enabled ensure that $kickstack::enabled == true')
+  }
+
   $missing_fact_template      = "'<%= @missing_fact %>' exported fact missing which is needed by '<%= @title %>'. Ensure that provider class '<%= @class %>' is applied in the ${kickstack_environment} kickstack_environment."
 
   if ($allow_default_passwords) {

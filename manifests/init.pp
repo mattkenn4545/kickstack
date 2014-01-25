@@ -6,6 +6,7 @@
 # or The Foreman.
 
 class kickstack (
+  $enabled                              = false,
   # The OpenStack release to install
   # * default 'havana'
   # * override by setting to 'folsom' (not recommended) or 'grizzly'
