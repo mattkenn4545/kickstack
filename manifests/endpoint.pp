@@ -3,8 +3,8 @@ define kickstack::endpoint (
   $servicename        = $name,
   $classname          = 'auth'
 ) {
-  if (getvar("kickstack::params::${name}_host")) {
-    $value = getvar("kickstack::params::${name}_host")
+  if (getvar("kickstack::params::${name}_api_host")) {
+    $value = getvar("kickstack::params::${name}_api_host")
   } else {
     $value = $fqdn
   }
