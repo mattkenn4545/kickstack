@@ -24,7 +24,7 @@ class kickstack::params (
 
   #Glance
   $glance_registry_host = pick(getvar("${kickstack_environment}_glance_registry_host"),   false),
-  $glance_host          = pick(getvar("${kickstack_environment}_glance_host"),            false),
+  $glance_api_host      = pick(getvar("${kickstack_environment}_glance_api_host"),        false),
 
   #Neutron
   $neutron_api_host     = pick(getvar("${kickstack_environment}_neutron_api_host"),       false),
@@ -54,7 +54,7 @@ class kickstack::params (
     'rpc_host'              => 'kickstack::rpc',
     'keystone_api_host'     => 'kickstack::keystone::config',
     'glance_registry_host'  => 'kickstack::glance::registry',
-    'glance_host'           => 'kickstack::glance::api',
+    'glance_api_host'       => 'kickstack::glance::api',
     'neutron_api_host'      => 'kickstack::neutron::server',
     'heat_metadata_host'    => 'kickstack::heat::api',
     'heat_cloudwatch_host'  => 'kickstack::heat::api',
