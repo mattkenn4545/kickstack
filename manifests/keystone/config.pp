@@ -23,14 +23,7 @@ class kickstack::keystone::config inherits kickstack::keystone {
       token_provider    => $token_provider
     }
 
-    # Installs the service user endpoint.
-    class { '::keystone::endpoint':
-      public_address    => "${hostname}${public_suffix}",
-      admin_address     => "${hostname}${admin_suffix}",
-      internal_address  => $hostname,
-      region            => $region,
-      require           => Class[ '::keystone' ]
-    }
+    kickstack::endpoint { 'keystone': }
 
     # Adds the admin credential to keystone.
     class { '::keystone::roles::admin':

@@ -1,17 +1,40 @@
 define kickstack::endpoint (
-  $service_password,
+  $service_password   = false,
   $servicename        = $name,
   $classname          = 'auth'
 ) {
-  $fullclassname = "::${servicename}::keystone::${classname}"
+  if (getvar("kickstack::params::${name}_host")) {
+    $value = getvar("kickstack::params::${name}_host")
+  } else {
+    $value = $fqdn
+  }
+
+  $public_address    = "${value}${kickstack::keystone::public_suffix}"
+  $admin_address     = "${value}${kickstack::keystone::admin_suffix}"
 
   # Installs the service user endpoint.
-  class { $fullclassname:
-    password          => $service_password,
-    public_address    => "${fqdn}${kickstack::keystone::public_suffix}",
-    admin_address     => "${fqdn}${kickstack::keystone::admin_suffix}",
-    internal_address  => $fqdn,
-    region            => $kickstack::keystone::region,
-    require           => Class['::keystone']
+  if ($name == 'keystone') {
+    class { "::keystone::endpoint":
+      public_address    => $public_address,
+      admin_address     => $admin_address,
+      internal_address  => $value,
+      region            => $kickstack::keystone::region,
+      require           => Class['::keystone']
+    }
+  } else {
+    if (!$service_password) {
+      fail("service_password must be sent for ${name} endpoint")
+    }
+
+    class { "::${servicename}::keystone::${classname}":
+      password          => $service_password,
+      public_address    => $public_address,
+      admin_address     => $admin_address,
+      internal_address  => $value,
+      region            => $kickstack::keystone::region,
+      require           => Class['::keystone']
+    }
   }
+
+  kickstack::exportfact { "${servicename}_api_host": }
 }
