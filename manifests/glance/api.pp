@@ -38,7 +38,7 @@ class kickstack::glance::api inherits kickstack::glance {
       require           => Class['::glance::api']
     }
 
-    kickstack::exportfact { 'glance_api_host':
+    kickstack::exportfact { 'glance_host':
       require           => Class['::glance::api']
     }
   }
