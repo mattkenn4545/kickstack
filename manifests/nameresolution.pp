@@ -6,14 +6,17 @@
 # Currently supports only entries in /etc/hosts. Alternative
 # implementations might dynamically manage DNS entries.
 class kickstack::nameresolution inherits kickstack::params {
+  include kickstack::keystone
+
   case $name_resolution {
     'hosts': {
       $host = pick($fqdn, $hostname)
       if $fqdn {
-        $aliases = [ $hostname ]
+        $aliases = [ $hostname,  "${hostname}${kickstack::keystone::admin_suffix}"]
       } else {
-        $aliases = []
+        $aliases = [ "${hostname}${kickstack::keystone::admin_suffix}" ]
       }
+
       @@host { $host:
         ip            => getvar("ipaddress_${nic_management}"),
         host_aliases  => $aliases,
