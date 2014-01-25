@@ -6,7 +6,7 @@ define kickstack::endpoint (
   if (getvar("kickstack::params::${name}_api_host")) {
     $value = getvar("kickstack::params::${name}_api_host")
   } else {
-    $value = $fqdn
+    $value = $hostname
   }
 
   $public_address    = "${value}${kickstack::keystone::public_suffix}"
