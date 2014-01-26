@@ -12,9 +12,9 @@ class kickstack::nameresolution inherits kickstack::params {
     'hosts': {
       $host = pick($fqdn, $hostname)
       if $fqdn {
-        $aliases = [ $hostname,  "${hostname}${kickstack::keystone::admin_suffix}"]
+        $aliases = unique([ $hostname,  "${hostname}${kickstack::keystone::admin_suffix}", "${hostname}${kickstack::keystone::public_suffix}"])
       } else {
-        $aliases = [ "${hostname}${kickstack::keystone::admin_suffix}" ]
+        $aliases = unique([ "${hostname}${kickstack::keystone::admin_suffix}", "${hostname}${kickstack::keystone::public_suffix}" ])
       }
 
       @@host { $host:
