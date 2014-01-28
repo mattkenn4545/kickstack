@@ -17,8 +17,10 @@ class kickstack::keystone::config inherits kickstack::keystone {
 
     if ($memcached_hosts == []) {
       $token_driver = 'keystone.token.backends.sql.Token'
+      $memcache_servers = false
     } else {
       $token_driver = 'keystone.token.backends.memcache.Token'
+      $memcache_servers = suffix($memcached_hosts, ':11211')
     }
 
     class { '::keystone':
