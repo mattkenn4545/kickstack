@@ -13,8 +13,6 @@ class kickstack::keystone::config inherits kickstack::keystone {
 
     $sql_connection     = $kickstack::keystone::db::sql_connection
 
-    $memcache_servers = suffix($memcached_hosts, ':11211')
-
     if ($memcached_hosts == []) {
       $token_driver = 'keystone.token.backends.sql.Token'
       $memcache_servers = false
