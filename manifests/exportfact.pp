@@ -3,7 +3,7 @@ define kickstack::exportfact {
 
   $value = getvar("kickstack::params::${name}")
 
-  if ($value == $hostname or $value == getvar("ipaddress_${kickstack::params::nic_management}") or !$value or $value == []) {
+  if ($value == $hostname or $value == getvar("ipaddress_${kickstack::params::nic_management}") or !$value or $value == [] $value == [$hostname]) {
     ::exportfact::export { "${kickstack::params::kickstack_environment}_${name}":
       value     => $name ? { 'nova_metadata_ip' => getvar("ipaddress_${kickstack::params::nic_management}"),
                              default            => $hostname },
