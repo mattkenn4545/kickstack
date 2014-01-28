@@ -30,7 +30,8 @@ class kickstack::nova::config inherits kickstack::nova {
           auth_strategy       => 'keystone',
           verbose             => $verbose,
           debug               => $debug,
-          glance_api_servers  => "${glance_registry_host}:9292"
+          glance_api_servers  => "${glance_registry_host}:9292",
+          memcached_servers   => $memcached_hosts
         }
       }
       'qpid': {
@@ -45,7 +46,8 @@ class kickstack::nova::config inherits kickstack::nova {
           auth_strategy       => 'keystone',
           verbose             => $verbose,
           debug               => $debug,
-          glance_api_servers  => "${glance_registry_host}:9292"
+          glance_api_servers  => "${glance_registry_host}:9292",
+          memcached_servers   => $memcached_hosts
         }
       }
     }

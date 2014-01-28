@@ -10,4 +10,6 @@ class kickstack::role::infrastructure inherits kickstack {
   include kickstack::nova::db
   include kickstack::heat::db
   include kickstack::ceilometer::db
+
+  include kickstack::memcached
 }

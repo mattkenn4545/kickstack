@@ -13,6 +13,12 @@ class kickstack::keystone::config inherits kickstack::keystone {
 
     $sql_connection     = $kickstack::keystone::db::sql_connection
 
+    if ($memcached_hosts == []) {
+      $token_driver = 'keystone.token.backends.sql.Token'
+    } else {
+      $token_driver = 'keystone.token.backends.memcache.Token'
+    }
+
     class { '::keystone':
       package_ensure    => $package_version,
       verbose           => $verbose,
@@ -20,7 +26,9 @@ class kickstack::keystone::config inherits kickstack::keystone {
       catalog_type      => 'sql',
       admin_token       => $admin_token,
       sql_connection    => $sql_connection,
-      token_provider    => $token_provider
+      token_provider    => $token_provider,
+      token_driver      => $token_driver,
+      memcache_servers  => $memcached_hosts
     }
 
     kickstack::endpoint { 'keystone': }

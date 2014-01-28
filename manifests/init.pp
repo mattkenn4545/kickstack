@@ -81,7 +81,8 @@ class kickstack (
   $vncproxy_host                        = undef,
 
   $nova_metadata_ip                     = undef,
-  $heat_cloudwatch_host                 = undef
+  $heat_cloudwatch_host                 = undef,
+  $memcached_hosts                      = undef
 ) {
   include ::exportfact
 
@@ -118,7 +119,8 @@ class kickstack (
     glance_registry_host                 => $glance_registry_host,
     vncproxy_host                        => $vncproxy_host,
     nova_metadata_ip                     => $nova_metadata_ip,
-    heat_cloudwatch_host                 => $heat_cloudwatch_host
+    heat_cloudwatch_host                 => $heat_cloudwatch_host,
+    memcached_hosts                      => $memcached_hosts
   }
 
   include kickstack::repo

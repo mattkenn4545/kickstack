@@ -34,7 +34,9 @@ class kickstack::params (
   $vncproxy_host                = pick(getvar("${kickstack_environment}_vncproxy_host"),          false),
 
   $nova_metadata_ip             = pick(getvar("${kickstack_environment}_nova_metadata_ip"),       false),
-  $heat_cloudwatch_host         = pick(getvar("${kickstack_environment}_heat_cloudwatch_host"),   false)
+  $heat_cloudwatch_host         = pick(getvar("${kickstack_environment}_heat_cloudwatch_host"),   false),
+
+  $memcached_hosts              = suffix(any2array(getvar("${kickstack_environment}_memcached_hosts")), ':11211')
 ) {
   if (!defined(Class['kickstack'])) {
     fail('Kickstack is NOT defined...')
