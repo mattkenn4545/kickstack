@@ -11,7 +11,7 @@ class kickstack::ha (
 
   $ha_services = [ 'keystone', 'neutron', 'heat', 'cinder', 'glance', 'ceilometer', 'nova' ]
 
-  kickstack::ha::listener { $ha_services: }
+  kickstack::ha::service { $ha_services: }
 
   Haproxy::Listen <| title != 'admin'|> {
     ipaddress => $ipaddress_eth1,
@@ -25,7 +25,7 @@ class kickstack::ha (
   }
 }
 
-define kickstack::ha::listener {
+define kickstack::ha::service {
   $service_ports = {
     'keystone'    => [ '5000', '35357' ],
     'neutron'     => [ '9696' ],
@@ -36,15 +36,19 @@ define kickstack::ha::listener {
     'ceilometer'  => [ '8777' ]
   }
 
-  haproxy::listen { $name:
-    ports             => $service_ports[$name],
-    collect_exported  => false
-  }
+  kickstack::ha::listener{ $service_ports[$name]: service => $name }
 
-  Haproxy::Balancermember <<| listening_service == $name and
-                              tag == 'kickstack' and
-                              tag == $kickstack::params::kickstack_environment
-                          |>> {
-    ports     => $service_ports[$name]
+#  Haproxy::Balancermember <<| listening_service == $name and
+#                              tag == 'kickstack' and
+#                              tag == $kickstack::params::kickstack_environment
+#                          |>> {
+#    ports     => $service_ports[$name]
+#  }
+}
+
+define kickstack::ha::listener ($service) {
+  haproxy::listen { "${service}-${name}":
+    ports             => $name,
+    collect_exported  => true
   }
 }

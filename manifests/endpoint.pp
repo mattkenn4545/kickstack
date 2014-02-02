@@ -36,13 +36,27 @@ define kickstack::endpoint (
     }
   }
 
-  @@haproxy::balancermember { "${servicename}-${fqdn}":
-    listening_service => $servicename,
-    server_names      => $hostname,
-    ipaddresses       => getvar("ipaddress_${kickstack::params::nic_management}"),
-    ports             => '1010',
-    options           => 'check'
+  $service_ports = {
+    'keystone'    => [ '5000', '35357' ],
+    'neutron'     => [ '9696' ],
+    'heat'        => [ '8004' ],
+    'cinder'      => [ '8776' ],
+    'glance'      => [ '9292' ],
+    'nova'        => [ '8773', '8774', '8775' ],
+    'ceilometer'  => [ '8777' ]
   }
 
+  kickstack::endpoint::balancermember{ $service_ports[$servicename]: service => $servicename}
+
   kickstack::exportfact { "${servicename}_api_host": }
+}
+
+define kickstack::endpoint::balancermember ( $service ) {
+  @@haproxy::balancermember { "${service}-${name}":
+    listening_service => "${service}-${name}",
+    server_names      => $hostname,
+    ipaddresses       => getvar("ipaddress_${kickstack::params::nic_management}"),
+    ports             => $name,
+    options           => 'check'
+  }
 }
