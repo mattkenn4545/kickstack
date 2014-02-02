@@ -24,7 +24,7 @@ class kickstack::neutron::agent::l2 inherits kickstack::neutron {
                                       default   => '' },
           tunnel_bridge       => $tunnel_bridge,
           package_ensure      => $package_version,
-          tunnel_types        => false
+          tunnel_types        => [$tenant_network_type]
         }
       }
 
