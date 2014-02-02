@@ -67,6 +67,8 @@ class kickstack (
   $rpc_host                             = undef,
 
   #Endpoint Hosts
+  $haproxy_host                         = undef,
+
   $ceilometer_api_host                  = undef,
   $nova_api_host                        = undef,
   $cinder_api_host                      = undef,
@@ -108,6 +110,7 @@ class kickstack (
     kickstack_environment                => $kickstack_environment,
     db_host                              => $db_host,
     rpc_host                             => $rpc_host,
+    haproxy_host                         => $haproxy_host,
     ceilometer_api_host                  => $ceilometer_api_host,
     nova_api_host                        => $nova_api_host,
     cinder_api_host                      => $cinder_api_host,

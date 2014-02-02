@@ -36,5 +36,13 @@ define kickstack::endpoint (
     }
   }
 
+  @@haproxy::balancermember { "${servicename}-${fqdn}":
+    listening_service => $servicename,
+    server_names      => $hostname,
+    ipaddresses       => getvar("ipaddress_${kickstack::params::nic_management}"),
+    ports             => '1010',
+    options           => 'check'
+  }
+
   kickstack::exportfact { "${servicename}_api_host": }
 }

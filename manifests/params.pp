@@ -20,14 +20,16 @@ class kickstack::params (
   $rpc_host                     = pick(getvar("${kickstack_environment}_rpc_host"),               false),
 
   #Endpoint Hosts
-  $ceilometer_api_host          = pick(getvar("${kickstack_environment}_ceilometer_api_host"),    false),
-  $nova_api_host                = pick(getvar("${kickstack_environment}_nova_api_host"),          false),
-  $cinder_api_host              = pick(getvar("${kickstack_environment}_cinder_api_host"),        false),
-  $heat_api_host                = pick(getvar("${kickstack_environment}_heat_api_host"),          false),
-  $heat_cfn_api_host            = pick(getvar("${kickstack_environment}_heat_cfn_api_host"),      false),
-  $glance_api_host              = pick(getvar("${kickstack_environment}_glance_api_host"),        false),
-  $keystone_api_host            = pick(getvar("${kickstack_environment}_keystone_api_host"),      false),
-  $neutron_api_host             = pick(getvar("${kickstack_environment}_neutron_api_host"),       false),
+  $haproxy_host                 = undef,
+
+  $ceilometer_api_host          = pick($haproxy_host, getvar("${kickstack_environment}_ceilometer_api_host"),     false),
+  $nova_api_host                = pick($haproxy_host, getvar("${kickstack_environment}_nova_api_host"),           false),
+  $cinder_api_host              = pick($haproxy_host, getvar("${kickstack_environment}_cinder_api_host"),         false),
+  $heat_api_host                = pick($haproxy_host, getvar("${kickstack_environment}_heat_api_host"),           false),
+  $heat_cfn_api_host            = pick($haproxy_host, getvar("${kickstack_environment}_heat_cfn_api_host"),       false),
+  $glance_api_host              = pick($haproxy_host, getvar("${kickstack_environment}_glance_api_host"),         false),
+  $keystone_api_host            = pick($haproxy_host, getvar("${kickstack_environment}_keystone_api_host"),       false),
+  $neutron_api_host             = pick($haproxy_host, getvar("${kickstack_environment}_neutron_api_host"),        false),
 
   #Facts
   $glance_registry_host         = pick(getvar("${kickstack_environment}_glance_registry_host"),   false),
