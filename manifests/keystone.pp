@@ -7,7 +7,7 @@ class kickstack::keystone (
   # The special tenant set up for administrative purposes
   $admin_tenant             = 'openstack',
 
-  $admin_email              = "admin@${fqdn}",
+  $admin_email              = 'admin@localhost',
 
   # The tenant set up so that individual OpenStack services can
   # authenticate with Keystone
