@@ -23,7 +23,8 @@ class kickstack::neutron::agent::l2 inherits kickstack::neutron {
                                       'gre'     => getvar("ipaddress_${nic_data}"),
                                       default   => '' },
           tunnel_bridge       => $tunnel_bridge,
-          package_ensure      => $package_version
+          package_ensure      => $package_version,
+          tunnel_types        => false
         }
       }
 
