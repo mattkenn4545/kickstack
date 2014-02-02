@@ -37,13 +37,6 @@ define kickstack::ha::service {
   }
 
   kickstack::ha::listener{ $service_ports[$name]: service => $name }
-
-#  Haproxy::Balancermember <<| listening_service == $name and
-#                              tag == 'kickstack' and
-#                              tag == $kickstack::params::kickstack_environment
-#                          |>> {
-#    ports     => $service_ports[$name]
-#  }
 }
 
 define kickstack::ha::listener ($service) {

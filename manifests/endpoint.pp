@@ -52,7 +52,7 @@ define kickstack::endpoint (
 }
 
 define kickstack::endpoint::balancermember ( $service ) {
-  @@haproxy::balancermember { "${service}-${name}":
+  @@haproxy::balancermember { "${service}-${name}-${hostname}":
     listening_service => "${service}-${name}",
     server_names      => $hostname,
     ipaddresses       => getvar("ipaddress_${kickstack::params::nic_management}"),
