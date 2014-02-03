@@ -13,7 +13,7 @@ class kickstack::keystone::config inherits kickstack::keystone {
 
     $sql_connection     = $kickstack::keystone::db::sql_connection
 
-    if ($memcached_hosts == [] or true == true) { #Not doing memcached atm due to performance and first run issues
+    if ($memcached_hosts == []) {
       $token_driver = 'keystone.token.backends.sql.Token'
       $memcache_servers = false
     } else {
