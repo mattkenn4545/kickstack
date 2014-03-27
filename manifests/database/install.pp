@@ -30,6 +30,4 @@ class kickstack::database::install inherits kickstack::database {
       fail("Unsupported kickstack::database::server: ${server}")
     }
   }
-
-  kickstack::exportfact { 'db_host': }
 }

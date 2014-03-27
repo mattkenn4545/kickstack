@@ -7,7 +7,6 @@ summary 'Rapid OpenStack deployment with puppet-dashboard or any other Puppet EN
 description 'Puppet module to rapidly install and deploy OpenStack, based on the Stackforge Puppet modules, configurable through parameters from puppet-dashboard, Puppet Enterprise, The Foreman, or any other Puppet External Node Classifier (ENC)'
 project_page 'https://github.com/hastexo/kickstack'
 
-dependency 'hastexo/exportfact', '>= 0.1.1'
 dependency 'puppetlabs/cinder', '>= 2.0.0'
 dependency 'puppetlabs/glance', '>= 2.0.0'
 dependency 'puppetlabs/horizon', '>= 2.0.0'

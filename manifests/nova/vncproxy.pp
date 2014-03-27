@@ -7,11 +7,6 @@ class kickstack::nova::vncproxy inherits kickstack::nova {
       host            => getvar("ipaddress_${nic_management}"),
       ensure_package  => $package_version
     }
-
-    kickstack::exportfact { 'vncproxy_host':
-      require         => Class['::nova::vncproxy']
-    }
-
   } else {
     notify { 'Unable to apply ::nova::vncproxy': }
   }

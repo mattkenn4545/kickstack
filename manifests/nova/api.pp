@@ -37,10 +37,6 @@ class kickstack::nova::api inherits kickstack::nova {
         service_password  => $admin_password,
         require           => Class['::nova::api']
       }
-
-      kickstack::exportfact { 'nova_metadata_ip':
-        require           => Class['::nova::api']
-      }
     } else {
       notify { 'Unable to apply ::nova::api': }
     }

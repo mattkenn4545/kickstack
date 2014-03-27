@@ -86,10 +86,6 @@ class kickstack (
   $heat_cloudwatch_host                 = undef,
   $memcached_hosts                      = undef
 ) {
-  include ::exportfact
-
-  ::exportfact::import { $kickstack_environment: }
-
   validate_bool($verbose, $debug, $allow_default_passwords)
 
   class { 'kickstack::params':

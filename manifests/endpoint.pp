@@ -47,8 +47,6 @@ define kickstack::endpoint (
   }
 
   kickstack::endpoint::balancermember{ $service_ports[$servicename]: service => $servicename}
-
-  kickstack::exportfact { "${servicename}_api_host": }
 }
 
 define kickstack::endpoint::balancermember ( $service ) {

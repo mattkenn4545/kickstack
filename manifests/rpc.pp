@@ -19,6 +19,4 @@ class kickstack::rpc inherits kickstack::params {
       fail("Unsupported RPC server: ${rpc_server}")
     }
   }
-
-  kickstack::exportfact { 'rpc_host': }
 }

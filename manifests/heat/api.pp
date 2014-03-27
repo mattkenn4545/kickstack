@@ -33,10 +33,6 @@ class kickstack::heat::api inherits kickstack::heat {
         enabled           => true
       }
 
-      kickstack::exportfact { 'heat_cloudwatch_host':
-        require           => Class[ '::heat::api_cloudwatch' ]
-      }
-
       # The puppet-heat module has no facility for setting up the
       # CloudWatch Keystone endpoint.
     }

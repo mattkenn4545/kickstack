@@ -44,16 +44,3 @@ a node as a Keystone authentication node, the Puppet runs on that node
 will essentially be empty until a configured Keystone database is
 known to the system. Likewise, a compute node will just not install
 until there is a Nova API service to manage it.
-
-## Shared information between nodes
-
-To share information between nodes, Kickstack makes use of the
-`exportfact` module. Exportfact is a simple module that uses Puppet
-Exported Resources to share Facts between nodes. These facts obviously
-contain potentially sensitive information such as passwords which,
-while they are transmitted securely *between* nodes (between the
-Puppet agent and master), are stored unencrypted both on the Puppet
-master and on the Puppet agent. Since this is no different from what
-would normally be stored on an OpenStack node anyway -- in files that
-are only readable by `root` and the respective service user, such as
-`cinder` -- this adds no significant *additional* security exposure.
