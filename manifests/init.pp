@@ -78,12 +78,12 @@ class kickstack (
   $keystone_api_host                    = undef,
   $neutron_api_host                     = undef,
 
-  #Facts
+  #Other Hosts
   $glance_registry_host                 = undef,
   $vncproxy_host                        = undef,
 
   $nova_metadata_ip                     = undef,
-  $heat_cloudwatch_host                 = undef,
+
   $memcached_hosts                      = undef
 ) {
   validate_bool($verbose, $debug, $allow_default_passwords)
@@ -118,7 +118,6 @@ class kickstack (
     glance_registry_host                 => $glance_registry_host,
     vncproxy_host                        => $vncproxy_host,
     nova_metadata_ip                     => $nova_metadata_ip,
-    heat_cloudwatch_host                 => $heat_cloudwatch_host,
     memcached_hosts                      => $memcached_hosts
   }
 
