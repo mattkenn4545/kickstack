@@ -1,12 +1,10 @@
 class kickstack::nova::compute inherits kickstack::nova {
   if (!$vncproxy_host) {
-    $missing_fact = 'vncproxy_host'
+    $unset_parameter = 'vncproxy_host'
   }
 
-  if $missing_fact {
-    $class = $exported_fact_provider[$missing_fact]
-
-    $message = inline_template($missing_fact_template)
+  if $unset_parameter {
+    $message = inline_template($unset_parameter_template)
     notify { $message: }
   } else {
     include kickstack::nova::config

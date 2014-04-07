@@ -1,14 +1,15 @@
 class kickstack::glance::registry inherits kickstack::glance {
   if (!$db_host) {
-    $missing_fact = 'db_host'
+    $unset_parameter = 'db_host'
   } elsif (!$keystone_api_host) {
-    $missing_fact = 'keystone_api_host'
+    $unset_parameter = 'keystone_api_host'
+  } elsif (!$glance_registry_host) {
+    $unset_parameter = 'glance_registry_host'
+    $is_provided = true
   }
 
-  if $missing_fact {
-    $class = $exported_fact_provider[$missing_fact]
-
-    $message = inline_template($missing_fact_template)
+  if $unset_parameter {
+    $message = inline_template($unset_parameter_template)
     notify { $message: }
   } else {
     include kickstack::glance::config

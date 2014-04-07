@@ -1,12 +1,10 @@
 class kickstack::neutron::config inherits kickstack::neutron {
   if (!$rpc_host) {
-    $missing_fact = 'rpc_host'
+    $unset_parameter = 'rpc_host'
   }
 
-  if $missing_fact {
-    $class = $exported_fact_provider[$missing_fact]
-
-    $message = inline_template($missing_fact_template)
+  if $unset_parameter {
+    $message = inline_template($unset_parameter_template)
     notify { $message: }
   } else {
     $allow_overlapping_ips = $network_type ? {

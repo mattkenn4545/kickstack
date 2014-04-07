@@ -1,12 +1,10 @@
 class kickstack::keystone::config inherits kickstack::keystone {
   if (!$db_host) {
-    $missing_fact = 'db_host'
+    $unset_parameter = 'db_host'
   }
 
-  if $missing_fact {
-    $class = $exported_fact_provider[$missing_fact]
-
-    $message = inline_template($missing_fact_template)
+  if $unset_parameter {
+    $message = inline_template($unset_parameter_template)
     notify { $message: }
   } else {
     include kickstack::keystone::db

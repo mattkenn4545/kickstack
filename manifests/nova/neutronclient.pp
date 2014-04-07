@@ -1,14 +1,12 @@
 class kickstack::nova::neutronclient inherits kickstack::nova {
   if (!$keystone_api_host) {
-    $missing_fact = 'keystone_api_host'
+    $unset_parameter = 'keystone_api_host'
   } elsif (!$neutron_api_host) {
-    $missing_fact = 'neutron_api_host'
+    $unset_parameter = 'neutron_api_host'
   }
 
-  if $missing_fact {
-    $class = $exported_fact_provider[$missing_fact]
-
-    $message = inline_template($missing_fact_template)
+  if $unset_parameter {
+    $message = inline_template($unset_parameter_template)
     notify { $message: }
   } else {
     include kickstack::nova::config

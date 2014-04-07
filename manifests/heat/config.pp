@@ -1,16 +1,14 @@
 class kickstack::heat::config inherits kickstack::heat {
   if (!$db_host) {
-    $missing_fact = 'db_host'
+    $unset_parameter = 'db_host'
   } elsif (!$rpc_host) {
-    $missing_fact = 'rpc_host'
+    $unset_parameter = 'rpc_host'
   } elsif (!$keystone_api_host) {
-    $missing_fact = 'keystone_api_host'
+    $unset_parameter = 'keystone_api_host'
   }
 
-  if $missing_fact {
-    $class = $exported_fact_provider[$missing_fact]
-
-    $message = inline_template($missing_fact_template)
+  if $unset_parameter {
+    $message = inline_template($unset_parameter_template)
     notify { $message: }
   } else {
     include kickstack::heat::db

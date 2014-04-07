@@ -1,14 +1,12 @@
 class kickstack::neutron::agent::metadata inherits kickstack::neutron {
    if (!$keystone_api_host) {
-     $missing_fact = 'keystone_api_host'
+     $unset_parameter = 'keystone_api_host'
    } elsif (!$nova_metadata_ip) {
-     $missing_fact = 'nova_metadata_ip'
+     $unset_parameter = 'nova_metadata_ip'
    }
 
-  if $missing_fact {
-    $class = $exported_fact_provider[$missing_fact]
-
-    $message = inline_template($missing_fact_template)
+  if $unset_parameter {
+    $message = inline_template($unset_parameter_template)
     notify { $message: }
   } else {
     include kickstack::neutron::config

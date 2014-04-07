@@ -27,15 +27,6 @@ class kickstack::heat::api inherits kickstack::heat {
         require           => Class[ '::heat::api_cfn' ]
       }
     }
-
-    if 'cloudwatch' in $enabled_apis {
-      class { '::heat::api_cloudwatch':
-        enabled           => true
-      }
-
-      # The puppet-heat module has no facility for setting up the
-      # CloudWatch Keystone endpoint.
-    }
   } else {
     notify { 'Unable to apply heat apis': }
   }
