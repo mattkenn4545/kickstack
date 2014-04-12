@@ -2,35 +2,39 @@ define kickstack::db (
   $password,
   $allowed_hosts = '%'
 ) {
-  include kickstack::database::install
+  if ($db_host) {
+    include kickstack::database::install
 
-  $database     = $kickstack::database::server
+    $database     = $kickstack::database::server
 
-  $servicename  = $name
-  $username     = $name
+    $servicename  = $name
+    $username     = $name
 
-  if ($password == "${servicename}_dbpass") {
-    if ($kickstack::params::allow_default_passwords) {
-      warning("Default password for database ${name}.")
-    } else {
-      fail("Default password for database ${name} and default passwords are not allowed.")
-    }
-  }
-
-  case $database {
-    'mysql': {
-      class { "::${servicename}::db::mysql":
-        user          => $username,
-        password      => $password,
-        charset       => 'utf8',
-        allowed_hosts => $allowed_hosts
+    if ($password == "${servicename}_dbpass") {
+      if ($kickstack::params::allow_default_passwords) {
+        warning("Default password for database ${name}.")
+      } else {
+        fail("Default password for database ${name} and default passwords are not allowed.")
       }
     }
 
-    default: {
-      class { "::${servicename}::db::${database}":
-        password      => $password
+    case $database {
+      'mysql': {
+        class { "::${servicename}::db::mysql":
+          user          => $username,
+          password      => $password,
+          charset       => 'utf8',
+          allowed_hosts => $allowed_hosts
+        }
+      }
+
+      default: {
+        class { "::${servicename}::db::${database}":
+          password      => $password
+        }
       }
     }
+  } else {
+    notify { "Unable to setup db for ${name} without 'db_host' being set.": }
   }
 }
