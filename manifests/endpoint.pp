@@ -10,7 +10,7 @@ define kickstack::endpoint (
 
     # Installs the service user endpoint.
     if ($name == 'keystone') {
-      class { "::keystone::endpoint":
+      class { '::keystone::endpoint':
         public_address    => $public_address,
         admin_address     => $admin_address,
         internal_address  => $value,
@@ -44,7 +44,7 @@ define kickstack::endpoint (
 
     kickstack::endpoint::balancermember{ $service_ports[$servicename]: service => $servicename }
   } else {
-    notify { "Please set '${name}_api_host' or 'haproxy_host'.  This node is eligable to be a '${name}_api_host'.": }
+    notify { "Please set '${name}_api_host' or 'haproxy_host'.  This node is eligible to be a '${name}_api_host'.": }
   }
 }
 
