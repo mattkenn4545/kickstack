@@ -1,26 +1,36 @@
 class kickstack::ha (
   $balance    =   'roundrobin'
 ) inherits kickstack::params {
-  class { 'haproxy': }
-
-  haproxy::listen { 'admin':
-    ports     => '8080',
-    ipaddress => $ipaddress_eth1,
-    options   => { 'mode' => [ 'http' ] }
+  if (!$haproxy_host) {
+    $unset_parameter = 'haproxy_host'
+    $is_provided = true
   }
 
-  $ha_services = [ 'keystone', 'neutron', 'heat', 'cinder', 'glance', 'ceilometer', 'nova' ]
+  if $unset_parameter {
+    $message = inline_template($unset_parameter_template)
+    notify { $message: }
+  } else {
+    class { 'haproxy': }
 
-  kickstack::ha::service { $ha_services: }
+    haproxy::listen { 'admin':
+      ports     => '8080',
+      ipaddress => $ipaddress_eth1,
+      options   => { 'mode' => [ 'http' ] }
+    }
 
-  Haproxy::Listen <| title != 'admin'|> {
-    ipaddress => $ipaddress_eth1,
-    options   => {
-      'balance' => $balance,
-      'option'  => [
-        'tcplog',
-        'tcpka'
-      ]
+    $ha_services = [ 'keystone', 'neutron', 'heat', 'cinder', 'glance', 'ceilometer', 'nova' ]
+
+    kickstack::ha::service { $ha_services: }
+
+    Haproxy::Listen <| title != 'admin'|> {
+      ipaddress => $ipaddress_eth1,
+      options   => {
+        'balance' => $balance,
+        'option'  => [
+          'tcplog',
+          'tcpka'
+        ]
+      }
     }
   }
 }

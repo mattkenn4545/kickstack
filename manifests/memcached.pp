@@ -1,5 +1,5 @@
-class kickstack::memcached {
-  if (!$memcached_hosts) {
+class kickstack::memcached inherits kickstack::params {
+  if ($memcached_hosts == []) {
     $unset_parameter = 'memcached_hosts'
     $is_provided = true
   }

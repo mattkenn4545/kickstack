@@ -47,7 +47,7 @@ class kickstack::params (
     fail('Kickstack is not enabled ensure that $kickstack::enabled == true')
   }
 
-  $unset_parameter_template      = "'<%= @unset_parameter %>' is missing and needed by '<%= @title %>' in the '${kickstack_environment}' kickstack environment. Ensure that '<%= @unset_parameter %>' is passed to kickstack."
+  $unset_parameter_template      = "'<%= @unset_parameter %>' is missing and needed by '<%= @title %>' in the '${kickstack_environment}' kickstack environment. Ensure that '<%= @unset_parameter %>' is passed to kickstack. <% if @is_provided %> '<%= @hostname %>' is eligible to become the '<%= @unset_parameter %>'.<% end %>"
 
   if ($allow_default_passwords) {
     $default_password_template  = "Default password for service '<%= @service_name %>'."
