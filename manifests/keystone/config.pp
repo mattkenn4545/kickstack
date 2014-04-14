@@ -34,12 +34,13 @@ class kickstack::keystone::config inherits kickstack::keystone {
     kickstack::endpoint { 'keystone': }
 
     # Adds the admin credential to keystone.
-    class { '::keystone::roles::admin':
-      email             => $admin_email,
-      password          => $admin_password,
-      admin_tenant      => $admin_tenant,
-      service_tenant    => $service_tenant,
-      require           => Class[ '::keystone::endpoint' ]
+    if defined('::keystone::endpoint') {
+      class { '::keystone::roles::admin':
+        email             => $admin_email,
+        password          => $admin_password,
+        admin_tenant      => $admin_tenant,
+        service_tenant    => $service_tenant
+      }
     }
 
     file { '/root/openstackrc':

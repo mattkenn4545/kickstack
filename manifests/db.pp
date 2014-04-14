@@ -2,7 +2,7 @@ define kickstack::db (
   $password,
   $allowed_hosts = '%'
 ) {
-  if ($db_host) {
+  if ($kickstack::params::db_host) {
     include kickstack::database::install
 
     $database     = $kickstack::database::server
