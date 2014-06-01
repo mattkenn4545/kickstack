@@ -60,8 +60,6 @@ class kickstack (
 
   $allow_default_passwords              = false,
 
-  $kickstack_environment                = pick($kickstack_environment, 'default'),
-
   #Infrastructure
   $db_host                              = undef,
   $rpc_host                             = undef,
@@ -103,7 +101,6 @@ class kickstack (
     nic_data                             => $nic_data,
     nic_external                         => $nic_external,
     allow_default_passwords              => $allow_default_passwords,
-    kickstack_environment                => $kickstack_environment,
     db_host                              => $db_host,
     rpc_host                             => $rpc_host,
     haproxy_host                         => $haproxy_host,

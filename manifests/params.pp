@@ -13,31 +13,30 @@ class kickstack::params (
   $nic_data,
   $nic_external,
   $allow_default_passwords,
-  $kickstack_environment,
 
   #Infrastructure
-  $db_host                      = pick(getvar("${kickstack_environment}_db_host"),                false),
-  $rpc_host                     = pick(getvar("${kickstack_environment}_rpc_host"),               false),
+  $db_host                      = pick($db_host,                false),
+  $rpc_host                     = pick($rpc_host,               false),
 
   #Endpoint Hosts
   $haproxy_host                 = undef,
 
-  $ceilometer_api_host          = pick($haproxy_host, getvar("${kickstack_environment}_ceilometer_api_host"),     false),
-  $nova_api_host                = pick($haproxy_host, getvar("${kickstack_environment}_nova_api_host"),           false),
-  $cinder_api_host              = pick($haproxy_host, getvar("${kickstack_environment}_cinder_api_host"),         false),
-  $heat_api_host                = pick($haproxy_host, getvar("${kickstack_environment}_heat_api_host"),           false),
-  $heat_cfn_api_host            = pick($haproxy_host, getvar("${kickstack_environment}_heat_cfn_api_host"),       false),
-  $glance_api_host              = pick($haproxy_host, getvar("${kickstack_environment}_glance_api_host"),         false),
-  $keystone_api_host            = pick($haproxy_host, getvar("${kickstack_environment}_keystone_api_host"),       false),
-  $neutron_api_host             = pick($haproxy_host, getvar("${kickstack_environment}_neutron_api_host"),        false),
+  $ceilometer_api_host          = pick($haproxy_host, $ceilometer_api_host,     false),
+  $nova_api_host                = pick($haproxy_host, $nova_api_host,           false),
+  $cinder_api_host              = pick($haproxy_host, $cinder_api_host,         false),
+  $heat_api_host                = pick($haproxy_host, $heat_api_host,           false),
+  $heat_cfn_api_host            = pick($haproxy_host, $heat_cfn_api_host,       false),
+  $glance_api_host              = pick($haproxy_host, $glance_api_host,         false),
+  $keystone_api_host            = pick($haproxy_host, $keystone_api_host,       false),
+  $neutron_api_host             = pick($haproxy_host, $neutron_api_host,        false),
 
   #Other Hosts
-  $glance_registry_host         = pick(getvar("${kickstack_environment}_glance_registry_host"),   false),
-  $vncproxy_host                = pick(getvar("${kickstack_environment}_vncproxy_host"),          false),
+  $glance_registry_host         = pick($glance_registry_host,   false),
+  $vncproxy_host                = pick($vncproxy_host,          false),
 
-  $nova_metadata_ip             = pick(getvar("${kickstack_environment}_nova_metadata_ip"),       false),
+  $nova_metadata_ip             = pick($nova_metadata_ip,       false),
 
-  $memcached_hosts              = split(pick(getvar("${kickstack_environment}_memcached_hosts"), ','), ',')
+  $memcached_hosts              = split(pick($memcached_hosts, ','), ',')
 ) {
   if (!defined(Class['kickstack'])) {
     fail('Kickstack is NOT defined...')
@@ -47,7 +46,7 @@ class kickstack::params (
     fail('Kickstack is not enabled ensure that $kickstack::enabled == true')
   }
 
-  $unset_parameter_template      = "'<%= @unset_parameter %>' is missing and needed by '<%= @title %>' in the '${kickstack_environment}' kickstack environment. Ensure that '<%= @unset_parameter %>' is passed to kickstack. <% if @is_provided %> '<%= @hostname %>' is eligible to become the '<%= @unset_parameter %>'.<% end %>"
+  $unset_parameter_template      = "'<%= @unset_parameter %>' is missing and needed by '<%= @title %>'. Ensure that '<%= @unset_parameter %>' is passed to kickstack. <% if @is_provided %> '<%= @hostname %>' is eligible to become the '<%= @unset_parameter %>'.<% end %>"
 
   if ($allow_default_passwords) {
     $default_password_template  = "Default password for service '<%= @service_name %>'."
