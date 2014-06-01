@@ -28,7 +28,7 @@ class kickstack::heat::config inherits kickstack::heat {
           rpc_backend         => 'heat.openstack.common.rpc.impl_kombu',
           rabbit_host         => $rpc_host,
           rabbit_password     => $rpc_password,
-          rabbit_virtualhost  => $rabbit_virtual_host,
+          rabbit_virtual_host => $rabbit_virtual_host,
           rabbit_userid       => $rpc_user,
           keystone_host       => $keystone_api_host,
           keystone_tenant     => $kickstack::keystone::service_tenant,
