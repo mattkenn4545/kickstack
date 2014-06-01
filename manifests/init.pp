@@ -122,5 +122,4 @@ class kickstack (
   }
 
   include kickstack::repo
-  include kickstack::nameresolution
 }
