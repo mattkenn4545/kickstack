@@ -9,7 +9,6 @@ class kickstack (
   $enabled                              = false,
   # The OpenStack release to install
   # * default 'havana'
-  # * override by setting to 'folsom' (not recommended) or 'grizzly'
   # This is for new installations only; don't expect this to magically
   # support rolling releases.
   $release                              = 'havana',
