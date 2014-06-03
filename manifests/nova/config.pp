@@ -15,11 +15,12 @@ class kickstack::nova::config inherits kickstack::nova {
 
     $sql_connection             = $kickstack::nova::db::sql_connection
 
-    if ($memcached_hosts == []) {
-      $memcache_servers = false
-    } else {
-      $memcache_servers = suffix($memcached_hosts, ':11211')
-    }
+    $memcache_servers = false
+#    if ($memcached_hosts == []) {
+#      $memcache_servers = false
+#    } else {
+#      $memcache_servers = suffix($memcached_hosts, ':11211')
+#    }
 
     case $rpc_server {
       'rabbitmq': {
