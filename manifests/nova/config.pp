@@ -22,6 +22,16 @@ class kickstack::nova::config inherits kickstack::nova {
 #      $memcache_servers = suffix($memcached_hosts, ':11211')
 #    }
 
+    include kickstack::cinder
+
+    if ($kickstack::cinder::backend == 'rbd') {
+      class { '::nova::compute::rbd':
+        libvirt_rbd_user            => $kickstack::cinder::rbd_user,
+        libvirt_rbd_secret_uuid     => $kickstack::cinder::rbd_secret_uuid,
+        libvirt_images_rbd_pool     => $kickstack::cinder::rbd_pool
+      }
+    }
+
     case $rpc_server {
       'rabbitmq': {
         class { '::nova':
